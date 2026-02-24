@@ -36,17 +36,35 @@
 			
 			&:is(:hover, :focus-visible) {
 				background-color: #7473;
-				padding-left: 1em;
+				padding-left: 2em;
+				span {
+					color: #747c;
+
+					&::after {
+						content: url("$lib/assets/external_link.svg");
+						position: absolute;
+						translate: 4px 2px;
+					}
+				}
 			}
 
 			span {
 				display: inherit;
 				font-weight: 600;
 				color: unset;
-				&::after {
-					content: url("$lib/assets/external_link.svg");
-					position: absolute;
-					translate: 4px 2px;
+			}
+		}
+		
+		a:visited {
+			color: #333;
+
+			span {
+				color: #474;
+			}
+
+			&:is(:hover, :focus-visible) {
+				span {
+					color: #747c;
 				}
 			}
 		}

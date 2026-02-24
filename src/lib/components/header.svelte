@@ -6,7 +6,7 @@
 	header {
 		color: white;
 		background-color: darkgray;
-		background-image: url("banner1.jpg");
+		background-image: url("$lib/assets/banner1.jpg");
 		background-size: cover;
 		background-position-y: calc(80% + 60px);
 		text-align: center;
@@ -24,6 +24,11 @@
 			span {
 				font-weight: 700;
 			}
+		}
+
+		@media screen and (width < 1005px) {
+			background-size: auto;
+			background-position-x: center;
 		}
 	}
 </style>

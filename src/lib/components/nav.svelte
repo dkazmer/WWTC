@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
-    import { preventDefault } from 'svelte/legacy';
+	import { preventDefault } from 'svelte/legacy';
 
 	let menu: HTMLAnchorElement;
 	let subMenu: HTMLDivElement;
@@ -117,7 +117,8 @@
 </nav>
 
 <style lang="scss">
-	@mixin new() { 
+	/* @mixin new() { // mixins not working here; reason unknown */
+	a.new::after {
 		content: "new";
 		color: white;
 		display: inline-block;
@@ -135,32 +136,49 @@
 		top: 0;
 		z-index: 10;
 		font-size: 0;
-		// box-shadow: 0 2px 4px #333;
+		/*// box-shadow: 0 2px 4px #333;*/
 		box-shadow: 0 2px 4px rgb(0 0 0 / 40%);
 		user-select: none;
-		
+
 		& > div {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			background: whitesmoke;
+
+			[role="menubar"] {
+				display: flex;
+				justify-content: center;
+				max-width: 1200px;
+				width: 100%;
+				padding-inline: 60px;
+	            box-sizing: border-box;
+			}
 		}
 		a {
 			color: var(--primary-dark);
 			text-decoration: none;
 			text-transform: uppercase;
 			display: inline-block;
-			padding: 20px 30px;
+			padding-block: 20px;
 			font-size: 14px;
 			outline: none;
+			flex-grow: 1;
+			text-align: center;
+			white-space: nowrap;
+
 			&:is([aria-selected="true"], [aria-expanded="true"]) {
 				background-color: var(--primary);
 				color: white;
+				pointer-events: none;
 			}
-			&:is(:focus-visible, :hover) {
+
+			&:not([aria-selected="true"], [aria-expanded="true"]):is(:focus-visible, :hover) {
 				color: white;
-				background-color: #9b6 !important;
+				/* background-color: #9b6 !important; */
+				background: linear-gradient(0, #683, #9b6);
 			}
+
 			&.new::after {
 				@include new();
 			}
@@ -184,14 +202,14 @@
 			color: #fff;
 		}
 		&:has([aria-expanded="false"]) #sub-menu {
-			// display: none;
+			/*// display: none;*/
 			max-height: 0;
 			position: absolute;
 			width: 100%;
 			transition-duration: 0.075s;
 		}
 		&:has([aria-expanded="false"]:hover) #sub-menu {
-			// display: block;
+			/*// display: block;*/
 			max-height: 5px;
 		}
 		/* FF */
@@ -216,15 +234,22 @@
 
 		background: var(--primary);
 		background-color: var(--primary);
+
 		a {
 			color: white;
-		}
-		a:hover,
-		[aria-selected="true"] {
-			background-color: var(--primary-dark);
+	        padding-inline: 30px;
 			border-radius: 13px;
 			box-shadow: 0 0 0px 6px var(--primary) inset;
 			outline: var(--primary) solid 2px;
+		}
+
+		/* a:hover, */
+		[aria-selected="true"] {
+			background-color: var(--primary-dark);
+		}
+		a:is(:hover, :focus-visible) {
+			background: none;
+			background-color: #9b6;
 		}
 		&:has([aria-selected="true"]) {
 			position: static !important;
@@ -242,6 +267,10 @@
 			position: absolute;
 			bottom: 0;
 			overflow: hidden;
+			display: block;
+			width: auto;
+			white-space: nowrap;
+
 			.new::after {
 				@include new();
 			}

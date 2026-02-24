@@ -12,7 +12,7 @@
 <style>
 	footer {
 		background-color: #333;
-		background-image: url(ww.jpg);
+		background-image: url("$lib/assets/ww.jpg");
 		background-repeat: no-repeat;
 		background-position: right 85%;
 		background-blend-mode: multiply;

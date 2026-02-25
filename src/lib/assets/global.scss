@@ -5,11 +5,9 @@
 	--secondary-light: #747;
 }
 
-
-
-
 html {
 	font-size: 62.5%;
+	scroll-behavior: smooth;
 }
 body {
 	background-color: #ddd;
@@ -24,20 +22,12 @@ body {
 	}
 }
 
-
-
-
-
-
-
 :is(main, header, footer) > div {
 	max-width: 1200px;
 	padding: 40px 60px;
 	margin-inline: auto;
 	box-sizing: border-box;
 }
-
-
 
 p.col {
 	columns: 2;

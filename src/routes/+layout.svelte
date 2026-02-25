@@ -1,28 +1,32 @@
 <script lang="ts">
 	import '$lib/assets/global.scss';
 
-	import favicon from '$lib/assets/favicon.svg';
-	import Nav from '$lib/components/nav.svelte';
-	import Header from '$lib/components/header.svelte';
-	import Footer from '$lib/components/footer.svelte';
-	import Notice from '$lib/components/notice.svelte';
-
+	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
 
-	let { children } = $props();
+	import favicon from '$lib/assets/favicon.svg';
+	import Footer from '$lib/components/footer.svelte';
+	import Header from '$lib/components/header.svelte';
+	import Nav from '$lib/components/nav.svelte';
+	import Notice from '$lib/components/notice.svelte';
 
+	let { children } = $props();
 	let noticeAllowedPages = $state(false);
 
-	afterNavigate(() => {
+	onMount(noticeChecker);
+	afterNavigate(noticeChecker);
+
+	function noticeChecker() {
 		const { pathname } = page.url;
 		noticeAllowedPages = pathname === '/' || pathname === '/membership' || pathname === ('/schedule' as string);
-	});
+	}
 
 	const notice: string = `We are currently in discussions with the City regarding our opening date. They are aiming to have the courts ready by
 		the last week of April. The final court surface work will be completed once the weather is consistently warm, likely
 		sometime in June. We’re excited to have the courts revitalized for the upcoming season.`;
 </script>
+
 <svelte:head>
 	<link rel="icon" href={favicon}>
 	<title>WWTC</title>

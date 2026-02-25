@@ -1,10 +1,8 @@
 <script lang="ts">
-	const {children} = $props()
+	const { children } = $props();
 </script>
 
-<div class="notice info">
-	{@render children()}
-</div>
+<div class="notice info">{@render children()}</div>
 
 <style>
 	.notice {

@@ -177,6 +177,7 @@
 				color: white;
 				/* background-color: #9b6 !important; */
 				background: linear-gradient(0, #683, #9b6);
+				text-shadow: 0 1px 2px #360;
 			}
 
 			&.new::after {

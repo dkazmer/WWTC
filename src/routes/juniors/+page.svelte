@@ -4,7 +4,6 @@
 	import BizCard, { type Card } from '$lib/components/biz_card.svelte';
 
 	let cards: Card[] = [];
-	let cardsContainer: HTMLElement;
 
 	onMount(async () => {
 		const data = await fetch('/contacts.json');
@@ -12,9 +11,11 @@
 		cards = json.filter(({ id }: Card) => id !== 'mark-cooper');
 	});
 
-	// function cardHighlight({ target }: Event & { target: HTMLAnchorElement }) {
 	const cardHighlight: MouseEventHandler<HTMLAnchorElement> = ({ currentTarget }) => {
-		cardsContainer.querySelector<HTMLDivElement>(currentTarget.hash)!.style.background = 'white';
+		cards = cards.map(card => {
+			card.active = card.id === currentTarget.hash.substring(1);
+			return card;
+		});
 	};
 </script>
 
@@ -41,7 +42,7 @@
 			be teaching lessons in <i>Mandarin only</i>.
 		</p>
 		<p>
-			<a href="akemi-seiriki" class="to-card" onclick={cardHighlight}>Akemi Seiriki</a>
+			<a href="#akemi-seiriki" class="to-card" onclick={cardHighlight}>Akemi Seiriki</a>
 			is returning to our coaching team this year at Wishing Well. She is a Certified Pro 2 tennis professional with
 			over <time datetime="PY27">27 years</time> experience coaching at the Mayfair Clubs.
 		</p>
@@ -89,9 +90,8 @@
 	</div>
 </article>
 
-<div class="cards" bind:this={cardsContainer}>
+<div class="cards">
 	{#each cards as card}
-		<!-- active state! -->
 		<BizCard {...card} />
 	{/each}
 </div>

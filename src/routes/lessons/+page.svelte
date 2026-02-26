@@ -1,14 +1,26 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import type { MouseEventHandler } from 'svelte/elements';
 	import BizCard, { type Card } from '$lib/components/biz_card.svelte';
 
 	let cards: Card[] = [];
+	let table: HTMLTableElement;
 
 	onMount(async () => {
 		const data = await fetch('/contacts.json');
 		const json = await data.json();
 		cards = json.filter(({ id }: Card) => id !== 'mark-cooper' && id !== 'peter-cameron');
+
+		// attached card handler to dynamic html:
+		table.querySelector('a')?.addEventListener('click', cardHighlight as EventListener);
 	});
+
+	const cardHighlight: MouseEventHandler<HTMLAnchorElement> = ({ currentTarget }) => {
+		cards = cards.map(card => {
+			card.active = card.id === currentTarget.hash.substring(1);
+			return card;
+		});
+	};
 
 	const rates: {
 		price: number;
@@ -37,7 +49,7 @@
 
 <section class="rates">
 	<h2>Hourly lesson rates</h2>
-	<table>
+	<table bind:this={table}>
 		<tbody>
 			{#each rates as { price, service }}
 				<tr>
@@ -56,19 +68,19 @@
 		participants must be members of the club.
 	</p>
 	<p>
-		<a href="#milica-stamenic" class="to-card">Milica Stamenic</a>
+		<a href="#milica-stamenic" class="to-card" onclick={cardHighlight}>Milica Stamenic</a>
 		is returning this year as Head Professional to Wishing Well to provide lessons to our members. She has
 		<time datetime="PY11">25+ years</time>
 		teaching experience, formally at the Mayfair Clubs; she earned a scholarship at the prestigious Bollettieri Sports
 		Academy, was also a member on Team Canada and top Under 18 in Canada.
 	</p>
 	<p>
-		<a href="#michael-qian" class="to-card">Michael Qian</a>
+		<a href="#michael-qian" class="to-card" onclick={cardHighlight}>Michael Qian</a>
 		is returning to our coaching team this year at Wishing Well. He is a Certified Pro 2 tennis professional. He will be
 		teaching lessons in <i>Mandarin only</i>.
 	</p>
 	<p>
-		<a href="akemi-seiriki" class="to-card">Akemi Seiriki</a>
+		<a href="akemi-seiriki" class="to-card" onclick={cardHighlight}>Akemi Seiriki</a>
 		is returning to our coaching team this year at Wishing Well. She is a Certified Pro 2 tennis professional with over
 		<time datetime="PY27">27 years</time>
 		experience coaching at the Mayfair Clubs.

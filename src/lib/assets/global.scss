@@ -16,10 +16,15 @@ body {
 	flex-direction: column;
 	min-height: 100vh;
 	font-family: 'Segoe UI', 'Lucida Grande', Geneva, Verdana, sans-serif;
+	
 	& > * {
 		box-sizing: border-box;
 		font-size: 1.6rem;
 	}
+}
+
+::selection {
+	background-color: #6836;
 }
 
 :is(main, header, footer) > div {

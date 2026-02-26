@@ -1,8 +1,10 @@
 <script lang="ts">
-	const { children } = $props();
+	import type { Snippet } from 'svelte';
+
+	const { children, type }: { chidren: Snippet; type: 'info' | 'warning' } = $props();
 </script>
 
-<div class="notice info">{@render children()}</div>
+<div class="notice {type}">{@render children()}</div>
 
 <style>
 	.notice {
@@ -15,7 +17,11 @@
 		padding: 1em;
 		border-left: var(--_accent) solid 6px;
 
-		&.notice::before {
+		&::selection {
+			background-color: var(--_accent);
+		}
+
+		&::before {
 			flex: 24px 0 0;
 			content: "i";
 			display: block;

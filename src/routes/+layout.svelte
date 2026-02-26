@@ -37,7 +37,7 @@
 <main>
 	<div>
 		{#if notice && noticeAllowedPages}
-			<Notice>{notice}</Notice>
+			<Notice type="info">{notice}</Notice>
 		{/if}
 		{@render children()}
 	</div>

@@ -4,10 +4,10 @@
 	const { children, type }: { chidren: Snippet; type: 'info' | 'warning' } = $props();
 </script>
 
-<div class="notice {type}">{@render children()}</div>
+<div class={type}>{@render children()}</div>
 
 <style>
-	.notice {
+	div {
 		--_base: var(--base, khaki);
 		--_accent: var(--accent, darkkhaki);
 
@@ -36,10 +36,10 @@
 			line-height: 23px;
 			color: var(--_base);
 		}
-	}
 
-	.notice.info {
-		--base: lightsteelblue;
-		--accent: dodgerblue;
+		&.info {
+			--base: lightsteelblue;
+			--accent: dodgerblue;
+		}
 	}
 </style>

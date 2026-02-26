@@ -34,7 +34,7 @@
 </table>
 
 <div class="cta">
-	<button type="button">Register Now</button>
+	<button type="button" role="link">Register Now</button>
 	<!-- <span>or sign up with our <a href="membershipwwtc_2024.pdf" target="_blank">fillable PDF</a></span> -->
 </div>
 

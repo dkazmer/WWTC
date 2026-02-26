@@ -1,4 +1,19 @@
-<header>
+<script lang="ts">
+	import { onMount } from 'svelte';
+
+	let header: HTMLElement;
+
+	onMount(() => {
+		setScrollPosition();
+		document.addEventListener('scroll', setScrollPosition);
+	});
+
+	function setScrollPosition() {
+		header.style.backgroundPositionY = `calc(80% + 60px + ${window.scrollY / 2}px)`;
+	}
+</script>
+
+<header bind:this={header}>
 	<div><span>Wishing Well</span> Tennis Club</div>
 </header>
 
@@ -12,6 +27,7 @@
 		text-align: center;
 		min-height: 177px;
 		scale: -1 1;
+		
 		div {
 			scale: -1 1;
 			text-align: left;
@@ -21,6 +37,7 @@
 			user-select: none;
 			mix-blend-mode: overlay;
 			translate: 0 70px;
+			
 			span {
 				font-weight: 700;
 			}

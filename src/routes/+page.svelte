@@ -1,6 +1,6 @@
 <div class="heading">
 	<h1>Hello everyone!</h1>
-	<div class="cta"><button type="button">Register Now</button></div>
+	<div class="cta"><button type="button" role="link">Register Now</button></div>
 </div>
 
 <!-- <div class="notice">The 2024 Club Tournament will be played on <time datetime="2024-09-14" style="font-weight: 600;">September 14/15<sup>th</sup></time>. Check under "PROGRAMS" for details</div> -->
@@ -70,7 +70,7 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 </article>
 
 <img
-	src="../../images/2024-05-04/20240504_121509.jpg"
+	src="./images/2024-05-04/20240504_121509.jpg"
 	alt="members"
 	style="width: -webkit-fill-available; margin-top: 2em;"
 >
@@ -106,6 +106,7 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 		}
 		section.winners {
 			flex-wrap: wrap;
+
 			& > div {
 				padding-bottom: 3em;
 			}
@@ -115,10 +116,12 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 	.heading {
 		display: flex;
 		padding-bottom: 3em;
+
 		h1 {
 			flex-grow: 1;
 			margin-top: 4px;
 		}
+
 		.cta {
 			padding-top: 0;
 		}

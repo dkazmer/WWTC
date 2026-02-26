@@ -16,7 +16,7 @@ body {
 	flex-direction: column;
 	min-height: 100vh;
 	font-family: 'Segoe UI', 'Lucida Grande', Geneva, Verdana, sans-serif;
-	
+
 	& > * {
 		box-sizing: border-box;
 		font-size: 1.6rem;
@@ -54,6 +54,7 @@ p.col {
 	background: linear-gradient(0deg, white, RGBA(102, 51, 102, 0.1));
 	text-shadow: 0 1px white;
 	user-select: none;
+
 	&:not(:disabled):hover {
 		// margin-top: -1px;
 		translate: 0 -1px;
@@ -97,37 +98,38 @@ h2 {
 	margin-inline: auto;
 	translate: 0 100px;
 	height: 0;
+
+	div {
+		position: absolute;
+		top: 33px;
+		width: 13px;
+		height: 13px;
+		border-radius: 50%;
+		background: var(--secondary);
+		animation-timing-function: cubic-bezier(0, 1, 1, 0);
+	
+		&:nth-child(1) {
+			left: 8px;
+			animation: lds-ellipsis1 0.6s infinite;
+		}
+		
+		&:nth-child(2) {
+			left: 8px;
+			animation: lds-ellipsis2 0.6s infinite;
+		}
+		
+		&:nth-child(3) {
+			left: 32px;
+			animation: lds-ellipsis2 0.6s infinite;
+		}
+		
+		&:nth-child(4) {
+			left: 56px;
+			animation: lds-ellipsis3 0.6s infinite;
+		}
+	}
 }
 
-.lds-ellipsis div {
-	position: absolute;
-	top: 33px;
-	width: 13px;
-	height: 13px;
-	border-radius: 50%;
-	background: var(--secondary);
-	animation-timing-function: cubic-bezier(0, 1, 1, 0);
-}
-
-.lds-ellipsis div:nth-child(1) {
-	left: 8px;
-	animation: lds-ellipsis1 0.6s infinite;
-}
-
-.lds-ellipsis div:nth-child(2) {
-	left: 8px;
-	animation: lds-ellipsis2 0.6s infinite;
-}
-
-.lds-ellipsis div:nth-child(3) {
-	left: 32px;
-	animation: lds-ellipsis2 0.6s infinite;
-}
-
-.lds-ellipsis div:nth-child(4) {
-	left: 56px;
-	animation: lds-ellipsis3 0.6s infinite;
-}
 
 @keyframes lds-ellipsis1 {
 	0% {
@@ -166,6 +168,7 @@ h2 {
 
 time {
 	white-space: nowrap;
+
 	&.bold {
 		font-weight: 600;
 	}

@@ -63,6 +63,19 @@
 		return page.url.pathname === path;
 	}
 
+	/* function isSubPath() {
+		switch (page.url.pathname) {
+			case '/intercounty':
+			case '/stf':
+			case '/juniors':
+			case '/lessons':
+			case '/tournament':
+				return 0;
+		}
+
+		return -1;
+	} */
+
 	onMount(() => {
 		const submenuItems = Array.from(subMenu.querySelectorAll('a'));
 
@@ -74,7 +87,7 @@
 		});
 
 		function isSubmenuItemSelected() {
-			return [...submenuItems].some(el => el.ariaSelected === 'true');
+			return [...submenuItems].some(el => el.ariaCurrent === 'page');
 		}
 
 		function isSubmenuItemClicked(t: EventTarget) {
@@ -94,28 +107,37 @@
 	<!-- top menu -->
 	<div class="main-menu">
 		<div role="menubar">
-			{#each tabs as { href, name, role, class: cls }}
-				{#if role === 'menu'}
-					<a {role} {href} aria-expanded={menuOpen} aria-controls="sub-menu" class={cls} onclick={() => menuOpen = !menuOpen} bind:this={menu}>
-						<div></div>{name}<div></div>
-					</a>
-				{:else}
-					<a role="tab" {href} aria-selected={isPath(href)} onclick={() => menuOpen = false}>{name || href.substring(1)}</a>
-				{/if}
-			{/each}
+			<ul>
+				{#each tabs as { href, name, role, class: cls }}
+					<li>
+						{#if role === 'menu'}
+							<a {role} {href} aria-current={menuOpen ? 'true' : null} aria-expanded={menuOpen} aria-controls="sub-menu" class={cls} onclick={() => menuOpen = !menuOpen} bind:this={menu}>
+								<div></div>{name}<div></div>
+							</a>
+						{:else}
+							<a {href} aria-current={isPath(href) ? 'page' : null} onclick={() => menuOpen = false}>{name || href.substring(1)}</a>
+						{/if}
+					</li>
+				{/each}
+			</ul>
 		</div>
 	</div>
 	<!-- Programs sub menu -->
 	<div id="sub-menu" aria-hidden={!menuOpen} bind:this={subMenu}>
 		<div role="menubar">
+			<ul>
 			{#each subTabs as { href, name, class: cls, label }}
-				<a role="tab" {href} aria-selected={isPath(href)} title={label} aria-label={label} class={cls}>{name || href.substring(1)}</a>
+				<li><a {href} aria-current={isPath(href) ? 'page' : null} title={label} aria-label={label} class={cls}>{name || href.substring(1)}</a></li>
 			{/each}
+			</ul>
 		</div>
 	</div>
 </nav>
 
 <style lang="scss">
+	ul, ul li {
+		display: contents;
+	}
 	/* @mixin new() { // mixins not working here; reason unknown */
 	a.new::after {
 		content: "new";
@@ -161,18 +183,20 @@
 			display: inline-block;
 			padding-block: 20px;
 			font-size: 14px;
+			/* outline-color: transparent; */
 			outline: none;
 			flex-grow: 1;
 			text-align: center;
 			white-space: nowrap;
+			letter-spacing: 1pt;
 
-			&:is([aria-selected="true"], [aria-expanded="true"]) {
+			&:is([aria-current="page"], [aria-expanded="true"]) {
 				background-color: var(--primary);
 				color: white;
 				pointer-events: none;
 			}
 
-			&:not([aria-selected="true"], [aria-expanded="true"]):is(:focus-visible, :hover) {
+			&:not([aria-current], [aria-expanded="true"]):is(:focus-visible, :hover) {
 				color: white;
 				/* background-color: #9b6 !important; */
 				background: linear-gradient(0, #683, #9b6);
@@ -194,10 +218,10 @@
 		[role="menu"]:hover::after {
 			translate: 0 4px;
 		}
-		&:has([aria-expanded="true"]) [aria-selected="true"] {
+		&:has([aria-expanded="true"]) [aria-current="page"] {
 			background-color: #9b6;
 		}
-		&:has(#sub-menu [role="tab"][aria-selected="true"]) [aria-expanded="false"] {
+		&:has(#sub-menu [aria-current="page"]) [aria-expanded="false"] {
 			background-color: var(--primary);
 			color: #fff;
 		}
@@ -244,14 +268,14 @@
 		}
 
 		/* a:hover, */
-		[aria-selected="true"] {
+		[aria-current] {
 			background-color: var(--primary-dark);
 		}
 		a:is(:hover, :focus-visible) {
 			background: none;
 			background-color: #9b6;
 		}
-		&:has([aria-selected="true"]) {
+		&:has([aria-current]) {
 			position: static !important;
 			/* max-height: 59px !important;
 			[role="tab"] {

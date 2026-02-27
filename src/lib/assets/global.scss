@@ -49,37 +49,11 @@ p.col {
 	column-gap: 40px;
 }
 
-.cta :is(button, input[type="button"]) {
-	cursor: pointer;
-	color: var(--secondary);
-	appearance: none;
-	padding: 10px 20px;
-	border: none;
-	border-radius: 6px;
-	box-shadow: 0 1px 2px var(--secondary);
-	font-family: inherit;
-	font-weight: 600;
-	font-size: 1.6rem;
-	line-height: 2rem;
-	background: linear-gradient(0deg, white, RGBA(102, 51, 102, 0.1));
-	text-shadow: 0 1px white;
-	user-select: none;
-
-	&:not(:disabled):hover {
-		// margin-top: -1px;
-		translate: 0 -1px;
-		box-shadow: 0 2px 3px var(--secondary);
-		// background: linear-gradient(0deg, white, RGBA(102, 51, 102, 0.05));
-	}
-	&:not(:disabled):active:hover {	// mouse down state
-		translate: 0 0;
-		box-shadow: 0 1px 2px var(--secondary);
-	}
-	&:disabled {
-		filter: grayscale(1);
-		cursor: auto;
-	}
+a, button {
+	outline-color: transparent;
 }
+
+
 
 h1 {
 	font-weight: 300;

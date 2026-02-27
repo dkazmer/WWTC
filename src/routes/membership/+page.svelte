@@ -1,3 +1,7 @@
+<script lang="ts">
+	import PrimaryBtn from '$lib/components/pri_btn.svelte';
+</script>
+
 <h1><time datetime="2026">2026</time> membership fees</h1>
 
 <table>
@@ -33,10 +37,7 @@
 	</tbody>
 </table>
 
-<div class="cta">
-	<button type="button" role="link">Register now</button>
-	<!-- <span>or sign up with our <a href="membershipwwtc_2024.pdf" target="_blank">fillable PDF</a></span> -->
-</div>
+<PrimaryBtn href="/register" label="Register now" />
 
 <h2>Online Booking of Tennis Courts & Hitting Wall</h2>
 <p>
@@ -62,7 +63,7 @@
 </p>
 
 <p>
-	Juniors cannot book courts during evening hours (<time datetime="PH3">7-10pm</time>), Sat & Sun Mornings (<time
+	Juniors cannot book courts during evening hours (<time datetime="PH3">7-10pm</time>), Sat &amp; Sun Mornings (<time
 		datetime="PH4"
 		>8am-12pm</time
 	>). Only 4 Adult Members can book 2 hours to play doubles in the evenings.
@@ -80,7 +81,7 @@
 </p>
 
 <style lang="scss">
-	.cta {
+	:global(.cta) {
 		margin: 40px auto;
 		width: 820px;
 	}
@@ -97,9 +98,10 @@
 		}
 		th {
 			color: white;
-			background-color: #683;
+			background-color: var(--primary);
 			padding: 8px 16px;
 			font-weight: 600;
+
 			span {
 				font-weight: normal;
 			}
@@ -107,7 +109,7 @@
 	}
 
 	@media only screen and (max-width: 768px) {
-		.cta {
+		:global(.cta) {
 			width: auto;
 		}
 		table {

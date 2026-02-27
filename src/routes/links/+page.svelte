@@ -19,6 +19,10 @@
 	.links {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
+		
+		a::after {
+			display: none;
+		}
 
 		a:link {
 			display: block;

@@ -1,7 +1,11 @@
+<script lang="ts">
+	import PrimaryBtn from '$lib/components/pri_btn.svelte';
+</script>
+
 <div class="heading">
 	<h1>Hello everyone!</h1>
 	<a href="http://wwtennis.skedda.com/" target="_blank">Book a court</a>
-	<div class="cta"><button type="button" role="link">Register now</button></div>
+	<PrimaryBtn href="/register" label="Register now" />
 </div>
 
 <!-- <div class="notice">The 2024 Club Tournament will be played on <time datetime="2024-09-14" style="font-weight: 600;">September 14/15<sup>th</sup></time>. Check under "PROGRAMS" for details</div> -->
@@ -84,6 +88,7 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 		border-radius: 12px;
 		border-end-start-radius: 0;
 		overflow: hidden;
+		user-select: none;
 	}
 	article.more {
 		clear: right;

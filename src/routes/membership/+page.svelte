@@ -34,7 +34,7 @@
 </table>
 
 <div class="cta">
-	<button type="button" role="link">Register Now</button>
+	<button type="button" role="link">Register now</button>
 	<!-- <span>or sign up with our <a href="membershipwwtc_2024.pdf" target="_blank">fillable PDF</a></span> -->
 </div>
 
@@ -104,12 +104,6 @@
 				font-weight: normal;
 			}
 		}
-	}
-	
-	a[target="_blank"]::after {
-		content: url("$lib/assets/external_link.svg");
-		position: absolute;
-		translate: 4px 2px;
 	}
 
 	@media only screen and (max-width: 768px) {

@@ -34,6 +34,16 @@ body {
 	box-sizing: border-box;
 }
 
+a[target="_blank"] {
+	margin-right: 17pt;
+
+	&::after {
+		content: url("$lib/assets/external_link.svg");
+		position: absolute;
+		translate: 4px 2px;
+	}
+}
+
 p.col {
 	columns: 2;
 	column-gap: 40px;

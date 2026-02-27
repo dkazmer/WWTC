@@ -13,13 +13,15 @@
 
 	let { children } = $props();
 	let noticeAllowedPages = $state(false);
+	let title = $state('');
 
-	onMount(noticeChecker);
-	afterNavigate(noticeChecker);
+	onMount(noticeCheckerPlus);
+	afterNavigate(noticeCheckerPlus);
 
-	function noticeChecker() {
+	function noticeCheckerPlus() {
 		const { pathname } = page.url;
 		noticeAllowedPages = pathname === '/' || pathname === '/membership' || pathname === ('/schedule' as string);
+		title = page.url.pathname.substring(1); // + title setter
 	}
 
 	const notice: string = `We are currently in discussions with the City regarding our opening date. They are aiming to have the courts ready by
@@ -29,7 +31,7 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon}>
-	<title>WWTC</title>
+	<title>WWTC | {title || 'home'}</title>
 </svelte:head>
 
 <Nav />

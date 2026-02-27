@@ -80,7 +80,7 @@
 		teaching lessons in <i>Mandarin only</i>.
 	</p>
 	<p>
-		<a href="akemi-seiriki" class="to-card" onclick={cardHighlight}>Akemi Seiriki</a>
+		<a href="#akemi-seiriki" class="to-card" onclick={cardHighlight}>Akemi Seiriki</a>
 		is returning to our coaching team this year at Wishing Well. She is a Certified Pro 2 tennis professional with over
 		<time datetime="PY27">27 years</time>
 		experience coaching at the Mayfair Clubs.

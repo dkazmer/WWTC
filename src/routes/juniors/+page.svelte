@@ -77,7 +77,7 @@
 			<li>The hitting wall is available for members to book all day</li>
 			<li>
 				To sign up for the junior tennis camps, please contact
-				<a href="javascript://" class="to-card" data-for="peter-cameron">Peter Cameron</a>
+				<a href="#peter-cameron" class="to-card" onclick={cardHighlight}>Peter Cameron</a>
 			</li>
 		</ul>
 	</div>
@@ -108,25 +108,6 @@
 		}
 		& > * {
 			page-break-inside: avoid;
-		}
-	}
-
-	:global {
-		main b,
-		table td:first-child {
-			font-weight: 600;
-		}
-		table td {
-			padding: 8px 16px;
-			background-color: #eee;
-
-			&:first-child {
-				min-width: 4em;
-			}
-		}
-		main li {
-			font-size: 1.3rem;
-			line-height: 2rem;
 		}
 	}
 </style>

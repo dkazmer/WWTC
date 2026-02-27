@@ -1,6 +1,7 @@
 <div class="heading">
 	<h1>Hello everyone!</h1>
-	<div class="cta"><button type="button" role="link">Register Now</button></div>
+	<a href="http://wwtennis.skedda.com/" target="_blank">Book a court</a>
+	<div class="cta"><button type="button" role="link">Register now</button></div>
 </div>
 
 <!-- <div class="notice">The 2024 Club Tournament will be played on <time datetime="2024-09-14" style="font-weight: 600;">September 14/15<sup>th</sup></time>. Check under "PROGRAMS" for details</div> -->
@@ -46,7 +47,7 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 	<p>
 		Early bird rate is $80 and must be paid by Sunday,
 		<time datetime="2026-03-01" class="bold">March 1<sup>st</sup></time>. Pay your
-		<a href="#/membership">membership</a>
+		<a href="/membership">membership</a>
 		fees early and save $10. You can pick up your shoe tags on opening day Saturday,
 		<time datetime="2026-05-02" class="bold">May 2<sup>nd</sup></time>,
 		<time datetime="PH2">11am to 1pm</time>. The rain date is the following day, Sunday,
@@ -80,6 +81,9 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 		float: right;
 		margin-left: 4em;
 		margin-bottom: 3em;
+		border-radius: 12px;
+		border-end-start-radius: 0;
+		overflow: hidden;
 	}
 	article.more {
 		clear: right;
@@ -120,6 +124,12 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 		h1 {
 			flex-grow: 1;
 			margin-top: 4px;
+		}
+
+		h1 + a {
+			max-height: 24px;
+			margin-top: 8px;
+			margin-right: 56pt;
 		}
 
 		.cta {

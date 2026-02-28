@@ -1,13 +1,23 @@
 <script lang="ts">
 	import type { page } from '$app/state';
 
-	const { href, label }: { href: Path; label: string; ext?: true } = $props();
+	const { href, label, type }: Button = $props();
+
 	type Path = typeof page.url.pathname;
 	// type Path = typeof ext extends true ? Open<typeof page.url.pathname> : typeof page.url.pathname;
 	// type Open<T extends string> = T | (string & {});
+
+	interface Button {
+		href: Path;
+		label: string;
+		type?: 'button' | 'submit';
+		ext?: true;
+	}
 </script>
 
-<div class="cta"><button type="button" role="link" onclick={() => location.pathname = href}>{label}</button></div>
+<div class="cta">
+	<button type={type || 'button'} role="link" onclick={() => location.pathname = href}>{label}</button>
+</div>
 
 <style lang="scss">
 	.cta :is(button, input[type="button"]) {

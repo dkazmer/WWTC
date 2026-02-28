@@ -37,7 +37,7 @@
 	</tbody>
 </table>
 
-<PrimaryBtn href="/register" label="Register now" />
+<div><PrimaryBtn href="/register" label="Register now" /></div>
 
 <h2>Online Booking of Tennis Courts & Hitting Wall</h2>
 <p>
@@ -81,7 +81,7 @@
 </p>
 
 <style lang="scss">
-	:global(.cta) {
+	table + div {
 		margin: 40px auto;
 		width: 820px;
 	}
@@ -109,7 +109,7 @@
 	}
 
 	@media only screen and (max-width: 768px) {
-		:global(.cta) {
+		table + div {
 			width: auto;
 		}
 		table {

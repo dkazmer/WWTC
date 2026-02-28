@@ -9,31 +9,63 @@
 	const tabs: Tab[] = [
 		{
 			href: '/',
-			name: 'home'
+			name: 'home',
+			icon: {
+				name: 'home',
+				family: 'outline'
+			}
 		},
 		{
-			href: '/membership'
+			href: '/membership',
+			icon: {
+				name: 'card_membership',
+				family: 'outline'
+			}
 		},
 		{
-			href: '/schedule'
+			href: '/schedule',
+			icon: {
+				name: 'schedule',
+				family: 'outline'
+			}
 		},
 		{
-			href: '/photos'
+			href: '/photos',
+			icon: {
+				name: 'photo',
+				family: 'outline'
+			}
 		},
 		{
 			href: 'javascript://',
 			name: 'programs',
-			role: 'menu'
+			role: 'menu',
+			icon: {
+				name: 'list_alt',
+				family: 'outline'
+			}
 		},
 		{
 			href: '/executive',
-			name: 'exec'
+			name: 'exec',
+			icon: {
+				name: 'badge',
+				family: 'outline'
+			}
 		},
 		{
-			href: '/newsletter'
+			href: '/newsletter',
+			icon: {
+				name: 'picture_as_pdf',
+				family: 'outline'
+			}
 		},
 		{
-			href: '/links'
+			href: '/links',
+			icon: {
+				name: 'insert_link',
+				family: 'outline'
+			}
 		}
 	];
 
@@ -101,6 +133,10 @@
 		label?: string;
 		role?: 'tab' | 'menu';
 		class?: 'new';
+		icon?: {
+			name: string;
+			family: string;
+		}
 	}
 </script>
 <nav>
@@ -108,14 +144,22 @@
 	<div class="main-menu">
 		<div role="menubar">
 			<ul>
-				{#each tabs as { href, name, role, class: cls }}
+				{#each tabs as { href, name, role, class: cls, icon }}
 					<li>
 						{#if role === 'menu'}
 							<a {role} {href} aria-current={menuOpen ? 'true' : null} aria-expanded={menuOpen} aria-controls="sub-menu" class={cls} onclick={() => menuOpen = !menuOpen} bind:this={menu}>
+								{#if icon}
+									<img src="https://material-icons.github.io/material-icons/svg/{icon.name}/{icon.family}.svg" alt="" role="presentation">
+								{/if}
 								<div></div>{name}<div></div>
 							</a>
 						{:else}
-							<a {href} aria-current={isPath(href) ? 'page' : null} onclick={() => menuOpen = false}>{name || href.substring(1)}</a>
+							<a {href} aria-current={isPath(href) ? 'page' : null} onclick={() => menuOpen = false}>
+								{#if icon}
+									<img src="https://material-icons.github.io/material-icons/svg/{icon.name}/{icon.family}.svg" alt="" role="presentation">
+								{/if}
+								{name || href.substring(1)}
+							</a>
 						{/if}
 					</li>
 				{/each}
@@ -127,7 +171,7 @@
 		<div role="menubar">
 			<ul>
 			{#each subTabs as { href, name, class: cls, label }}
-				<li><a {href} aria-current={isPath(href) ? 'page' : null} title={label} aria-label={label} class={cls}>{name || href.substring(1)}</a></li>
+				<li><a {href} aria-current={isPath(href) ? 'page' : null} tabindex={menuOpen ? 0 : -1} title={label} aria-label={label} class={cls}>{name || href.substring(1)}</a></li>
 			{/each}
 			</ul>
 		</div>
@@ -189,6 +233,11 @@
 			text-align: center;
 			white-space: nowrap;
 			letter-spacing: 1pt;
+			
+			img {
+				vertical-align: middle;
+				margin-block: -7px -4px;
+			}
 
 			&:is([aria-current="page"], [aria-expanded="true"]) {
 				background-color: var(--primary);
@@ -332,6 +381,12 @@
 				left: unset;
 				right: 0;
 			}
+		}
+	}
+	
+	@media screen and (width < 1000px) {
+		nav a img {
+			display: none;
 		}
 	}
 </style>

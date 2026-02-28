@@ -86,7 +86,7 @@
 		{
 			href: '/tournament',
 			name: 'club tournament',
-			class: 'new'
+			className: 'new'
 		}
 	];
 
@@ -132,11 +132,11 @@
 		name?: string;
 		label?: string;
 		role?: 'tab' | 'menu';
-		class?: 'new';
+		className?: 'new';
 		icon?: {
 			name: string;
 			family: string;
-		}
+		};
 	}
 </script>
 <nav>
@@ -144,19 +144,38 @@
 	<div class="main-menu">
 		<div role="menubar">
 			<ul>
-				{#each tabs as { href, name, role, class: cls, icon }}
+				{#each tabs as { href, name, role, className, icon }}
 					<li>
 						{#if role === 'menu'}
-							<a {role} {href} aria-current={menuOpen ? 'true' : null} aria-expanded={menuOpen} aria-controls="sub-menu" class={cls} onclick={() => menuOpen = !menuOpen} bind:this={menu}>
+							<a
+								{role}
+								{href}
+								aria-current={menuOpen ? 'true' : null}
+								aria-expanded={menuOpen}
+								aria-controls="sub-menu"
+								class={className}
+								onclick={() => menuOpen = !menuOpen}
+								bind:this={menu}
+							>
 								{#if icon}
-									<img src="https://material-icons.github.io/material-icons/svg/{icon.name}/{icon.family}.svg" alt="" role="presentation">
+									<img
+										src="https://material-icons.github.io/material-icons/svg/{icon.name}/{icon.family}.svg"
+										alt=""
+										aria-hidden="true"
+									>
 								{/if}
-								<div></div>{name}<div></div>
+								<div></div>
+								{name}
+								<div></div>
 							</a>
 						{:else}
 							<a {href} aria-current={isPath(href) ? 'page' : null} onclick={() => menuOpen = false}>
 								{#if icon}
-									<img src="https://material-icons.github.io/material-icons/svg/{icon.name}/{icon.family}.svg" alt="" role="presentation">
+									<img
+										src="https://material-icons.github.io/material-icons/svg/{icon.name}/{icon.family}.svg"
+										alt=""
+										aria-hidden="true"
+									>
 								{/if}
 								{name || href.substring(1)}
 							</a>
@@ -170,9 +189,19 @@
 	<div id="sub-menu" aria-hidden={!menuOpen} bind:this={subMenu}>
 		<div role="menubar">
 			<ul>
-			{#each subTabs as { href, name, class: cls, label }}
-				<li><a {href} aria-current={isPath(href) ? 'page' : null} tabindex={menuOpen ? 0 : -1} title={label} aria-label={label} class={cls}>{name || href.substring(1)}</a></li>
-			{/each}
+				{#each subTabs as { href, name, className, label }}
+					<li>
+						<a
+							{href}
+							aria-current={isPath(href) ? 'page' : null}
+							tabindex={menuOpen ? 0 : -1}
+							title={label}
+							aria-label={label}
+							class={className}
+							>{name || href.substring(1)}</a
+						>
+					</li>
+				{/each}
 			</ul>
 		</div>
 	</div>
@@ -237,12 +266,18 @@
 			img {
 				vertical-align: middle;
 				margin-block: -7px -4px;
+				filter: var(--primary-dark-filter);
+				opacity: .54;
 			}
 
 			&:is([aria-current="page"], [aria-expanded="true"]) {
 				background-color: var(--primary);
 				color: white;
 				pointer-events: none;
+				
+				img {
+					filter: invert(1) drop-shadow(0px 2px 4px var(--primary-dark));
+				}
 			}
 
 			&:not([aria-current], [aria-expanded="true"]):is(:focus-visible, :hover) {
@@ -250,6 +285,10 @@
 				/* background-color: #9b6 !important; */
 				background: linear-gradient(0, #683, #9b6);
 				text-shadow: 0 1px 2px #360;
+				
+				img {
+					filter: invert(1) drop-shadow(0px 2px 4px var(--primary-dark));
+				}
 			}
 
 			&.new::after {
@@ -269,6 +308,10 @@
 		}
 		&:has([aria-expanded="true"]) [aria-current="page"] {
 			background-color: #9b6;
+			
+			img {
+				filter: invert(1);
+			}
 		}
 		&:has(#sub-menu [aria-current="page"]) [aria-expanded="false"] {
 			background-color: var(--primary);

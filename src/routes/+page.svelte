@@ -8,6 +8,13 @@
 	<PrimaryBtn href="/register" label="Register now" />
 </div>
 
+<img
+	src="./images/2024-05-04/20240504_121509.jpg"
+	alt="members"
+	role="presentation"
+	style="width: -webkit-fill-available; margin-bottom: 4em;"
+>
+
 <!-- <div class="notice">The 2024 Club Tournament will be played on <time datetime="2024-09-14" style="font-weight: 600;">September 14/15<sup>th</sup></time>. Check under "PROGRAMS" for details</div> -->
 <div class="mapouter">
 	<div class="gmap_canvas">
@@ -73,12 +80,6 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 		to two courts. Thanks for your cooperation.
 	</p>
 </article>
-
-<img
-	src="./images/2024-05-04/20240504_121509.jpg"
-	alt="members"
-	style="width: -webkit-fill-available; margin-top: 2em;"
->
 
 <style lang="scss">
 	.mapouter {

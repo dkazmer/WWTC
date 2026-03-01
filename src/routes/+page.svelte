@@ -5,7 +5,7 @@
 <div class="heading">
 	<h1>Hello everyone!</h1>
 	<a href="http://wwtennis.skedda.com/" target="_blank">Book a court</a>
-	<PrimaryBtn href="/register" label="Register now" />
+	<PrimaryBtn href="/register" label="Register now" icon={{ family: 'outline', name: 'app_registration' }} />
 </div>
 
 <img

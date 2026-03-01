@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { page } from '$app/state';
 
-	const { href, label, type }: Button = $props();
+	const { href, label, type, icon }: Button = $props();
 
 	type Path = typeof page.url.pathname;
 	// type Path = typeof ext extends true ? Open<typeof page.url.pathname> : typeof page.url.pathname;
@@ -12,11 +12,24 @@
 		label: string;
 		type?: 'button' | 'submit';
 		ext?: true;
+		icon?: {
+			name: string;
+			family: string;
+		};
 	}
 </script>
 
 <div class="cta">
-	<button type={type || 'button'} role="link" onclick={() => location.pathname = href}>{label}</button>
+	<button type={type || 'button'} role="link" onclick={() => location.pathname = href}>
+		{#if icon}
+			<img
+				src="https://material-icons.github.io/material-icons/svg/{icon.name}/{icon.family}.svg"
+				alt=""
+				aria-hidden="true"
+			>
+		{/if}
+		{label}
+	</button>
 </div>
 
 <style lang="scss">
@@ -49,6 +62,12 @@
 		&:disabled {
 			filter: grayscale(1);
 			cursor: auto;
+		}
+		
+		img {
+			filter: var(--secondary-filter);
+            margin-block: -7px -4px;
+            vertical-align: middle;
 		}
 	}
 </style>

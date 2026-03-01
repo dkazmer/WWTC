@@ -7,37 +7,35 @@
 <table>
 	<thead>
 		<tr>
-			<th></th>
-			<th>
-				Early Bird
-				<span
-					>(before <time datetime="2026-03-01">March 1<sup>st</sup></time>)</span
-				>
-			</th>
-			<th>Regular&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
-			<th>
-				Late Summer
-				<span
-					>(<time datetime="2026-08-15">August 15<sup>th</sup></time>)</span
-				>
-			</th>
+			<th>Period</th>
+			<th>Adult</th>
+			<th>Junior <span>(under 18)</span></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td><span>Adult</span></td>
+			<td>
+				<b>Early Bird</b>
+				(before <time datetime="2026-03-01">March 1<sup>st</sup></time>)
+			</td>
 			<td>$80</td>
-			<td>$90</td>
-			<td>$50</td>
+			<td rowspan="3">$35</td>
 		</tr>
 		<tr>
-			<td><span>Junior</span> (under 18)</td>
-			<td colspan="3">$35</td>
+			<td><b>Regular</b></td>
+			<td>$90</td>
+		</tr>
+		<tr>
+			<td>
+				<b>Late Summer</b>
+				(<time datetime="2026-08-15">August 15<sup>th</sup></time>)
+			</td>
+			<td>$50</td>
 		</tr>
 	</tbody>
 </table>
 
-<div><PrimaryBtn href="/register" label="Register now" /></div>
+<div><PrimaryBtn href="/register" label="Register now" icon={{ family: 'outline', name: 'app_registration' }} /></div>
 
 <h2>Online Booking of Tennis Courts & Hitting Wall</h2>
 <p>
@@ -89,12 +87,15 @@
 	table {
 		margin: 40px auto;
 		min-width: 820px;
+
+		b {
+			font-weight: 600;
+		}
+
 		td {
 			background-color: whitesmoke;
 			padding: 8px 16px;
-			span {
-				font-weight: 600;
-			}
+			vertical-align: initial;
 		}
 		th {
 			color: white;

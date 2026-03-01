@@ -128,7 +128,7 @@
 	});
 
 	interface Tab {
-		href: string;
+		href: typeof page.url.pathname;
 		name?: string;
 		label?: string;
 		role?: 'tab' | 'menu';
@@ -268,6 +268,7 @@
 				margin-block: -7px -4px;
 				filter: var(--primary-dark-filter);
 				opacity: .54;
+				pointer-events: none;
 			}
 
 			&:is([aria-current="page"], [aria-expanded="true"]) {
@@ -277,6 +278,7 @@
 				
 				img {
 					filter: invert(1) drop-shadow(0px 2px 4px var(--primary-dark));
+					opacity: 1;
 				}
 			}
 
@@ -288,6 +290,7 @@
 				
 				img {
 					filter: invert(1) drop-shadow(0px 2px 4px var(--primary-dark));
+					opacity: 1;
 				}
 			}
 

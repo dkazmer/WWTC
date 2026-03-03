@@ -1,5 +1,11 @@
 <script lang="ts">
 	import PrimaryBtn from '$lib/components/pri_btn.svelte';
+	import { rates } from '$lib/constants';
+
+	const {
+		adult: { earlyBird, regular, fall },
+		junior
+	} = rates;
 </script>
 
 <h1><time datetime="2026">2026</time> membership fees</h1>
@@ -18,19 +24,19 @@
 				<b>Early Bird</b>
 				(before <time datetime="2026-03-01">March 1<sup>st</sup></time>)
 			</td>
-			<td>$80</td>
-			<td rowspan="3">$35</td>
+			<td>${earlyBird}</td>
+			<td rowspan="3">${junior}</td>
 		</tr>
 		<tr>
 			<td><b>Regular</b></td>
-			<td>$90</td>
+			<td>${regular}</td>
 		</tr>
 		<tr>
 			<td>
 				<b>Late Summer</b>
 				(<time datetime="2026-08-15">August 15<sup>th</sup></time>)
 			</td>
-			<td>$50</td>
+			<td>${fall}</td>
 		</tr>
 	</tbody>
 </table>

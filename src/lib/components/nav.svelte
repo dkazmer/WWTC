@@ -37,6 +37,7 @@
 			}
 		},
 		{
+			// @ts-expect-error (ts2322): string doesn't match type
 			href: 'javascript://',
 			name: 'programs',
 			role: 'menu',

@@ -8,7 +8,7 @@
 	// type Open<T extends string> = T | (string & {});
 
 	interface Button {
-		href: Path;
+		href?: Path;
 		label: string;
 		type?: 'button' | 'submit';
 		ext?: true;
@@ -20,7 +20,7 @@
 </script>
 
 <div class="cta">
-	<button type={type || 'button'} role="link" onclick={() => location.pathname = href}>
+	<button type={type || 'button'} role="link" onclick={href ? () => (location.pathname = href) : null}>
 		{#if icon}
 			<img
 				src="https://material-icons.github.io/material-icons/svg/{icon.name}/{icon.family}.svg"

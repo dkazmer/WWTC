@@ -15,7 +15,6 @@
 	style="width: -webkit-fill-available; margin-bottom: 4em;"
 >
 
-<!-- <div class="notice">The 2024 Club Tournament will be played on <time datetime="2024-09-14" style="font-weight: 600;">September 14/15<sup>th</sup></time>. Check under "PROGRAMS" for details</div> -->
 <div class="mapouter">
 	<div class="gmap_canvas">
 		<iframe
@@ -37,16 +36,7 @@
 				width: 500px;
 			}
 		</style>
-		<!-- biome-ignore lint/a11y/useAnchorContent: ignore -->
-		<a href="https://www.embedgooglemap.net"></a>
-		<style>
-			.gmap_canvas {
-				overflow: hidden;
-				background: none !important;
-				height: 400px;
-				width: 500px;
-			}
-		</style>
+		<!-- <a href="https://www.embedgooglemap.net"></a> -->
 	</div>
 </div>
 
@@ -94,32 +84,14 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 	article.more {
 		clear: right;
 	}
-	.cta {
-		padding-top: 1em;
-	}
 	h2 {
 		display: -webkit-box;
-	}
-	section.winners {
-		display: flex;
-		justify-content: space-evenly;
-		font-size: 1.3rem;
-		line-height: normal;
-		text-align: center;
-		padding-top: 4em;
 	}
 
 	@media only screen and (width <= 768px) {
 		.mapouter {
 			float: none;
 			margin: 0 auto;
-		}
-		section.winners {
-			flex-wrap: wrap;
-
-			& > div {
-				padding-bottom: 3em;
-			}
 		}
 	}
 
@@ -137,9 +109,12 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 			margin-top: 8px;
 			margin-right: 56pt;
 		}
+	}
 
-		.cta {
-			padding-top: 0;
-		}
+	.gmap_canvas {
+		overflow: hidden;
+		background: none !important;
+		height: 400px;
+		width: 500px;
 	}
 </style>

@@ -9,12 +9,24 @@
 
 	let legal = $state(false);
 	let validEmail = $state(false);
-	let clonedCount = $state(0);
-	let clonedArray: 1[] = $state([]);
+	let dataFamily = $state<Family[]>([]);
+	let lastName = ''; // don't use $state here!
+	
 
 	function addFamily() {
-		if (clonedArray.length === 5) return;
-		clonedArray.push(1);
+		if (dataFamily.length === 5) return;
+		dataFamily.push({firstName: '', lastName, age: '', gender: ''})
+	}
+	
+	function ageGroup({target: {value}}: Event & {target: HTMLSelectElement}) {
+		console.log('>> change', value);
+	}
+	
+	interface Family {
+		firstName: string;
+		lastName: string;
+		age: 'a' | 'j' | '';
+		gender: 'm' | 'f' | 'o' | '';
 	}
 </script>
 
@@ -35,7 +47,7 @@
 <section>
 	<!-- <form action="connect.php" method="post"> -->
 	<form>
-		{@render person(0)}
+		{@render person({lastName, firstName: '', age: '', gender: ''}, 0)}
 		<section class="returning">
 			<input type="radio" name="returning" id="nMem" value="new" required><label for="nMem">New member</label>
 			<input type="radio" name="returning" id="rMem" value="returning"><label for="rMem">Returning member</label>
@@ -113,16 +125,15 @@
 				class="plus"
 				title="add another family member"
 				onclick={addFamily}
-				disabled={clonedCount > 4}
+				disabled={dataFamily.length > 4}
 			>
 				+
 			</button>
-			<span class="count">{clonedArray.length}/5</span>
-			{#each clonedArray as x, i}
-				{@render person(i+1, true)}
+			<span class="count">{dataFamily.length}/5</span>
+			{#each dataFamily as item, i}
+				{@render person(item, i+1, true)}
 			{/each}
 		</section>
-		<!-- <div><input type="checkbox" name="lessons" id="lessons"><label for="lessons">Lessons ($70)</label></div> -->
 		<section class="lessons">
 			<input type="radio" name="lessons" id="nolessons" value="none" checked><label for="nolessons">No lessons</label>
 			<input type="radio" name="lessons" id="plessons" value="private">
@@ -170,40 +181,46 @@
 				>
 			</p>
 		</section>
-		<!-- <div><input type="submit" value="Submit"></div> -->
-		<!-- <div class="cta"><input type="button" class="submit" value="Submit"></div> -->
 		<PrimaryBtn label="Submit" type="submit" />
 	</form>
 </section>
 
-{#snippet person(id: number, hasClose = false)}
+{#snippet person(item: typeof data[number], i: number, hasClose = false)}
+	{@const id = i ? `[${i}]` : ''}
 	<section>
 		<input
 			type="text"
 			maxlength="32"
-			name="firstName{id ? `[${id}]` : ''}"
+			name="firstName{id}"
 			placeholder="First name*"
 			required
 			pattern={'[A-Z]{1}[a-z]{1,32}'}
 			title="eg., Martin"
+			bind:value={item.firstName}
 		>
-		<input type="text" maxlength="32" name="lastName{id ? `[${id}]` : ''}" placeholder="Last name*" required pattern={'[A-Za-z]{1,32}'}>
-		<select name="gender{id ? `[${id}]` : ''}" required>
+		{#if i === 0}
+			<input type="text" maxlength="32" name="lastName{id}" placeholder="Last name*" bind:value={lastName} required pattern={'[A-Za-z]{1,32}'}>
+		{:else}
+			<input type="text" maxlength="32" name="lastName{id}" placeholder="Last name*" bind:value={item.lastName} required pattern={'[A-Za-z]{1,32}'}>
+		{/if}
+		<select name="gender{id}" required bind:value={item.gender}>
 			<option value="" disabled selected>Gender*</option>
 			<option value="m">Male</option>
 			<option value="f">Female</option>
 			<option value="o">Other</option>
 		</select>
-		<select name="ageGroup{id ? `[${id}]` : ''}" required>
+		<select name="ageGroup{id}" required bind:value={item.age} onchange={ageGroup}>
 			<option value="" disabled selected>Age group*</option>
 			<option value="a">Adult</option>
 			<option value="j">Junior</option>
 		</select>
 		{#if hasClose}
-			<button type="button" title="remove this entry" onclick={() => clonedArray.splice(id-1, 1)}>×</button>
+			<button type="button" title="remove this entry" onclick={() => data.splice(i-1, 1)}>×</button>
 		{/if}
 	</section>
 {/snippet}
+
+<!-- <Test /> -->
 
 <style lang="scss">
 	/* form */

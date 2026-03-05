@@ -28,4 +28,4 @@ export const rates = {
 		fall: 50
 	},
 	junior: 35
-};
+} as const;

@@ -33,7 +33,7 @@
 </div>
 
 <style lang="scss">
-	.cta :is(button, input[type="button"]) {
+	.cta button {
 		cursor: pointer;
 		color: var(--secondary);
 		appearance: none;

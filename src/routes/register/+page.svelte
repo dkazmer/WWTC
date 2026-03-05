@@ -8,20 +8,34 @@
 	} = rates;
 
 	let legal = $state(false);
-	let validEmail = $state(false);
-	let dataFamily = $state<Family[]>([]);
 	let lastName = ''; // don't use $state here!
-	
+	let validEmail = $state(false);
+	let dataFamily = $state<Family[]>([{ lastName, firstName: '', age: '', gender: '' }]);
+	let total = $state(0);
 
+	// biome-ignore lint/correctness/noUnusedVariables: is used
 	function addFamily() {
-		if (dataFamily.length === 5) return;
-		dataFamily.push({firstName: '', lastName, age: '', gender: ''})
+		if (dataFamily.length === 6) return;
+		dataFamily.push({ firstName: '', lastName, age: '', gender: '' });
 	}
-	
-	function ageGroup({target: {value}}: Event & {target: HTMLSelectElement}) {
-		console.log('>> change', value);
+
+	// biome-ignore lint/correctness/noUnusedVariables: is used
+	function rmFamily(i: number) {
+		dataFamily.splice(i, 1);
+		totalReducer();
 	}
-	
+
+	function totalReducer() {
+		// biome-ignore format: compact
+		total = dataFamily.reduce((tally, { age }) => tally + (x => {
+			switch (x) {
+				case 'a': return regular; // TODO: account for season periods!
+				case 'j': return junior;
+				default: return 0;
+			}
+		})(age), 0); // 0, not lessonsTally
+	}
+
 	interface Family {
 		firstName: string;
 		lastName: string;
@@ -47,7 +61,7 @@
 <section>
 	<!-- <form action="connect.php" method="post"> -->
 	<form>
-		{@render person({lastName, firstName: '', age: '', gender: ''}, 0)}
+		{@render person(dataFamily.at(0)!, 0)}
 		<section class="returning">
 			<input type="radio" name="returning" id="nMem" value="new" required><label for="nMem">New member</label>
 			<input type="radio" name="returning" id="rMem" value="returning"><label for="rMem">Returning member</label>
@@ -125,13 +139,15 @@
 				class="plus"
 				title="add another family member"
 				onclick={addFamily}
-				disabled={dataFamily.length > 4}
+				disabled={dataFamily.length > 5}
 			>
 				+
 			</button>
-			<span class="count">{dataFamily.length}/5</span>
+			<span class="count">{dataFamily.length-1}/5</span>
 			{#each dataFamily as item, i}
-				{@render person(item, i+1, true)}
+				{#if i > 0}
+					{@render person(item, i, true)}
+				{/if}
 			{/each}
 		</section>
 		<section class="lessons">
@@ -141,8 +157,8 @@
 			<input type="radio" name="lessons" id="lessons" value="public">
 			<label for="lessons">Public lessons<!--  ($40) --></label>
 		</section>
-		<div class="total">0</div>
-		<input type="hidden" name="owing" value="0">
+		<div class="total">{total}</div>
+		<input type="hidden" name="owing" bind:value={total}>
 		<input type="hidden" name="season" value="">
 		<section class="info">
 			<p><b>Membership type:</b></p>
@@ -185,7 +201,7 @@
 	</form>
 </section>
 
-{#snippet person(item: typeof data[number], i: number, hasClose = false)}
+{#snippet person(item: typeof dataFamily[number], i: number, hasClose = false)}
 	{@const id = i ? `[${i}]` : ''}
 	<section>
 		<input
@@ -199,9 +215,25 @@
 			bind:value={item.firstName}
 		>
 		{#if i === 0}
-			<input type="text" maxlength="32" name="lastName{id}" placeholder="Last name*" bind:value={lastName} required pattern={'[A-Za-z]{1,32}'}>
+			<input
+				type="text"
+				maxlength="32"
+				name="lastName{id}"
+				placeholder="Last name*"
+				bind:value={lastName}
+				required
+				pattern={'[A-Za-z]{1,32}'}
+			>
 		{:else}
-			<input type="text" maxlength="32" name="lastName{id}" placeholder="Last name*" bind:value={item.lastName} required pattern={'[A-Za-z]{1,32}'}>
+			<input
+				type="text"
+				maxlength="32"
+				name="lastName{id}"
+				placeholder="Last name*"
+				bind:value={item.lastName}
+				required
+				pattern={'[A-Za-z]{1,32}'}
+			>
 		{/if}
 		<select name="gender{id}" required bind:value={item.gender}>
 			<option value="" disabled selected>Gender*</option>
@@ -209,13 +241,13 @@
 			<option value="f">Female</option>
 			<option value="o">Other</option>
 		</select>
-		<select name="ageGroup{id}" required bind:value={item.age} onchange={ageGroup}>
+		<select name="ageGroup{id}" required bind:value={item.age} onchange={totalReducer}>
 			<option value="" disabled selected>Age group*</option>
 			<option value="a">Adult</option>
 			<option value="j">Junior</option>
 		</select>
 		{#if hasClose}
-			<button type="button" title="remove this entry" onclick={() => data.splice(i-1, 1)}>×</button>
+			<button type="button" title="remove this entry" onclick={() => rmFamily(i)}>×</button>
 		{/if}
 	</section>
 {/snippet}

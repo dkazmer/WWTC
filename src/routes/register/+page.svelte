@@ -1,6 +1,9 @@
 <script lang="ts">
 	import PrimaryBtn from '$lib/components/pri_btn.svelte';
-	import { rates, season } from '$lib/constants';
+	import { keyDates, rates, season } from '$lib/constants';
+	import { determine } from './period.svelte';
+
+	const adultRate = determine(keyDates, rates.adult);
 
 	const {
 		adult: { earlyBird, regular, fall },
@@ -8,15 +11,15 @@
 	} = rates;
 
 	let legal = $state(false);
-	let lastName = ''; // don't use $state here!
+	// svelte-ignore non_reactive_update: don't use $state on `lastName`!
+	let lastName = '';
 	let validEmail = $state(false);
 	let dataFamily = $state<Family[]>([{ lastName, firstName: '', age: '', gender: '' }]);
 	let total = $state(0);
 
 	// biome-ignore lint/correctness/noUnusedVariables: is used
 	function addFamily() {
-		if (dataFamily.length === 6) return;
-		dataFamily.push({ firstName: '', lastName, age: '', gender: '' });
+		dataFamily.length < 6 && dataFamily.push({ firstName: '', lastName, age: '', gender: '' });
 	}
 
 	// biome-ignore lint/correctness/noUnusedVariables: is used
@@ -29,7 +32,7 @@
 		// biome-ignore format: compact
 		total = dataFamily.reduce((tally, { age }) => tally + (x => {
 			switch (x) {
-				case 'a': return regular; // TODO: account for season periods!
+				case 'a': return adultRate;
 				case 'j': return junior;
 				default: return 0;
 			}

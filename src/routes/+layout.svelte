@@ -48,12 +48,13 @@
 </main>
 <Footer />
 
-<style>
+<style lang="scss">
 	main {
 		flex-grow: 1;
 		line-height: 2.4rem;
 		box-shadow: 0 2px 6px 0 black;
 		z-index: 1;
+
 		:global {
 			a:link {
 				color: var(--secondary-light);

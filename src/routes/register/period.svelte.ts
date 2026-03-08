@@ -1,13 +1,10 @@
-// Determine period of the season, based on which we can narrow adult rate
+// biome-ignore-all lint/suspicious/noExplicitAny: allow `any`
 import type { Temporal as Tmp } from '@js-temporal/polyfill';
 import type { rates as ratesObj } from '$lib/constants';
 
-globalThis.Temporal = globalThis.Temporal || (await import('@js-temporal/polyfill')).Temporal;
-
-// biome-ignore lint/correctness/noInvalidUseBeforeDeclaration: declared in global types
-const TPD = Temporal.PlainDate;
-// biome-ignore lint/correctness/noInvalidUseBeforeDeclaration: declared in global types
-const { Now } = Temporal;
+// @ts-expect-error (ts2339): "Property 'Temporal' does not exist on type"
+const { Temporal } = 'Temporal' in globalThis ? globalThis : await import('@js-temporal/polyfill');
+const { Now, PlainDate: TPD } = Temporal;
 
 /**
  * Narrow the rate based on the date.
@@ -26,14 +23,12 @@ export function determine(
 	const regular = TPD.from(dates.regular);
 	const fall = TPD.from(dates.fall);
 
-	if (Temporal.PlainDate.compare(now, fall) >= 0) return rates.fall;
-	if (Temporal.PlainDate.compare(now, regular) >= 0) return rates.regular;
+	if (TPD.compare(now, fall) >= 0) return rates.fall;
+	if (TPD.compare(now, regular) >= 0) return rates.regular;
 	return rates.earlyBird;
 }
 
 declare global {
-	var Temporal: Temporal;
-
 	type TemporalInstance = InstanceType<Temporal['PlainDate']>;
 	type Temporal = { [K in keyof typeof Tmp]: (typeof Tmp)[K] };
 

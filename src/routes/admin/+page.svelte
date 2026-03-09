@@ -1,16 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { ChangeEventHandler, MouseEventHandler } from 'svelte/elements';
 	import iconExcel from '$lib/assets/excel_icon.svg';
 	import { createAPIMethod } from '$lib/createAPI';
 	import StatsComponent from './stats.svelte';
+	import type { Age, Gender } from './table.svelte';
+	import Table from './table.svelte';
 
-	// biome-ignore format: compact
-	const headings = [
-		'id', 'name', 'email', 'phone', 'address', 'age group', 'gender', 'date', 'type', 'for', 'owing', 'paid'
-	];
-
-	let tbody: HTMLElement;
+	let checkedIDs: Set<number>;
+	let n = $props();
 	let list: List = [];
 	let stats: Stats = {
 		total: 0,
@@ -30,17 +27,6 @@
 		stats = setStats(list);
 	});
 
-	function getGender(x: Gender) {
-		switch (x) {
-			case 'm':
-				return 'male';
-			case 'f':
-				return 'female';
-			default:
-				return 'other';
-		}
-	}
-
 	function setStats(data: List) {
 		const adults = data.filter(({ ageGroup }) => ageGroup === 'a');
 		const juniors = data.filter(({ ageGroup }) => ageGroup !== 'a');
@@ -54,29 +40,12 @@
 		};
 	}
 
-	const setCheck: MouseEventHandler<HTMLTableRowElement> = ({ currentTarget }) => {
-		const box = currentTarget?.querySelector<HTMLInputElement>('input[type="checkbox"]');
-		if (!box) return;
-		box.checked = !box.checked;
-	};
-
-	const checkAll: ChangeEventHandler<HTMLInputElement> = ({ currentTarget }) => {
-		const checks = tbody.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
-		checks.forEach(c => {
-			c.checked = currentTarget.checked;
-		});
-	};
-
-	// use Zod here?
 	// biome-ignore format: compact
 	type ListKeys = 'id' | 'firstName' | 'lastName' | 'email' | 'phone' | 'phone_sec' | 'address' | 'postal'
 		| 'date' | 'lessons' | 'season' | 'type' | 'bType' | 'numApplicants' | 'owing' | 'paid';
 
 	type Stats = { [K in 'total' | 'numAdults' | 'numJuniors' | 'paidAdults' | 'paidJuniors']: number };
-
 	type List = ({ [K in ListKeys]: string } & { gender: Gender } & { ageGroup: Age })[];
-	type Gender = 'm' | 'f' | 'o';
-	type Age = 'a' | 'j';
 </script>
 
 <section id="form" style="display: none;">
@@ -104,44 +73,10 @@
 		</form>
 	</section>
 	<section id="table">
-		<table>
-			<thead>
-				<tr>
-					<th><input type="checkbox" onchange={checkAll}></th>
-					{#each headings as h}
-						<th>{h}</th>
-					{/each}
-				</tr>
-			</thead>
-			<tbody bind:this={tbody}>
-				{#each list as { id, firstName, lastName, email, phone, phone_sec, address, postal, date, gender, ageGroup, lessons, season, type, bType, numApplicants, owing, paid }}
-					<tr onclick={owing === '0' ? null : setCheck}>
-						<td>
-							{#if owing !== '0'}
-								<input type="checkbox" name={id} {id} data-ow={owing}>
-							{/if}
-						</td>
-						<td>${id}</td>
-						<td style="font-weight:600">{firstName} {lastName}</td>
-						<td><a href="mailto:{email}">{email}</a></td>
-						<td>{phone}<br>{phone_sec}</td>
-						<td>{address.replaceAll(/\s?,\s?/g, ', ')} {postal || ''}</td>
-						<td>{ageGroup === 'a' ? 'adult' : 'junior'}</td>
-						<td>{getGender(gender)}</td>
-						<td>{date}</td>
-						<td>{type}, {bType}</td>
-						<td>{season}</td>
-						<td style:color={owing !== '0' ? 'darkred' : 'darkgrey'}>${owing}</td>
-						<!-- <td${owing !== '0' ? ' style="color:darkred"' : ' style="color:darkgrey"'}>$${owing}</td> -->
-						<td style:color={owing === '0' ? 'darkgreen' : 'darkgrey'}>{paid ? `$${paid}` : '/'}</td>
-						<!-- <td${owing === '0' ? ' style="color:darkgreen"' : ' style="color:darkgrey"'}>${paid ? `$${paid}` : '/'}</td></tr> -->
-					</tr>
-				{/each}
-			</tbody>
-		</table>
+		<Table {...list} bind:n />
 	</section>
 	<section id="numbers"><StatsComponent {...stats} /></section>
-	<button id="is_paid" type="button" disabled>Mark as Paid</button><span class="selected">0</span>
+	<button id="is_paid" type="button" disabled>Mark as Paid</button><span class="selected">{n}</span>
 </div>
 
 <style lang="scss">
@@ -286,58 +221,6 @@
 		display: inline-block;
 		margin-inline: auto;
 		overflow: hidden;
-	}
-
-	table {
-		font-size: small;
-		margin-inline: auto;
-		th {
-			text-align: left;
-		}
-		td,
-		th {
-			vertical-align: baseline;
-			padding-inline: 1em;
-			white-space: nowrap;
-		}
-		tbody tr {
-			&:nth-child(odd) {
-				background-color: #e9e9e9;
-			}
-			&:has(input:checked) {
-				background-color: #6836;
-
-				&:hover {
-					background-color: #6839;
-				}
-			}
-			&:hover {
-				background-color: #f3f3f3;
-			}
-			&:has(input[type="checkbox"]) {
-				cursor: pointer;
-				outline-offset: 4px;
-
-				&:hover {
-					outline: #683 dashed 2px;
-				}
-			}
-		}
-
-		td:has(input[type="checkbox"]) {
-			font-size: 0;
-			line-height: 0;
-			vertical-align: middle;
-			text-align: center;
-
-			input[type="checkbox"] {
-				margin: 0;
-			}
-		}
-	}
-	section#table :is(th, tbody td):nth-child(9n + 2) {
-		text-align: right;
-		display: none;
 	}
 
 	span.selected {

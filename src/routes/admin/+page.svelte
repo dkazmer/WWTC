@@ -1,15 +1,24 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import type { ChangeEventHandler, MouseEventHandler } from 'svelte/elements';
 	import iconExcel from '$lib/assets/excel_icon.svg';
 	import { createAPIMethod } from '$lib/createAPI';
+	import StatsComponent from './stats.svelte';
 
 	// biome-ignore format: compact
 	const headings = [
-		'<input type="checkbox" name="" id="">', 'id', 'name', 'email', 'phone',
-		'address', 'age group', 'gender', 'date', 'type', 'for', 'owing', 'paid'
+		'id', 'name', 'email', 'phone', 'address', 'age group', 'gender', 'date', 'type', 'for', 'owing', 'paid'
 	];
 
+	let tbody: HTMLElement;
 	let list: List = [];
+	let stats: Stats = {
+		total: 0,
+		numAdults: 0,
+		numJuniors: 0,
+		paidAdults: 0,
+		paidJuniors: 0
+	};
 
 	const get = createAPIMethod<{ year: string }, List>({
 		url: './data.json',
@@ -18,6 +27,7 @@
 
 	onMount(async () => {
 		list = await get({ year: '2026' });
+		stats = setStats(list);
 	});
 
 	function getGender(x: Gender) {
@@ -31,14 +41,42 @@
 		}
 	}
 
+	function setStats(data: List) {
+		const adults = data.filter(({ ageGroup }) => ageGroup === 'a');
+		const juniors = data.filter(({ ageGroup }) => ageGroup !== 'a');
+
+		return {
+			total: data.length,
+			numAdults: adults.length,
+			numJuniors: juniors.length,
+			paidAdults: adults.filter(({ owing }) => owing === '0').length,
+			paidJuniors: juniors.filter(({ owing }) => owing === '0').length
+		};
+	}
+
+	const setCheck: MouseEventHandler<HTMLTableRowElement> = ({ currentTarget }) => {
+		const box = currentTarget?.querySelector<HTMLInputElement>('input[type="checkbox"]');
+		if (!box) return;
+		box.checked = !box.checked;
+	};
+
+	const checkAll: ChangeEventHandler<HTMLInputElement> = ({ currentTarget }) => {
+		const checks = tbody.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+		checks.forEach(c => {
+			c.checked = currentTarget.checked;
+		});
+	};
+
 	// use Zod here?
 	// biome-ignore format: compact
-	type ListKeys = 'id' | 'firstName' | 'lastName' | 'email' | 'phone' | 'phone_sec' | 'address'
-		| 'postal' | 'date' | 'ageGroup' | 'lessons' | 'season' | 'type' | 'bType'
-		| 'numApplicants' | 'owing' | 'paid';
+	type ListKeys = 'id' | 'firstName' | 'lastName' | 'email' | 'phone' | 'phone_sec' | 'address' | 'postal'
+		| 'date' | 'lessons' | 'season' | 'type' | 'bType' | 'numApplicants' | 'owing' | 'paid';
 
-	type List = ({ [K in ListKeys]: string } & { gender: Gender })[];
+	type Stats = { [K in 'total' | 'numAdults' | 'numJuniors' | 'paidAdults' | 'paidJuniors']: number };
+
+	type List = ({ [K in ListKeys]: string } & { gender: Gender } & { ageGroup: Age })[];
 	type Gender = 'm' | 'f' | 'o';
+	type Age = 'a' | 'j';
 </script>
 
 <section id="form" style="display: none;">
@@ -48,8 +86,8 @@
 		<input type="password" name="pass" id="pass" placeholder="Password" required autofocus><br>
 	</form>
 </section>
-<div class="wrapper" style="display: block;">
-	<section class="top-bar" data-members="232">
+<div class="wrapper" style="display: inline-block;">
+	<section class="top-bar" data-members="{stats.total} members ({stats.numAdults} : {stats.numJuniors})">
 		<button id="refresh" type="button" title="refresh data">&#8634;</button>
 		<button id="excel" type="button" class="icon" title="generate Excel spreadsheet">
 			<span>Excel </span>
@@ -69,34 +107,15 @@
 		<table>
 			<thead>
 				<tr>
+					<th><input type="checkbox" onchange={checkAll}></th>
 					{#each headings as h}
-						<th>{@html h}</th>
+						<th>{h}</th>
 					{/each}
 				</tr>
 			</thead>
-			<tbody>
+			<tbody bind:this={tbody}>
 				{#each list as { id, firstName, lastName, email, phone, phone_sec, address, postal, date, gender, ageGroup, lessons, season, type, bType, numApplicants, owing, paid }}
-					<!-- <tr>
-						<td>{item.id}</td>
-						<td>{item.firstName}</td>
-						<td>{item.lastName}</td>
-						<td>{item.email}</td>
-						<td>{item.phone}</td>
-						<td>{item.phone_sec}</td>
-						<td>{item.address}</td>
-						<td>{item.postal}</td>
-						<td>{item.date}</td>
-						<td>{item.gender}</td>
-						<td>{item.ageGroup}</td>
-						<td>{item.lessons}</td>
-						<td>{item.season}</td>
-						<td>{item.type}</td>
-						<td>{item.bType}</td>
-						<td>{item.numApplicants}</td>
-						<td>{item.owing}</td>
-						<td>{item.paid}</td>
-					</tr> -->
-					<tr>
+					<tr onclick={owing === '0' ? null : setCheck}>
 						<td>
 							{#if owing !== '0'}
 								<input type="checkbox" name={id} {id} data-ow={owing}>
@@ -121,30 +140,14 @@
 			</tbody>
 		</table>
 	</section>
-	<section id="numbers"></section>
+	<section id="numbers"><StatsComponent {...stats} /></section>
 	<button id="is_paid" type="button" disabled>Mark as Paid</button><span class="selected">0</span>
 </div>
 
 <style lang="scss">
-	.links {
-		columns: 2;
-
-		a {
-			float: left;
-			clear: left;
-			font-weight: 600;
-			margin-bottom: 1em;
-			text-shadow: none !important;
-		}
-		span {
-			float: left;
-		}
-	}
-
-	@media only screen and (max-width: 768px) {
-		.links span {
-			display: none;
-		}
+	:global(div:has(> .wrapper)) {
+		display: flex;
+		max-width: unset;
 	}
 
 	button,
@@ -201,10 +204,6 @@
 
 	input:not([type="button"], [type="hidden"], [type="checkbox"], [type="radio"]) {
 		min-width: 219px;
-
-		&.long {
-			min-width: 478px;
-		}
 	}
 
 	section#form {
@@ -228,6 +227,7 @@
 	section#table {
 		overflow-x: auto;
 		margin-bottom: 1em;
+		padding: 0 4px 4px;
 	}
 
 	section.top-bar {
@@ -282,11 +282,6 @@
 		}
 	}
 
-	main > div {
-		max-width: unset;
-		display: flex;
-	}
-
 	div.wrapper {
 		display: inline-block;
 		margin-inline: auto;
@@ -310,14 +305,33 @@
 				background-color: #e9e9e9;
 			}
 			&:has(input:checked) {
-				background-color: darkkhaki;
+				background-color: #6836;
 
 				&:hover {
-					background-color: khaki;
+					background-color: #6839;
 				}
 			}
 			&:hover {
 				background-color: #f3f3f3;
+			}
+			&:has(input[type="checkbox"]) {
+				cursor: pointer;
+				outline-offset: 4px;
+
+				&:hover {
+					outline: #683 dashed 2px;
+				}
+			}
+		}
+
+		td:has(input[type="checkbox"]) {
+			font-size: 0;
+			line-height: 0;
+			vertical-align: middle;
+			text-align: center;
+
+			input[type="checkbox"] {
+				margin: 0;
 			}
 		}
 	}
@@ -342,39 +356,5 @@
 
 	section#numbers {
 		float: right;
-
-		fieldset {
-			border: white 2px groove;
-			border-radius: 12px;
-			user-select: none;
-			padding-bottom: 20px;
-
-			legend {
-				color: #999;
-				text-shadow: 0 1px 0 white;
-			}
-			tbody tr {
-				font-size: 2rem;
-				font-weight: 700;
-				background-color: unset !important;
-
-				td {
-					text-align: left !important;
-					padding: 0;
-				}
-			}
-			th {
-				font-weight: unset;
-				text-align: left !important;
-				padding-inline: 0 4em;
-				min-width: 4em;
-			}
-			tr th:first-child {
-				padding-left: 4em;
-				font-size: 1.3rem;
-				font-weight: 400;
-				min-width: unset;
-			}
-		}
 	}
 </style>

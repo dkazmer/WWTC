@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { ChangeEventHandler, MouseEventHandler } from 'svelte/elements';
+	import type { Age, Gender, List } from './index';
 
 	let tbody: HTMLElement;
 
@@ -8,10 +9,9 @@
 		'id', 'name', 'email', 'phone', 'address', 'age group', 'gender', 'date', 'type', 'for', 'owing', 'paid'
 	];
 
-	const list = $props();
-	export const checkedIDs = new Set<number>();
-	export let n = 1;
+	const checkedIDs = new Set<number>();
 	const triggerEvent = (box: HTMLInputElement) => box?.dispatchEvent(new Event('change', { bubbles: true }));
+	const { onCheckChange, ...list }: Props = $props();
 
 	function getGender(x: Gender) {
 		// biome-ignore format: compact
@@ -31,7 +31,7 @@
 
 	const checkChange: ChangeEventHandler<HTMLInputElement> = ({ currentTarget: box }) => {
 		checkedIDs[box.checked ? 'add' : 'delete'](parseInt(box.name, 10));
-		console.log('>> checked items', checkedIDs);
+		onCheckChange(checkedIDs);
 	};
 
 	const checkAll: ChangeEventHandler<HTMLInputElement> = ({ currentTarget }) => {
@@ -42,12 +42,21 @@
 			triggerEvent(c);
 		});
 	};
+
+	type Props = {
+		onCheckChange: Fn<void, Set<number>>;
+	} & List;
 </script>
 
-<script module>
+<!-- <script module>
 	export type Gender = 'm' | 'f' | 'o';
 	export type Age = 'a' | 'j';
-</script>
+	export type List = ({ [K in ListKeys]: string } & { gender: Gender; ageGroup: Age; })[]
+
+	// biome-ignore format: compact
+	type ListKeys = 'id' | 'firstName' | 'lastName' | 'email' | 'phone' | 'phone_sec' | 'address' | 'postal'
+		| 'date' | 'lessons' | 'season' | 'type' | 'bType' | 'numApplicants' | 'owing' | 'paid';
+</script> -->
 
 <table>
 	<thead>

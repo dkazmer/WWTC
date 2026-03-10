@@ -2,20 +2,20 @@
 	import { onMount } from 'svelte';
 	import iconExcel from '$lib/assets/excel_icon.svg';
 	import { createAPIMethod } from '$lib/createAPI';
+	import type { List, Stats } from './index';
 	import StatsComponent from './stats.svelte';
-	import type { Age, Gender } from './table.svelte';
 	import Table from './table.svelte';
 
 	let checkedIDs: Set<number>;
-	let n = $props();
-	let list: List = [];
-	let stats: Stats = {
+	let checkedSize = $state(0);
+	let list: List = $state([]);
+	let stats: Stats = $state({
 		total: 0,
 		numAdults: 0,
 		numJuniors: 0,
 		paidAdults: 0,
 		paidJuniors: 0
-	};
+	});
 
 	const get = createAPIMethod<{ year: string }, List>({
 		url: './data.json',
@@ -40,12 +40,10 @@
 		};
 	}
 
-	// biome-ignore format: compact
-	type ListKeys = 'id' | 'firstName' | 'lastName' | 'email' | 'phone' | 'phone_sec' | 'address' | 'postal'
-		| 'date' | 'lessons' | 'season' | 'type' | 'bType' | 'numApplicants' | 'owing' | 'paid';
-
-	type Stats = { [K in 'total' | 'numAdults' | 'numJuniors' | 'paidAdults' | 'paidJuniors']: number };
-	type List = ({ [K in ListKeys]: string } & { gender: Gender } & { ageGroup: Age })[];
+	const handleChecks: Fn<void, Set<number>> = x => {
+		checkedIDs = x;
+		checkedSize = x.size;
+	};
 </script>
 
 <section id="form" style="display: none;">
@@ -73,10 +71,11 @@
 		</form>
 	</section>
 	<section id="table">
-		<Table {...list} bind:n />
+		<Table {...list} onCheckChange={handleChecks} />
 	</section>
 	<section id="numbers"><StatsComponent {...stats} /></section>
-	<button id="is_paid" type="button" disabled>Mark as Paid</button><span class="selected">{n}</span>
+	<button id="is_paid" type="button" disabled={!checkedSize}>Mark as Paid</button
+	><span class="selected">{checkedSize}</span>
 </div>
 
 <style lang="scss">

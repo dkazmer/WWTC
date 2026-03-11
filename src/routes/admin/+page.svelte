@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import type { ChangeEventHandler, MouseEventHandler } from 'svelte/elements';
 	import iconExcel from '$lib/assets/excel_icon.svg';
 	import { createAPIMethod } from '$lib/createAPI';
+	import { myExcelXML } from './excel.js';
 	import type { List, Stats } from './index';
 	import StatsComponent from './stats.svelte';
 	import Table from './table.svelte';
@@ -16,6 +18,8 @@
 		paidAdults: 0,
 		paidJuniors: 0
 	});
+
+	let listCount = $derived(Object.entries(list).length);
 
 	const get = createAPIMethod<{ year: string }, List>({
 		url: './data.json',
@@ -44,6 +48,25 @@
 		checkedIDs = x;
 		checkedSize = x.size;
 	};
+
+	const markAsPaid: MouseEventHandler<HTMLButtonElement> = () => {
+		if (!checkedSize) return;
+		if (!confirm('Confirm mark selected as paid')) return;
+		console.log('>> mark as paid', checkedIDs);
+	};
+
+	const yearChange: ChangeEventHandler<HTMLSelectElement> = ({ currentTarget }) => {
+		console.log('>> db', currentTarget.value);
+	};
+
+	const genExcel = () => {
+		const xls = new myExcelXML(list);
+		xls.downLoad();
+	};
+
+	const refresh = () => {
+		console.log('>> refresh');
+	};
 </script>
 
 <section id="form" style="display: none;">
@@ -55,13 +78,25 @@
 </section>
 <div class="wrapper" style="display: inline-block;">
 	<section class="top-bar" data-members="{stats.total} members ({stats.numAdults} : {stats.numJuniors})">
-		<button id="refresh" type="button" title="refresh data">&#8634;</button>
-		<button id="excel" type="button" class="icon" title="generate Excel spreadsheet">
+		<button id="refresh" type="button" title="refresh data" onclick={refresh}>&#8634;</button>
+		<button
+			id="excel"
+			type="button"
+			class="icon"
+			title="generate Excel spreadsheet"
+			onclick={genExcel}
+			disabled={!listCount}
+		>
 			<span>Excel </span>
 			<img src={iconExcel} alt="excel" aria-hidden="true">
 		</button>
 		<form id="db" style="display: contents;">
-			<select name="db" id="year" style="float: right; margin-right: 14px; box-shadow: 0 0 1px gray;">
+			<select
+				name="db"
+				id="year"
+				style="float: right; margin-right: 14px; box-shadow: 0 0 1px gray;"
+				onchange={yearChange}
+			>
 				<option value="reg2026">2026</option>
 				<option value="reg2025">2025</option>
 				<option value="reg2024">2024</option>
@@ -74,7 +109,7 @@
 		<Table {...list} onCheckChange={handleChecks} />
 	</section>
 	<section id="numbers"><StatsComponent {...stats} /></section>
-	<button id="is_paid" type="button" disabled={!checkedSize}>Mark as Paid</button
+	<button id="is_paid" type="button" disabled={!checkedSize} onclick={markAsPaid}>Mark as Paid</button
 	><span class="selected">{checkedSize}</span>
 </div>
 
@@ -114,16 +149,21 @@
 			pointer-events: none;
 		}
 		&#excel.icon {
+			--shadow: drop-shadow(0 1px 1px white);
+
 			padding-inline: 9px;
 			border: none;
 			background: none;
-			filter: drop-shadow(0px 1px 1px white);
+			filter: var(--shadow);
 
 			span {
 				display: none;
 			}
 			&:hover {
-				filter: drop-shadow(0px 1px 1px #fff9) drop-shadow(0px 0px 2px #00640099);
+				filter: drop-shadow(0 1px 1px #fff9) drop-shadow(0 0px 2px #00640099);
+			}
+			&:disabled {
+				filter: var(--shadow) grayscale(1);
 			}
 		}
 		&#is_paid {
@@ -228,11 +268,8 @@
 		margin-left: 1em;
 		user-select: none;
 
-		&::before {
-			content: "(";
-		}
 		&::after {
-			content: " selected)";
+			content: " selected";
 		}
 	}
 

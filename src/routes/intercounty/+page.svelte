@@ -29,7 +29,7 @@ The InterCounty schedule can be found
 	and Thursday, <time class="bold" datetime="2026-04-30">30<sup>th</sup></time>, <time datetime="PH2">7-9pm</time>.
 </p>
 
-<style>
+<style lang="scss">
 	.champs {
 		float: right;
 		text-align: center;
@@ -41,15 +41,17 @@ The InterCounty schedule can be found
 		background: linear-gradient(45deg, white, #bbb);
 		box-shadow: gray 0 2px 4px;
 		user-select: none;
+
+		b {
+			font-weight: 600;
+		}
 	}
-	main b {
-		font-weight: 600;
-	}
-	main p {
+
+	p {
 		margin-block: 4px 0;
 	}
 
-	@media only screen and (max-width: 768px) {
+	@media only screen and (width <= 768px) {
 		.champs {
 			float: none;
 			margin: 0 auto 3em;

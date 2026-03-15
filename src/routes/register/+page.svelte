@@ -385,7 +385,7 @@
 		line-height: 2rem;
 		padding-bottom: 2em;
 
-		@media only screen and (min-width: 769px) {
+		@media only screen and (width > 768px) {
 			columns: 2;
 			column-gap: 4em;
 			column-rule: gray dotted 1px;
@@ -575,7 +575,7 @@
 		text-transform: initial;
 	}
 
-	@media only screen and (max-width: 768px) {
+	@media only screen and (width <= 768px) {
 		input:not([type="button"], [type="hidden"], [type="checkbox"], [type="radio"]) {
 			min-width: unset;
 			max-width: 8em;

@@ -13,7 +13,7 @@ The Scarborough Tennis Federation schedule can be found
 <h2>A1 &mdash; Wednesday</h2>
 <p>Wishing Well plays in STF A1 Division</p>
 <p>Fees: $3.00 per player per match played for balls.</p>
-<p>Team Captain STF A2: <a href="mailto:kregan-vandermoer@rogers.com">Kathleen Regan Vandermoer</a></p>
+<p>Team Captain STF A1: <a href="mailto:kregan-vandermoer@rogers.com">Kathleen Regan Vandermoer</a></p>
 
 <h2>Team Tryouts</h2>
 <p>
@@ -25,16 +25,6 @@ The Scarborough Tennis Federation schedule can be found
 </p>
 
 <style>
-	.social {
-		display: flex;
-		justify-content: space-around;
-		padding: 4em;
-
-		img {
-			max-width: 60px;
-			cursor: pointer;
-		}
-	}
 	.champs {
 		float: left;
 		text-align: center;
@@ -46,16 +36,17 @@ The Scarborough Tennis Federation schedule can be found
 		background: linear-gradient(45deg, white, #bbb);
 		box-shadow: gray 0 2px 4px;
 		user-select: none;
+
+		b {
+			font-weight: 600;
+		}
 	}
 
-	main b {
-		font-weight: 600;
-	}
-	main p {
+	p {
 		margin-block: 4px 0;
 	}
 
-	@media only screen and (max-width: 768px) {
+	@media only screen and (width <= 768px) {
 		.champs {
 			float: none;
 			margin: 0 auto 3em;

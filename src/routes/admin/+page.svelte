@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { ChangeEventHandler, MouseEventHandler } from 'svelte/elements';
+	import type { ChangeEventHandler, KeyboardEventHandler, MouseEventHandler } from 'svelte/elements';
 	import iconExcel from '$lib/assets/excel_icon.svg';
 	import { createAPIMethod } from '$lib/createAPI';
 	import { myExcelXML } from './excel.js';
@@ -8,6 +8,7 @@
 	import StatsComponent from './stats.svelte';
 	import Table from './table.svelte';
 
+	let authenticated = $state(false);
 	let checkedIDs: Set<number>;
 	let checkedSize = $state(0);
 	let list: List = $state([]);
@@ -55,7 +56,7 @@
 		console.log('>> mark as paid', checkedIDs);
 	};
 
-	const yearChange: ChangeEventHandler<HTMLSelectElement> = ({ currentTarget }) => {
+	const changeDB: ChangeEventHandler<HTMLSelectElement> = ({ currentTarget }) => {
 		console.log('>> db', currentTarget.value);
 	};
 
@@ -67,53 +68,64 @@
 	const refresh = () => {
 		console.log('>> refresh');
 	};
+
+	const auth: KeyboardEventHandler<HTMLInputElement> = ({ currentTarget, key }) => {
+		if (key !== 'Enter') return;
+		// if (!currentTarget.validity.valid) return;
+		// console.log('>> valid?', currentTarget.validity.valid);
+		authenticated = currentTarget.validity.valid;
+	};
 </script>
 
-<section id="form" style="display: none;">
-	<form>
-		<!-- svelte-ignore a11y_autofocus -->
-		<!-- biome-ignore lint/a11y/noAutofocus: allow autofocus -->
-		<input type="password" name="pass" id="pass" placeholder="Password" required autofocus><br>
-	</form>
-</section>
-<div class="wrapper" style="display: inline-block;">
-	<section class="top-bar" data-members="{stats.total} members ({stats.numAdults} : {stats.numJuniors})">
-		<button id="refresh" type="button" title="refresh data" onclick={refresh}>&#8634;</button>
-		<button
-			id="excel"
-			type="button"
-			class="icon"
-			title="generate Excel spreadsheet"
-			onclick={genExcel}
-			disabled={!listCount}
-		>
-			<span>Excel </span>
-			<img src={iconExcel} alt="excel" aria-hidden="true">
-		</button>
-		<form id="db" style="display: contents;">
-			<select
-				name="db"
-				id="year"
-				style="float: right; margin-right: 14px; box-shadow: 0 0 1px gray;"
-				onchange={yearChange}
-			>
-				<option value="reg2026">2026</option>
-				<option value="reg2025">2025</option>
-				<option value="reg2024">2024</option>
-				<option value="registration">2023</option>
-			</select>
-			<input type="hidden" name="pass" id="pass2">
+{#if !authenticated}
+	<section id="form">
+		<form>
+			<!-- svelte-ignore a11y_autofocus -->
+			<!-- biome-ignore format: compact -->
+			<!-- biome-ignore lint/a11y/noAutofocus: allow autofocus -->
+			<input type="password" name="pass" id="pass" placeholder="Password" required autofocus minlength="6" onkeyup={auth}><br>
 		</form>
 	</section>
-	<section id="table">
-		<Table {...list} onCheckChange={handleChecks} />
-	</section>
-	<section id="numbers"><StatsComponent {...stats} /></section>
-	<button id="is_paid" type="button" disabled={!checkedSize} onclick={markAsPaid}>Mark as Paid</button
-	><span class="selected">{checkedSize}</span>
-</div>
+{:else}
+	<div class="wrapper">
+		<section class="top-bar" data-members="{stats.total} members ({stats.numAdults} : {stats.numJuniors})">
+			<button id="refresh" type="button" title="refresh data" onclick={refresh}>&#8634;</button>
+			<button
+				id="excel"
+				type="button"
+				class="icon"
+				title="generate Excel spreadsheet"
+				onclick={genExcel}
+				disabled={!listCount}
+			>
+				<span>Excel </span>
+				<img src={iconExcel} alt="excel" aria-hidden="true">
+			</button>
+			<form id="db" style="display: contents;">
+				<select
+					name="db"
+					id="year"
+					style="float: right; margin-right: 14px; box-shadow: 0 0 1px gray;"
+					onchange={changeDB}
+				>
+					<option value="reg2026">2026</option>
+					<option value="reg2025">2025</option>
+					<option value="reg2024">2024</option>
+					<option value="registration">2023</option>
+				</select>
+				<input type="hidden" name="pass" id="pass2">
+			</form>
+		</section>
+		<section id="table">
+			<Table {...list} onCheckChange={handleChecks} />
+		</section>
+		<section id="numbers"><StatsComponent {...stats} /></section>
+		<button id="is_paid" type="button" disabled={!checkedSize} onclick={markAsPaid}>Mark as Paid</button
+		><span class="selected">{checkedSize}</span>
+	</div>
+{/if}
 
-<style lang="scss">
+<style>
 	:global(div:has(> .wrapper)) {
 		display: flex;
 		max-width: unset;
@@ -125,10 +137,13 @@
 		font-family: inherit;
 		font-weight: 500;
 		font-size: 1.6rem;
-		padding: 2px 16px;
+		padding: 8px 16px;
 		margin: 0 4px 8px 0;
 		border: none;
 		user-select: none;
+	}
+	select {
+		padding: 2px 16px;
 	}
 
 	button {
@@ -169,11 +184,6 @@
 		&#is_paid {
 			padding-block: 8px;
 		}
-
-		&#is_paid.hide,
-		&#is_paid.hide + span.selected {
-			display: none;
-		}
 	}
 
 	input:not([type="button"], [type="hidden"], [type="checkbox"], [type="radio"]) {
@@ -183,18 +193,17 @@
 	section#form {
 		margin: 5em auto;
 		text-align: center;
+
 		form {
 			text-align: left;
 			display: inline-block;
-			&.filled::after {
+
+			&:has(input:valid)::after {
 				content: 'Press "Enter" ...';
 				font-size: small;
 				display: block;
 				color: #666;
 			}
-		}
-		& ~ * {
-			display: none;
 		}
 	}
 

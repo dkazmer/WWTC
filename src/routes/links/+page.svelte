@@ -74,7 +74,7 @@
 		}
 	}
 
-	@media only screen and (max-width: 768px) {
+	@media only screen and (width <= 768px) {
 		.links span {
 			display: none;
 		}

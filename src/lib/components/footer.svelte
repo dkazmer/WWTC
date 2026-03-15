@@ -19,7 +19,8 @@
 		& > div {
 			color: #ccc;
 			font-size: 1.3rem;
-			@media only screen and (min-width: 769px) {
+
+			@media only screen and (width > 768px) {
 				column-count: 2;
 			}
 			a:link {

@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1773898896227,
+      "tag": "0000_chubby_daimon_hellstrom",
+      "breakpoints": true
+    }
+  ]
+}

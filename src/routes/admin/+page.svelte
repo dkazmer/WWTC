@@ -79,12 +79,12 @@
 
 {#if !authenticated}
 	<section id="form">
-		<form>
+		<div>
 			<!-- svelte-ignore a11y_autofocus -->
 			<!-- biome-ignore format: compact -->
 			<!-- biome-ignore lint/a11y/noAutofocus: allow autofocus -->
 			<input type="password" name="pass" id="pass" placeholder="Password" required autofocus minlength="6" onkeyup={auth}><br>
-		</form>
+		</div>
 	</section>
 {:else}
 	<div class="wrapper">
@@ -194,7 +194,7 @@
 		margin: 5em auto;
 		text-align: center;
 
-		form {
+		div {
 			text-align: left;
 			display: inline-block;
 

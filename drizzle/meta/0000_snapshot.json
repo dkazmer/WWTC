@@ -1,0 +1,571 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "5",
+  "dialect": "mysql",
+  "tables": {
+    "reg2024": {
+      "name": "reg2024",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "firstName": {
+          "autoincrement": false,
+          "name": "firstName",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lastName": {
+          "autoincrement": false,
+          "name": "lastName",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "autoincrement": false,
+          "name": "email",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "autoincrement": false,
+          "name": "phone",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone_sec": {
+          "autoincrement": false,
+          "name": "phone_sec",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "address": {
+          "autoincrement": false,
+          "name": "address",
+          "type": "varchar(1000)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "postal": {
+          "autoincrement": false,
+          "name": "postal",
+          "type": "varchar(7)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date": {
+          "default": "'current_timestamp()'",
+          "autoincrement": false,
+          "name": "date",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "gender": {
+          "autoincrement": false,
+          "name": "gender",
+          "type": "enum('m','f','o')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ageGroup": {
+          "autoincrement": false,
+          "name": "ageGroup",
+          "type": "enum('j','s','a')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lessons": {
+          "autoincrement": false,
+          "name": "lessons",
+          "type": "enum('none','private','public')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "season": {
+          "autoincrement": false,
+          "name": "season",
+          "type": "smallint(4) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "default": "'''solo'''",
+          "autoincrement": false,
+          "name": "type",
+          "type": "enum('family','solo')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bType": {
+          "default": "'''new'''",
+          "autoincrement": false,
+          "name": "bType",
+          "type": "enum('new','returning')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "numApplicants": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "numApplicants",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owing": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "owing",
+          "type": "smallint(3) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "paid": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "paid",
+          "type": "smallint(3) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "reg2025": {
+      "name": "reg2025",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "firstName": {
+          "autoincrement": false,
+          "name": "firstName",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lastName": {
+          "autoincrement": false,
+          "name": "lastName",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "autoincrement": false,
+          "name": "email",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "autoincrement": false,
+          "name": "phone",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone_sec": {
+          "autoincrement": false,
+          "name": "phone_sec",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "address": {
+          "autoincrement": false,
+          "name": "address",
+          "type": "varchar(1000)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "postal": {
+          "autoincrement": false,
+          "name": "postal",
+          "type": "varchar(7)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date": {
+          "default": "'current_timestamp()'",
+          "autoincrement": false,
+          "name": "date",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "gender": {
+          "autoincrement": false,
+          "name": "gender",
+          "type": "enum('m','f','o')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ageGroup": {
+          "autoincrement": false,
+          "name": "ageGroup",
+          "type": "enum('j','s','a')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lessons": {
+          "autoincrement": false,
+          "name": "lessons",
+          "type": "enum('none','private','public')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "season": {
+          "autoincrement": false,
+          "name": "season",
+          "type": "smallint(4) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "default": "'''solo'''",
+          "autoincrement": false,
+          "name": "type",
+          "type": "enum('family','solo')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bType": {
+          "default": "'''new'''",
+          "autoincrement": false,
+          "name": "bType",
+          "type": "enum('new','returning')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "numApplicants": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "numApplicants",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owing": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "owing",
+          "type": "smallint(3) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "paid": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "paid",
+          "type": "smallint(3) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "reg2026": {
+      "name": "reg2026",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "firstName": {
+          "autoincrement": false,
+          "name": "firstName",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lastName": {
+          "autoincrement": false,
+          "name": "lastName",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "autoincrement": false,
+          "name": "email",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "autoincrement": false,
+          "name": "phone",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone_sec": {
+          "autoincrement": false,
+          "name": "phone_sec",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "address": {
+          "autoincrement": false,
+          "name": "address",
+          "type": "varchar(1000)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "postal": {
+          "autoincrement": false,
+          "name": "postal",
+          "type": "varchar(7)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date": {
+          "default": "'current_timestamp()'",
+          "autoincrement": false,
+          "name": "date",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "gender": {
+          "autoincrement": false,
+          "name": "gender",
+          "type": "enum('m','f','o')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ageGroup": {
+          "autoincrement": false,
+          "name": "ageGroup",
+          "type": "enum('j','s','a')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lessons": {
+          "autoincrement": false,
+          "name": "lessons",
+          "type": "enum('none','private','public')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "season": {
+          "autoincrement": false,
+          "name": "season",
+          "type": "smallint(4) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "default": "'''solo'''",
+          "autoincrement": false,
+          "name": "type",
+          "type": "enum('family','solo')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bType": {
+          "default": "'''new'''",
+          "autoincrement": false,
+          "name": "bType",
+          "type": "enum('new','returning')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "numApplicants": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "numApplicants",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owing": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "owing",
+          "type": "smallint(3) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "paid": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "paid",
+          "type": "smallint(3) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "registration": {
+      "name": "registration",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "firstName": {
+          "autoincrement": false,
+          "name": "firstName",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lastName": {
+          "autoincrement": false,
+          "name": "lastName",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "autoincrement": false,
+          "name": "email",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "autoincrement": false,
+          "name": "phone",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone_sec": {
+          "autoincrement": false,
+          "name": "phone_sec",
+          "type": "varchar(12)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "address": {
+          "autoincrement": false,
+          "name": "address",
+          "type": "varchar(1000)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date": {
+          "default": "'current_timestamp()'",
+          "autoincrement": false,
+          "name": "date",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "gender": {
+          "autoincrement": false,
+          "name": "gender",
+          "type": "enum('m','f','o')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ageGroup": {
+          "autoincrement": false,
+          "name": "ageGroup",
+          "type": "enum('j','s','a')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lessons": {
+          "autoincrement": false,
+          "name": "lessons",
+          "type": "enum('none','private','public')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "season": {
+          "autoincrement": false,
+          "name": "season",
+          "type": "smallint(4) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "default": "'''solo'''",
+          "autoincrement": false,
+          "name": "type",
+          "type": "enum('family','solo')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bType": {
+          "default": "'''new'''",
+          "autoincrement": false,
+          "name": "bType",
+          "type": "enum('new','returning')",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "numApplicants": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "numApplicants",
+          "type": "tinyint(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owing": {
+          "default": 0,
+          "autoincrement": false,
+          "name": "owing",
+          "type": "smallint(3) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    }
+  },
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {},
+    "indexes": {}
+  }
+}

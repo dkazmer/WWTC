@@ -75,16 +75,24 @@
 		// console.log('>> valid?', currentTarget.validity.valid);
 		authenticated = currentTarget.validity.valid;
 	};
+
+	function submit(e: Event) {
+		// e.preventDefault();
+		console.log('>> submit', e);
+		// const xhr = new XMLHttpRequest()
+		// xhr.open()
+	}
 </script>
 
 {#if !authenticated}
 	<section id="form">
-		<div>
+		<form method="POST" onsubmit={submit}>
 			<!-- svelte-ignore a11y_autofocus -->
 			<!-- biome-ignore format: compact -->
 			<!-- biome-ignore lint/a11y/noAutofocus: allow autofocus -->
-			<input type="password" name="pass" id="pass" placeholder="Password" required autofocus minlength="6" onkeyup={auth}><br>
-		</div>
+			<input type="password" name="pass" id="pass" placeholder="Password" aria-label="Password" required autofocus
+				minlength="6" onkeyup={auth}><br>
+		</form>
 	</section>
 {:else}
 	<div class="wrapper">
@@ -194,7 +202,7 @@
 		margin: 5em auto;
 		text-align: center;
 
-		div {
+		form {
 			text-align: left;
 			display: inline-block;
 

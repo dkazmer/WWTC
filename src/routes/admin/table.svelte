@@ -31,7 +31,7 @@
 
 	const checkChange: ChangeEventHandler<HTMLInputElement> = ({ currentTarget: box }) => {
 		checkedIDs[box.checked ? 'add' : 'delete'](parseInt(box.name, 10));
-		onCheckChange(checkedIDs);
+		onCheckChange?.(checkedIDs);
 	};
 
 	const checkAll: ChangeEventHandler<HTMLInputElement> = ({ currentTarget }) => {
@@ -44,7 +44,7 @@
 	};
 
 	type Props = {
-		onCheckChange: Fn<void, Set<number>>;
+		onCheckChange?: Fn<void, Set<number>>;
 	} & List;
 </script>
 

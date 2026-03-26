@@ -8,6 +8,13 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+
+	namespace NodeJS {
+		interface ProcessEnv {
+			DATABASE_URL: string;
+			PASS: string;
+		}
+	}
 }
 
 export {};

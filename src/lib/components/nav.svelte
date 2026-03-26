@@ -9,64 +9,64 @@
 	const tabs: Tab[] = [
 		{
 			href: '/',
-			name: 'home',
+			// name: 'home',
 			icon: {
 				name: 'home',
 				family: 'outline'
 			}
 		},
 		{
-			href: '/membership',
-			icon: {
-				name: 'card_membership',
-				family: 'outline'
-			}
+			href: '/membership'
+			// icon: {
+			// 	name: 'card_membership',
+			// 	family: 'outline'
+			// }
 		},
 		{
-			href: '/schedule',
-			icon: {
-				name: 'schedule',
-				family: 'outline'
-			}
+			href: '/schedule'
+			// icon: {
+			// 	name: 'schedule',
+			// 	family: 'outline'
+			// }
 		},
 		{
-			href: '/photos',
-			icon: {
-				name: 'photo',
-				family: 'outline'
-			}
+			href: '/photos'
+			// icon: {
+			// 	name: 'photo',
+			// 	family: 'outline'
+			// }
 		},
 		{
 			// @ts-expect-error (ts2322): string doesn't match type
 			href: 'javascript://',
 			name: 'programs',
-			role: 'menu',
-			icon: {
-				name: 'list_alt',
-				family: 'outline'
-			}
+			role: 'menu'
+			// icon: {
+			// 	name: 'list_alt',
+			// 	family: 'outline'
+			// }
 		},
 		{
 			href: '/executive',
-			name: 'exec',
-			icon: {
-				name: 'badge',
-				family: 'outline'
-			}
+			name: 'exec'
+			// icon: {
+			// 	name: 'badge',
+			// 	family: 'outline'
+			// }
 		},
 		{
-			href: '/newsletter',
-			icon: {
-				name: 'picture_as_pdf',
-				family: 'outline'
-			}
+			href: '/newsletter'
+			// icon: {
+			// 	name: 'picture_as_pdf',
+			// 	family: 'outline'
+			// }
 		},
 		{
-			href: '/links',
-			icon: {
-				name: 'insert_link',
-				family: 'outline'
-			}
+			href: '/links'
+			// icon: {
+			// 	name: 'insert_link',
+			// 	family: 'outline'
+			// }
 		}
 	];
 

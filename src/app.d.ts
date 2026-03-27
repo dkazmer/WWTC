@@ -15,6 +15,10 @@ declare global {
 			PASS: string;
 		}
 	}
+
+	namespace DB {
+		type Table = 'registration' | `reg202${4 | 5 | 6}`;
+	}
 }
 
 export {};

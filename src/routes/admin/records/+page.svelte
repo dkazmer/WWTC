@@ -8,6 +8,8 @@
 	import StatsComponent from './stats.svelte';
 	import Table from './table.svelte';
 
+	let form: HTMLFormElement;
+
 	let checkedIDs: Set<number>;
 	let checkedSize = $state(0);
 	let list: List = $state([]);
@@ -29,6 +31,7 @@
 	onMount(async () => {
 		list = await get({ year: '2026' });
 		stats = setStats(list);
+		form.submit();
 	});
 
 	function setStats(data: List) {
@@ -59,14 +62,14 @@
 		console.log('>> db', currentTarget.value);
 	};
 
-	const genExcel = () => {
+	function genExcel() {
 		const xls = new myExcelXML(list);
 		xls.downLoad();
-	};
+	}
 
-	const refresh = () => {
+	function refresh() {
 		console.log('>> refresh');
-	};
+	}
 </script>
 
 <!-- <h1>Records</h1> -->
@@ -85,13 +88,8 @@
 			<span>Excel </span>
 			<img src={iconExcel} alt="excel" aria-hidden="true">
 		</button>
-		<form id="db" style="display: contents;">
-			<select
-				name="db"
-				id="year"
-				style="float: right; margin-right: 14px; box-shadow: 0 0 1px gray;"
-				onchange={changeDB}
-			>
+		<form id="db" method="GET" bind:this={form}>
+			<select name="db" id="year" onchange={changeDB}>
 				<option value="reg2026">2026</option>
 				<option value="reg2025">2025</option>
 				<option value="reg2024">2024</option>
@@ -114,6 +112,10 @@
 		max-width: unset;
 	}
 
+	form {
+		display: contents;
+	}
+
 	button,
 	input,
 	select {
@@ -127,6 +129,9 @@
 	}
 	select {
 		padding: 2px 16px;
+		float: right;
+		margin-right: 14px;
+		box-shadow: 0 0 1px gray;
 	}
 
 	button {

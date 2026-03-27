@@ -8,6 +8,7 @@
 	import StatsComponent from './stats.svelte';
 	import Table from './table.svelte';
 
+	let value = $state('');
 	let authenticated = $state(false);
 	let checkedIDs: Set<number>;
 	let checkedSize = $state(0);
@@ -19,6 +20,8 @@
 		paidAdults: 0,
 		paidJuniors: 0
 	});
+
+	const { form } = $props();
 
 	let listCount = $derived(Object.entries(list).length);
 
@@ -68,30 +71,17 @@
 	const refresh = () => {
 		console.log('>> refresh');
 	};
-
-	const auth: KeyboardEventHandler<HTMLInputElement> = ({ currentTarget, key }) => {
-		if (key !== 'Enter') return;
-		// if (!currentTarget.validity.valid) return;
-		// console.log('>> valid?', currentTarget.validity.valid);
-		authenticated = currentTarget.validity.valid;
-	};
-
-	function submit(e: Event) {
-		// e.preventDefault();
-		console.log('>> submit', e);
-		// const xhr = new XMLHttpRequest()
-		// xhr.open()
-	}
 </script>
 
 {#if !authenticated}
 	<section id="form">
-		<form method="POST" onsubmit={submit}>
+		<form method="POST" class={form?.incorrect && !value.length ? 'error' : null}>
 			<!-- svelte-ignore a11y_autofocus -->
 			<!-- biome-ignore format: compact -->
 			<!-- biome-ignore lint/a11y/noAutofocus: allow autofocus -->
 			<input type="password" name="pass" id="pass" placeholder="Password" aria-label="Password" required autofocus
-				minlength="6" onkeyup={auth}><br>
+				minlength="6" bind:value={value}><br>
+			<div><b>Error:</b> wrong password</div>
 		</form>
 	</section>
 {:else}
@@ -207,10 +197,26 @@
 			display: inline-block;
 
 			&:has(input:valid)::after {
-				content: 'Press "Enter" ...';
+				content: "Press ENTER ...";
 				font-size: small;
 				display: block;
 				color: #666;
+			}
+
+			div {
+				display: none;
+			}
+
+			&.error:has(input:invalid) {
+				input {
+					box-shadow: 0 0 12px 2px brown;
+				}
+
+				div {
+					display: block;
+					font-size: small;
+					color: brown;
+				}
 			}
 		}
 	}

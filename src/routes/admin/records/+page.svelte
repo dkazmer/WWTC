@@ -2,17 +2,19 @@
 	import { onMount } from 'svelte';
 	import type { ChangeEventHandler, MouseEventHandler } from 'svelte/elements';
 	import iconExcel from '$lib/assets/excel_icon.svg';
-	import { createAPIMethod } from '$lib/createAPI';
+	// import { createAPIMethod } from '$lib/createAPI';
 	import { myExcelXML } from './excel.js';
-	import type { List, Stats } from './index';
+	import type { Stats, TableDB } from './index';
 	import StatsComponent from './stats.svelte';
 	import Table from './table.svelte';
 
-	let form: HTMLFormElement;
+	// let formEl: HTMLFormElement;
+
+	const { data }: { data: { response: TableDB[] } } = $props();
 
 	let checkedIDs: Set<number>;
 	let checkedSize = $state(0);
-	let list: List = $state([]);
+	let list: TableDB[] = $state([]);
 	let stats: Stats = $state({
 		total: 0,
 		numAdults: 0,
@@ -23,18 +25,19 @@
 
 	let listCount = $derived(Object.entries(list).length);
 
-	const get = createAPIMethod<{ year: string }, List>({
-		url: '/data.json',
-		method: 'GET'
-	});
+	// const get = createAPIMethod<{ year: string }, List>({
+	// 	url: '/data.json',
+	// 	method: 'GET'
+	// });
 
 	onMount(async () => {
-		list = await get({ year: '2026' });
+		// list = await get({ year: '2026' });
+		list = data.response;
 		stats = setStats(list);
-		form.submit();
+		// formEl.submit();
 	});
 
-	function setStats(data: List) {
+	function setStats(data: TableDB[]) {
 		const adults = data.filter(({ ageGroup }) => ageGroup === 'a');
 		const juniors = data.filter(({ ageGroup }) => ageGroup !== 'a');
 
@@ -42,8 +45,8 @@
 			total: data.length,
 			numAdults: adults.length,
 			numJuniors: juniors.length,
-			paidAdults: adults.filter(({ owing }) => owing === '0').length,
-			paidJuniors: juniors.filter(({ owing }) => owing === '0').length
+			paidAdults: adults.filter(({ owing }) => !owing).length,
+			paidJuniors: juniors.filter(({ owing }) => !owing).length
 		};
 	}
 
@@ -60,6 +63,8 @@
 
 	const changeDB: ChangeEventHandler<HTMLSelectElement> = ({ currentTarget }) => {
 		console.log('>> db', currentTarget.value);
+		const form = currentTarget.closest('form');
+		form?.submit();
 	};
 
 	function genExcel() {
@@ -88,14 +93,14 @@
 			<span>Excel </span>
 			<img src={iconExcel} alt="excel" aria-hidden="true">
 		</button>
-		<form id="db" method="GET" bind:this={form}>
+		<form id="db" method="GET">
 			<select name="db" id="year" onchange={changeDB}>
 				<option value="reg2026">2026</option>
 				<option value="reg2025">2025</option>
 				<option value="reg2024">2024</option>
 				<option value="registration">2023</option>
 			</select>
-			<input type="hidden" name="pass" id="pass2">
+			<!-- <input type="hidden" name="pass" id="pass2"> -->
 		</form>
 	</section>
 	<section id="table">

@@ -17,7 +17,7 @@ declare global {
 	}
 
 	namespace DB {
-		type Table = 'registration' | `reg202${4 | 5 | 6}`;
+		type TableName = 'registration' | `reg202${4 | 5 | 6}`;
 	}
 }
 

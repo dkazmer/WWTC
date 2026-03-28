@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ChangeEventHandler, MouseEventHandler } from 'svelte/elements';
-	import type { Age, Gender, List } from './index';
+	import type { TableDB } from './index';
 
 	let tbody: HTMLElement;
 
@@ -13,7 +13,7 @@
 	const triggerEvent = (box: HTMLInputElement) => box?.dispatchEvent(new Event('change', { bubbles: true }));
 	const { onCheckChange, ...list }: Props = $props();
 
-	function getGender(x: Gender) {
+	function getGender(x: TableDB['gender']) {
 		// biome-ignore format: compact
 		switch (x) {
 			case 'm': return 'male';
@@ -45,7 +45,7 @@
 
 	type Props = {
 		onCheckChange?: Fn<void, Set<number>>;
-	} & List;
+	} & TableDB[];
 </script>
 
 <!-- <script module>
@@ -68,25 +68,27 @@
 		</tr>
 	</thead>
 	<tbody bind:this={tbody}>
-		{#each list as { id, firstName, lastName, email, phone, phone_sec, address, postal, date, gender, ageGroup, season, type, bType, owing, paid }}
-			<tr onclick={owing === '0' ? null : setCheck}>
+		{#each list as { id, firstName, lastName, email, phone, phoneSec, address, postal, date, gender, ageGroup, season, type, bType, owing, paid }}
+			{@const idString = `${id}`}
+			<tr onclick={!owing ? null : setCheck}>
 				<td>
-					{#if owing !== '0'}
-						<input type="checkbox" name={id} {id} data-ow={owing} onchange={checkChange}>
+					{#if owing}
+						<input type="checkbox" name={idString} id={idString} data-ow={owing} onchange={checkChange}>
 					{/if}
 				</td>
 				<td>{id}</td>
-				<td style="font-weight:600">{firstName} {lastName}</td>
+				<td style="font-weight: 600">{firstName} {lastName}</td>
 				<td><a href="mailto:{email}">{email}</a></td>
-				<td>{phone}<br>{phone_sec}</td>
+				<td>{phone}<br>{phoneSec}</td>
 				<td>{address.replaceAll(/\s?,\s?/g, ', ')} {postal || ''}</td>
 				<td>{ageGroup === 'a' ? 'adult' : 'junior'}</td>
 				<td>{getGender(gender)}</td>
 				<td>{date}</td>
 				<td>{type}, {bType}</td>
 				<td>{season}</td>
-				<td style:color={owing !== '0' ? 'darkred' : 'darkgrey'}>${owing}</td>
-				<td style:color={owing === '0' ? 'darkgreen' : 'darkgrey'}>{paid ? `$${paid}` : '/'}</td>
+				<td style:color={owing ? 'darkred' : 'darkgrey'}>${owing}</td>
+				<!-- <td style:color={!owing ? 'darkgreen' : 'darkgrey'}>${paid}</td> -->
+				<td style:color={!owing ? 'darkgreen' : 'darkgrey'}>{paid !== undefined ? `$${paid}` : '/'}</td>
 			</tr>
 		{/each}
 	</tbody>

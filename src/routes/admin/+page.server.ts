@@ -14,7 +14,7 @@ export const actions = {
 				httpOnly: true,
 				secure: true,
 				sameSite: 'strict',
-				maxAge: 60 // * 60 * 24 * 7; // 1 week (unit: seconds)
+				maxAge: 120 // * 60 * 24 * 7; // 1 week (unit: seconds)
 			});
 
 			throw redirect(303, path);

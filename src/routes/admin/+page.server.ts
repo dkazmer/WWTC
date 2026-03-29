@@ -8,13 +8,12 @@ export const actions = {
 		const path = '/admin/records';
 
 		if (pass === PASS) {
-			console.log('>> redirect');
 			cookies.set('authenticated', 'true', {
 				path,
 				httpOnly: true,
 				secure: true,
 				sameSite: 'strict',
-				maxAge: 120 // * 60 * 24 * 7; // 1 week (unit: seconds)
+				maxAge: 60 * 60 // * 24 * 7; // 1 week (unit: seconds)
 			});
 
 			throw redirect(303, path);

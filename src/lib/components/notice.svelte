@@ -23,6 +23,7 @@
 
 		&::selection {
 			background-color: var(--_accent);
+			color: whitesmoke;
 		}
 
 		&::before {

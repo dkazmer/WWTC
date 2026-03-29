@@ -46,17 +46,8 @@
 	type Props = {
 		onCheckChange?: Fn<void, Set<number>>;
 	} & TableDB[];
+	// } & (TableDB & { [K in 'paid' | 'postal']: string })[];
 </script>
-
-<!-- <script module>
-	export type Gender = 'm' | 'f' | 'o';
-	export type Age = 'a' | 'j';
-	export type List = ({ [K in ListKeys]: string } & { gender: Gender; ageGroup: Age; })[]
-
-	// biome-ignore format: compact
-	type ListKeys = 'id' | 'firstName' | 'lastName' | 'email' | 'phone' | 'phone_sec' | 'address' | 'postal'
-		| 'date' | 'lessons' | 'season' | 'type' | 'bType' | 'numApplicants' | 'owing' | 'paid';
-</script> -->
 
 <table>
 	<thead>
@@ -77,7 +68,7 @@
 					{/if}
 				</td>
 				<td>{id}</td>
-				<td style="font-weight: 600">{firstName} {lastName}</td>
+				<td class="bold">{firstName} {lastName}</td>
 				<td><a href="mailto:{email}">{email}</a></td>
 				<td>{phone}<br>{phoneSec}</td>
 				<td>{address.replaceAll(/\s?,\s?/g, ', ')} {postal || ''}</td>
@@ -128,6 +119,9 @@
 				&:hover {
 					outline: #683 dashed 2px;
 				}
+			}
+			td.bold {
+				font-weight: 600
 			}
 		}
 

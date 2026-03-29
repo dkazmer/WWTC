@@ -30,7 +30,7 @@
 		{#each list as item, i}
 			{@const [first, last] = item.name.split(' ')}
 			<p class={i ? null : 'club'}>
-				{first} <span>{last}</span>{@html item.occupation ? ' &bull;' : ''} {item.occupation}
+				<b>{first} <span>{last}</span></b>{@html item.occupation ? ' &bull;' : ''} {item.occupation}
 				<span><a href="mailto:{item.email}">{item.email}</a></span>
 			</p>
 		{/each}
@@ -74,6 +74,10 @@
 
 			p {
 				margin-bottom: 2em;
+
+				b {
+					font-weight: 600;
+				}
 
 				&::before {
 					content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4s-4 1.79-4 4s1.79 4 4 4m0 2c-2.67 0-8 1.34-8 4v1c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-1c0-2.66-5.33-4-8-4'/%3E%3C/svg%3E");

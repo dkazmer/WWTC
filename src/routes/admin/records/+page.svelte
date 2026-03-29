@@ -8,10 +8,19 @@
 	import StatsComponent from './stats.svelte';
 	import Table from './table.svelte';
 
-	// let formEl: HTMLFormElement;
-
 	const { data }: { data: { response: TableDB[] } } = $props();
 
+	const dbNames: {
+		name: `${number}`;
+		value: DB.TableName;
+	}[] = [
+		{ name: '2026', value: 'reg2026' },
+		{ name: '2025', value: 'reg2025' },
+		{ name: '2024', value: 'reg2024' },
+		{ name: '2023', value: 'reg2023' }
+	];
+
+	let searchDB: DB.TableName = $state('reg2026');
 	let checkedIDs: Set<number>;
 	let checkedSize = $state(0);
 	let list: TableDB[] = $state([]);
@@ -25,16 +34,10 @@
 
 	let listCount = $derived(Object.entries(list).length);
 
-	// const get = createAPIMethod<{ year: string }, List>({
-	// 	url: '/data.json',
-	// 	method: 'GET'
-	// });
-
 	onMount(async () => {
-		// list = await get({ year: '2026' });
+		searchDB = new URL(location.href).searchParams.get('db') as DB.TableName;
 		list = data.response;
 		stats = setStats(list);
-		// formEl.submit();
 	});
 
 	function setStats(data: TableDB[]) {
@@ -93,12 +96,11 @@
 			<span>Excel </span>
 			<img src={iconExcel} alt="excel" aria-hidden="true">
 		</button>
-		<form id="db" method="GET">
+		<form id="db" method="GET" onsubmit={e => e.preventDefault()}>
 			<select name="db" id="year" onchange={changeDB}>
-				<option value="reg2026">2026</option>
-				<option value="reg2025">2025</option>
-				<option value="reg2024">2024</option>
-				<option value="registration">2023</option>
+				{#each dbNames as { name, value }}
+					<option {value} selected={value === searchDB || null}>{name}</option>
+				{/each}
 			</select>
 			<!-- <input type="hidden" name="pass" id="pass2"> -->
 		</form>
@@ -122,7 +124,6 @@
 	}
 
 	button,
-	input,
 	select {
 		font-family: inherit;
 		font-weight: 500;
@@ -178,10 +179,6 @@
 		&#is_paid {
 			padding-block: 8px;
 		}
-	}
-
-	input:not([type="button"], [type="hidden"], [type="checkbox"], [type="radio"]) {
-		min-width: 219px;
 	}
 
 	section#table {

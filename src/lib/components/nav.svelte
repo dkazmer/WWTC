@@ -10,6 +10,7 @@
 		{
 			href: '/',
 			// name: 'home',
+			label: 'home',
 			icon: {
 				name: 'home',
 				family: 'outline'
@@ -145,7 +146,7 @@
 	<div class="main-menu">
 		<div role="menubar">
 			<ul>
-				{#each tabs as { href, name, role, className, icon }}
+				{#each tabs as { href, name, role, className, icon, label }}
 					<li>
 						{#if role === 'menu'}
 							<a
@@ -170,7 +171,13 @@
 								<div></div>
 							</a>
 						{:else}
-							<a {href} aria-current={isPath(href) ? 'page' : null} onclick={() => menuOpen = false}>
+							<a
+								{href}
+								aria-label={label || null}
+								title={label || null}
+								aria-current={isPath(href) ? 'page' : null}
+								onclick={() => menuOpen = false}
+							>
 								{#if icon}
 									<img
 										src="https://material-icons.github.io/material-icons/svg/{icon.name}/{icon.family}.svg"

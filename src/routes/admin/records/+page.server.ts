@@ -1,6 +1,5 @@
 // import { fail, json } from '@sveltejs/kit';
 // import { eq } from 'drizzle-orm';
-import type { InferSelectModel } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/mysql2';
 import { DATABASE_URL } from '$env/static/private';
 import { getTable } from '$lib/server/db/schema';
@@ -23,5 +22,3 @@ export const actions = {
 		console.log('>> formData', formData);
 	}
 };
-
-export type TableDB = InferSelectModel<typeof defaultTable>;

@@ -17,12 +17,10 @@
 	let dataFamily = $state<Family[]>([{ lastName, firstName: '', age: '', gender: '' }]);
 	let total = $state(0);
 
-	// biome-ignore lint/correctness/noUnusedVariables: is used
 	function addFamily() {
 		dataFamily.length < 6 && dataFamily.push({ firstName: '', lastName, age: '', gender: '' });
 	}
 
-	// biome-ignore lint/correctness/noUnusedVariables: is used
 	function rmFamily(i: number) {
 		dataFamily.splice(i, 1);
 		totalReducer();
@@ -63,7 +61,7 @@
 </div>
 <section>
 	<!-- <form action="connect.php" method="post"> -->
-	<form>
+	<form method="POST">
 		{@render person(dataFamily.at(0)!, 0)}
 		<section class="returning">
 			<input type="radio" name="returning" id="nMem" value="new" required><label for="nMem">New member</label>
@@ -255,8 +253,6 @@
 	</section>
 {/snippet}
 
-<!-- <Test /> -->
-
 <style lang="scss">
 	/* form */
 	input,
@@ -304,13 +300,13 @@
 	.address,
 	.additional,
 	.contact {
-		padding-top: 20px;
+		padding-top: 2em;
 
 		h2 {
 			font-size: inherit;
 			font-weight: 600;
 			margin: 0 0 6px;
-			border-top: darkgray dashed 1px;
+			border-top: none;
 			opacity: 1;
 		}
 	}
@@ -319,7 +315,7 @@
 			content: "";
 			display: block;
 			padding-top: 12px;
-			border-top: darkgray dashed 1px;
+			/* border-top: darkgray dashed 1px; */
 		}
 		h2 {
 			display: inline-block;

@@ -1,4 +1,5 @@
 // import { sql } from 'drizzle-orm';
+import type { InferSelectModel } from 'drizzle-orm';
 import {
 	// mysqlSchema,
 	// type AnyMySqlColumn,
@@ -11,7 +12,7 @@ import {
 	varchar
 } from 'drizzle-orm/mysql-core';
 
-export function getTable(db: DB.TableName) {
+export function getTable<T extends DB.TableName>(db: T) {
 	if (db === 'reg2023')
 		return mysqlTable('registration', {
 			id: int().autoincrement().notNull(),
@@ -53,3 +54,5 @@ export function getTable(db: DB.TableName) {
 		paid: smallint().notNull()
 	});
 }
+
+export type TableDB = InferSelectModel<ReturnType<typeof getTable<'reg2026'>>> & { [K in 'postal' | 'paid']: string };

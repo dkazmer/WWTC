@@ -1,4 +1,4 @@
-import { fail, redirect } from '@sveltejs/kit';
+import { fail, redirect, type Cookies } from '@sveltejs/kit';
 import { drizzle } from 'drizzle-orm/mysql2';
 import { DATABASE_URL } from '$env/static/private';
 import { getTable, type TableDB } from '$lib/server/db/schema';
@@ -9,7 +9,7 @@ const db = drizzle(DATABASE_URL);
 const defaultTable = getTable('reg2026');
 
 export const actions = {
-	async default({ request }) {
+	async default({ request, cookies }) {
 		// @ts-expect-error (ts2740): missing props
 		const formattedData: TableDB = {};
 		const formData = await request.formData();
@@ -41,7 +41,7 @@ export const actions = {
 		// 	return fail(400, { message, cause });
 		// }
 
-		return email(formattedData);
+		return email(formattedData, cookies);
 	}
 };
 
@@ -73,9 +73,18 @@ async function insert(formattedData: TableDB, additionalFamily: TableDB[]) {
 	return { data, error: null };
 }
 
-async function email(formattedData: TableDB) {
+async function email(formattedData: TableDB, cookies: Cookies) {
 	const { data, error } = await tryCatch(send(formattedData));
 	console.log('>> emailResponse', data, error);
+
+	cookies.set('registered', 'true', {
+		path: '/membership',
+		httpOnly: false,
+		secure: true,
+		sameSite: 'strict',
+		maxAge: 60 // 1 minute (unit: seconds)
+	});
+
 	if (data) throw redirect(303, '/membership?registered');
 
 	const { code, command, response, responseCode } = error as unknown as App.Error['Response'];

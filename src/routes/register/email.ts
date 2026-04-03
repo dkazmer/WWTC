@@ -23,6 +23,7 @@ const transporter = createTransport({
 });
 
 export function send(userData: TableDB) {
+	// return Promise.resolve('email fake sent' as unknown as SMTPTransport.SentMessageInfo);
 	const mailOptions: SendMailOptions = {
 		to: userData.email,
 		from: `Wishing Well Tennis Club <${senderAlt}>`,

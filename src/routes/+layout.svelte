@@ -23,7 +23,8 @@
 		noticeCheckerPlus();
 
 		const url = new URL(location.href);
-		hasRegistered = url.searchParams.has('registered');
+		console.log('>> cookie (layout)', document.cookie.includes('registered'));
+		hasRegistered = url.searchParams.has('registered') && document.cookie.includes('registered');
 	});
 
 	function noticeCheckerPlus() {

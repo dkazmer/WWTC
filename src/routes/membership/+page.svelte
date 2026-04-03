@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import PrimaryBtn from '$lib/components/pri_btn.svelte';
-	import { rates } from '$lib/constants';
+	import { rates, season } from '$lib/constants';
 
 	let hasRegistered = $state(false);
 
 	onMount(() => {
 		const url = new URL(location.href);
-		hasRegistered = url.searchParams.has('registered');
+		hasRegistered = url.searchParams.has('registered') && document.cookie.includes('registered');
 	});
 
 	const {
@@ -16,7 +16,7 @@
 	} = rates;
 </script>
 
-<h1><time datetime="2026">2026</time> membership fees</h1>
+<h1><time datetime={`${season}`}>{season}</time> membership fees</h1>
 
 <table>
 	<thead>

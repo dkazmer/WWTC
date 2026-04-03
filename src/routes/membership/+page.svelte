@@ -1,6 +1,14 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import PrimaryBtn from '$lib/components/pri_btn.svelte';
 	import { rates } from '$lib/constants';
+
+	let hasRegistered = $state(false);
+
+	onMount(() => {
+		const url = new URL(location.href);
+		hasRegistered = url.searchParams.has('registered');
+	});
 
 	const {
 		adult: { earlyBird, regular, fall },
@@ -41,7 +49,9 @@
 	</tbody>
 </table>
 
-<div><PrimaryBtn href="/register" label="Register now" icon={{ family: 'outline', name: 'app_registration' }} /></div>
+{#if !hasRegistered}
+	<div><PrimaryBtn href="/register" label="Register now" icon={{ family: 'outline', name: 'app_registration' }} /></div>
+{/if}
 
 <h2>Online Booking of Tennis Courts & Hitting Wall</h2>
 <p>

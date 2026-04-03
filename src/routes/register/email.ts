@@ -1,5 +1,6 @@
 import { createTransport, type SendMailOptions } from 'nodemailer';
-import { DB_PASS } from '$env/static/private';
+import type SMTPTransport from 'nodemailer/lib/smtp-transport';
+import { DB_PASS, DB_USER } from '$env/static/private';
 import { season } from '$lib/constants';
 import type { TableDB } from '$lib/server/db/schema';
 
@@ -11,13 +12,12 @@ const transporter = createTransport({
 	port: 587,
 	from: `Wishing Well Tennis Club <${senderAlt}>`,
 	replyTo: `Wishing Well Tennis Club <${sender}>`,
-	headers: {
-		'MIME-Version': '1.0',
-		'Content-type': 'text/plain; charset=UTF-8'
-	},
+	// headers: {
+	// 	'MIME-Version': '1.0',
+	// 	'Content-type': 'text/plain; charset=UTF-8'
+	// },
 	auth: {
-		// user: senderAlt,
-		user: 'wwtcspri',
+		user: DB_USER,
 		pass: decodeURIComponent(DB_PASS)
 	}
 });
@@ -29,19 +29,21 @@ export function send(userData: TableDB) {
 		replyTo: `Wishing Well Tennis Club <${sender}>`,
 		// bcc: `dkazmer@live.ca; ${sender}`,
 		subject: `${season} tennis season at WWTC`,
-		// text: getBody(),
+		// text: getBody(userData),
 		html: getBody(userData)
 	};
 
-	transporter.sendMail(mailOptions, (error, info) => {
-		error ? console.error('>> error', error) : console.log('>> email sent!', info);
+	return new Promise<SMTPTransport.SentMessageInfo>((res, rej) => {
+		transporter.sendMail(mailOptions, (error, info) => {
+			error ? rej(error) : res(info);
+		});
 	});
 }
 
 function getBody({ firstName, lastName, owing, bType }: TableDB) {
 	return `Welcome${bType === 'returning' ? ' back' : ''}, <b>${firstName} ${lastName}</b>, to <i>Wishing Well Tennis Club</i> for the ${season} season!
 <p>
-Please remember to send a money transfer in the amount of <b>$${owing}</b> to <u>${sender}</u>.
+Please remember to send a money transfer to <u>${sender}</u> in the amount of <b>$${owing}</b>.
 </p>
 Once we have received payment, we'll provide the gate combo-lock code, and you'll be able to collect your shoe tag on opening day or thereafter. Allow twenty-four (24) hours to process your membership.
 <p>

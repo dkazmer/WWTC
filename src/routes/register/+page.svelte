@@ -2,7 +2,9 @@
 	import PrimaryBtn from '$lib/components/pri_btn.svelte';
 	import { keyDates, rates, season } from '$lib/constants';
 	import { determine } from './period.svelte';
+	import Notice from '$lib/components/notice.svelte';
 
+	const { form } = $props();
 	const adultRate = determine(keyDates, rates.adult);
 
 	const {
@@ -44,6 +46,10 @@
 		gender: 'm' | 'f' | 'o' | '';
 	}
 </script>
+
+{#if form?.error}
+	<Notice type="danger">Oops... something went wrong.</Notice>
+{/if}
 
 <h1>Sign up for the {season} season&hellip;</h1>
 <section id="disclaimer" aria-hidden={!legal}>

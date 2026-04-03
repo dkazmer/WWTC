@@ -14,9 +14,17 @@
 	let { children } = $props();
 	let noticeAllowedPages = $state(false);
 	let title = $state('');
+	let hasRegistered = $state(false);
 
 	onMount(noticeCheckerPlus);
-	afterNavigate(noticeCheckerPlus);
+	// afterNavigate(noticeCheckerPlus);
+
+	afterNavigate(() => {
+		noticeCheckerPlus();
+
+		const url = new URL(location.href);
+		hasRegistered = url.searchParams.has('registered');
+	});
 
 	function noticeCheckerPlus() {
 		const { pathname } = page.url;
@@ -40,6 +48,12 @@
 <Header />
 <main>
 	<div>
+		{#if hasRegistered}
+			<Notice
+				><b>Success!</b>&nbsp; We have received your application. A confirmation email has been sent. (Check your
+				junk/spam folder.)</Notice
+			>
+		{/if}
 		{#if notice && noticeAllowedPages}
 			<Notice type="info">{notice}</Notice>
 		{/if}

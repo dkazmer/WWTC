@@ -1,4 +1,4 @@
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { drizzle } from 'drizzle-orm/mysql2';
 import { DATABASE_URL } from '$env/static/private';
 import { getTable, type TableDB } from '$lib/server/db/schema';
@@ -13,7 +13,7 @@ export const actions = {
 		// @ts-expect-error (ts2740): missing props
 		const formattedData: TableDB = {};
 		const formData = await request.formData();
-		const additionalFamily = insertFamily(formData);
+		const additionalFamily = family(formData);
 
 		formData.forEach((value, key) => {
 			if (key.includes('[')) return;
@@ -35,24 +35,17 @@ export const actions = {
 		formattedData.numApplicants = additionalFamily.length + 1;
 		console.log('>> formattedData', formattedData, additionalFamily);
 
-		// const { data, error } = await tryCatch(db.insert(defaultTable).values(formattedData));
-
+		// const { error } = await insert(formattedData, additionalFamily);
 		// if (error) {
 		// 	const { message, cause } = error;
 		// 	return fail(400, { message, cause });
 		// }
 
-		// insert additional family
-		// additionalFamily.forEach(member => {
-		// 	db.insert(defaultTable).values(member);
-		// });
-
-		// email
-		send(formattedData);
+		return email(formattedData);
 	}
 };
 
-function insertFamily(formData: FormData) {
+function family(formData: FormData) {
 	const arr = [];
 
 	for (let i = 1; i <= 5; i++) {
@@ -66,4 +59,26 @@ function insertFamily(formData: FormData) {
 	}
 
 	return arr;
+}
+
+async function insert(formattedData: TableDB, additionalFamily: TableDB[]) {
+	const { data, error } = await tryCatch(db.insert(defaultTable).values(formattedData));
+	if (error) return { error };
+
+	// insert additional family
+	additionalFamily.forEach(member => {
+		db.insert(defaultTable).values(member);
+	});
+
+	return { data, error: null };
+}
+
+async function email(formattedData: TableDB) {
+	const { data, error } = await tryCatch(send(formattedData));
+	console.log('>> emailResponse', data, error);
+	if (data) throw redirect(303, '/membership?registered');
+
+	const { code, command, response, responseCode } = error as unknown as App.Error['Response'];
+	if (code !== 'EENVELOPE') return { error: { response: 'unknown error' } };
+	return fail<{ error: App.Error['Response'] }>(responseCode, { error: { code, command, response, responseCode } });
 }

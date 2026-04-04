@@ -4,6 +4,7 @@ import { DATABASE_URL } from '$env/static/private';
 import { getTable, type TableDB } from '$lib/server/db/schema';
 import { tryCatch } from '$lib/try-catch.js';
 import { send } from './email.js';
+import { eq } from 'drizzle-orm';
 
 const db = drizzle(DATABASE_URL);
 const defaultTable = getTable('reg2026');
@@ -33,13 +34,14 @@ export const actions = {
 		});
 
 		formattedData.numApplicants = additionalFamily.length + 1;
-		console.log('>> formattedData', formattedData, additionalFamily);
+		// console.log('>> formattedData', formattedData, additionalFamily);
 
-		// const { error } = await insert(formattedData, additionalFamily);
-		// if (error) {
-		// 	const { message, cause } = error;
-		// 	return fail(400, { message, cause });
-		// }
+		const { error } = await insert(formattedData, additionalFamily);
+		if (error) {
+			console.log('>> insert error', error);
+			const { message, cause } = error;
+			return fail(400, { error: { message, cause } });
+		}
 
 		return email(formattedData, cookies);
 	}
@@ -62,13 +64,15 @@ function family(formData: FormData) {
 }
 
 async function insert(formattedData: TableDB, additionalFamily: TableDB[]) {
-	const { data, error } = await tryCatch(db.insert(defaultTable).values(formattedData));
-	if (error) return { error };
+	// check existing
+	const existingUser = await db.select().from(defaultTable).where(eq(defaultTable.email, formattedData.email)).limit(1);
+	if (existingUser.length) return { error: new Error('Email has aleady been registered.') };
 
-	// insert additional family
-	additionalFamily.forEach(member => {
-		db.insert(defaultTable).values(member);
-	});
+	// insert
+	const x = additionalFamily.length ? [formattedData, ...additionalFamily] : formattedData;
+	// @ts-expect-error (ts2769): apparent type mismatch
+	const { data, error } = await tryCatch(db.insert(defaultTable).values(x));
+	if (error) return { error };
 
 	return { data, error: null };
 }
@@ -85,9 +89,10 @@ async function email(formattedData: TableDB, cookies: Cookies) {
 		maxAge: 60 // 1 minute (unit: seconds)
 	});
 
-	if (data) throw redirect(303, '/membership?registered');
+	throw redirect(303, `/membership?registered${error ? '&noemail' : ''}`);
 
-	const { code, command, response, responseCode } = error as unknown as App.Error['Response'];
-	if (code !== 'EENVELOPE') return { error: { response: 'unknown error' } };
-	return fail<{ error: App.Error['Response'] }>(responseCode, { error: { code, command, response, responseCode } });
+	// should never go beyond this point: registration is already successful, simply redirect with message about whether confirmation email was sent or not
+	// const { code, command, response, responseCode } = error as unknown as App.Error['Response'];
+	// if (code !== 'EENVELOPE') return { error: { response: 'unknown error' } };
+	// return fail<{ error: App.Error['Response'] }>(responseCode, { error: { code, command, response, responseCode } });
 }

@@ -1,8 +1,8 @@
 // import { fail, json } from '@sveltejs/kit';
-// import { eq } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/mysql2';
 import { DATABASE_URL } from '$env/static/private';
-import { getTable } from '$lib/server/db/schema';
+import { getTable, type TableDB } from '$lib/server/db/schema';
 
 const db = drizzle(DATABASE_URL);
 const defaultTable = getTable('reg2026');
@@ -17,8 +17,18 @@ export const load = async ({ request }) => {
 };
 
 export const actions = {
-	async default({ request }) {
+	async paid({ request }) {
 		const formData = await request.formData();
-		console.log('>> formData', formData);
+		console.log('>> paid', formData);
+		// for (const prop in formData) {
+		// 	console.log('>> prop', prop);
+		// }
+		formData.forEach((_value, key) => {
+			console.log('>> each', key);
+			// db.update(defaultTable).set({
+			// 	owing: 0,
+			// 	paid: 123
+			// } as unknown as Partial<TableDB>).where(eq(defaultTable.id, parseInt(key, 10)))
+		});
 	}
 };

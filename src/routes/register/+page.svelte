@@ -1,8 +1,8 @@
 <script lang="ts">
+	import Notice from '$lib/components/notice.svelte';
 	import PrimaryBtn from '$lib/components/pri_btn.svelte';
 	import { keyDates, rates, season } from '$lib/constants';
 	import { determine } from './period.svelte';
-	import Notice from '$lib/components/notice.svelte';
 
 	const { form } = $props();
 	const adultRate = determine(keyDates, rates.adult);
@@ -18,6 +18,7 @@
 	let validEmail = $state(false);
 	let dataFamily = $state<Family[]>([{ lastName, firstName: '', age: '', gender: '' }]);
 	let total = $state(0);
+	let emailValue = $state('');
 
 	function addFamily() {
 		dataFamily.length < 6 && dataFamily.push({ firstName: '', lastName, age: '', gender: '' });
@@ -48,7 +49,7 @@
 </script>
 
 {#if form?.error}
-	<Notice type="danger">Oops... something went wrong.</Notice>
+	<Notice type="danger">{form?.error?.message || 'Oops... something went wrong.'}</Notice>
 {/if}
 
 <h1>Sign up for the {season} season&hellip;</h1>
@@ -105,9 +106,11 @@
 					pattern={"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"}
 					title="eg., example@site.com"
 					onchange={({ target }: Event) => validEmail = (target as HTMLInputElement)?.validity?.valid}
+					bind:value={emailValue}
 				>
 			</div>
 			<div>
+				<!-- pattern={'[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,4}$'} -->
 				<input
 					type="email"
 					id="email2"
@@ -117,8 +120,8 @@
 					disabled={!validEmail}
 					onpaste={() => false}
 					autocomplete="off"
-					pattern={'[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,4}$'}
-					title="eg., example@site.com"
+					pattern="(?=.*{emailValue}).*"
+					title="(Email fields must match)"
 				><span></span>
 			</div>
 		</section>
@@ -556,6 +559,10 @@
 			font-weight: bold;
 			color: #350;
 		}
+	}
+	
+	#email2:invalid {
+		background-color: #fdd;
 	}
 
 	@media not all and (min-resolution: 0.001dpcm) {

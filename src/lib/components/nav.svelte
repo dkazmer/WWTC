@@ -12,7 +12,8 @@
 			// name: 'home',
 			label: 'home',
 			icon: {
-				name: 'home',
+				// name: 'home',
+				name: 'sports_tennis',
 				family: 'outline'
 			}
 		},
@@ -92,7 +93,6 @@
 		}
 	];
 
-	// biome-ignore lint/correctness/noUnusedVariables: is used
 	function isPath(path: string) {
 		return page.url.pathname === path;
 	}

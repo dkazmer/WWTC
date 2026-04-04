@@ -52,6 +52,7 @@
 			}
 		}
 		th {
+			font-size: 1.3rem;
 			font-weight: unset;
 			text-align: left !important;
 			padding-inline: 0 4em;

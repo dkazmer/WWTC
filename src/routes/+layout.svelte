@@ -15,6 +15,7 @@
 	let noticeAllowedPages = $state(false);
 	let title = $state('');
 	let hasRegistered = $state(false);
+	let noEmail = $state(false);
 
 	onMount(noticeCheckerPlus);
 	// afterNavigate(noticeCheckerPlus);
@@ -23,8 +24,8 @@
 		noticeCheckerPlus();
 
 		const url = new URL(location.href);
-		console.log('>> cookie (layout)', document.cookie.includes('registered'));
 		hasRegistered = url.searchParams.has('registered') && document.cookie.includes('registered');
+		noEmail = url.searchParams.has('noemail');
 	});
 
 	function noticeCheckerPlus() {
@@ -32,10 +33,6 @@
 		noticeAllowedPages = pathname === '/' || pathname === '/membership' || pathname === '/schedule';
 		title = pathname.split('/').at(-1)!.toUpperCase(); // + title setter
 	}
-
-	const notice: string = `We are currently in discussions with the City regarding our opening date. They are aiming to have the courts ready by
-		the last week of April. The final court surface work will be completed once the weather is consistently warm, likely
-		sometime in June. We’re excited to have the courts revitalized for the upcoming season.`;
 
 	// `The 2024 Club Tournament will be played on <time datetime="2024-09-14" style="font-weight: 600;">September 14/15<sup>th</sup></time>. Check under "PROGRAMS" for details`
 </script>
@@ -51,12 +48,20 @@
 	<div>
 		{#if hasRegistered}
 			<Notice
-				><b>Success!</b>&nbsp; We have received your application. A confirmation email has been sent. (Check your
-				junk/spam folder.)</Notice
-			>
+				><b>Success!</b>&nbsp; We have received your application.
+				{#if noEmail}
+					But a confirmation email could not be sent.
+				{:else}
+					A confirmation email has been sent. (Check your junk/spam folder.)
+				{/if}
+			</Notice>
 		{/if}
-		{#if notice && noticeAllowedPages}
-			<Notice type="info">{notice}</Notice>
+		{#if noticeAllowedPages}
+			<Notice type="info"
+				>We are currently in discussions with the City regarding our opening date. They are aiming to have the courts
+				ready by the last week of April. The final court surface work will be completed once the weather is consistently
+				warm, likely sometime in June. We’re excited to have the courts revitalized for the upcoming season.</Notice
+			>
 		{/if}
 		{@render children()}
 	</div>

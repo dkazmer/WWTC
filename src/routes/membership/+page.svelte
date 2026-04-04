@@ -95,6 +95,24 @@
 </p>
 
 <style lang="scss">
+	/* experimental */
+	:global(main > div)::after {
+		/* content: ""; */
+		background-image: url(https://material-icons.github.io/material-icons/svg/card_membership/outline.svg);
+		width: 50%;
+		display: block;
+		height: 12em;
+		background-repeat: no-repeat;
+		background-size: contain;
+		z-index: -1;
+		opacity: 0.1;
+		margin-block: 5em;
+	}
+
+	:global(main > div > div):nth-child(n + 2) {
+		margin-top: -24px;
+	}
+
 	table + div {
 		margin: 40px auto;
 		width: 820px;

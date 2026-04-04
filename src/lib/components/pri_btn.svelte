@@ -20,7 +20,7 @@
 </script>
 
 <div class="cta">
-	<button type={type || 'button'} role="link" onclick={href ? () => (location.pathname = href) : null}>
+	<button type={type || 'button'} role="link" onclick={href ? () => (location.href = href) : null}>
 		{#if icon}
 			<img
 				src="https://material-icons.github.io/material-icons/svg/{icon.name}/{icon.family}.svg"

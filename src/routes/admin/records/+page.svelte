@@ -35,7 +35,8 @@
 	let listCount = $derived(Object.entries(list).length);
 
 	onMount(async () => {
-		searchDB = new URL(location.href).searchParams.get('db') as DB.TableName;
+		const tableName = new URL(location.href).searchParams.get('db') as DB.TableName;
+		searchDB = tableName || searchDB;
 		list = data.response;
 		stats = setStats(list);
 	});
@@ -105,12 +106,15 @@
 			<!-- <input type="hidden" name="pass" id="pass2"> -->
 		</form>
 	</section>
-	<section id="table">
-		<Table {...list} onCheckChange={handleChecks} />
-	</section>
+	<form method="POST" action="?/paid">
+		<input type="hidden" name="table" value={searchDB}>
+		<section id="table">
+			<Table {...list} onCheckChange={handleChecks} />
+		</section>
+		<button id="is_paid" type="submit" disabled={!checkedSize}>Mark as Paid</button
+		><span class="selected">{checkedSize}</span>
+	</form>
 	<section id="numbers"><StatsComponent {...stats} /></section>
-	<button id="is_paid" type="button" disabled={!checkedSize} onclick={markAsPaid}>Mark as Paid</button
-	><span class="selected">{checkedSize}</span>
 </div>
 
 <style>

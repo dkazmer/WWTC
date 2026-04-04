@@ -19,16 +19,18 @@ export const load = async ({ request }) => {
 export const actions = {
 	async paid({ request }) {
 		const formData = await request.formData();
+		const tableLocal = getTable(formData.get('table') as DB.TableName);
 		console.log('>> paid', formData);
 		// for (const prop in formData) {
 		// 	console.log('>> prop', prop);
 		// }
 		formData.forEach((_value, key) => {
+			if (key === 'table') return;
 			console.log('>> each', key);
-			// db.update(defaultTable).set({
+			// db.update(tableLocal).set({
 			// 	owing: 0,
 			// 	paid: 123
-			// } as unknown as Partial<TableDB>).where(eq(defaultTable.id, parseInt(key, 10)))
+			// } as unknown as Partial<TableDB>).where(eq(tableLocal.id, parseInt(key, 10)))
 		});
 	}
 };

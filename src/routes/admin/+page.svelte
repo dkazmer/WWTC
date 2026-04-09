@@ -10,7 +10,7 @@
 		<!-- biome-ignore lint/a11y/noAutofocus: allow autofocus -->
 		<input type="password" name="pass" id="pass" placeholder="Password" aria-label="Password" required autofocus
 				minlength="6" bind:value={value}><br>
-		<div>wrong password</div>
+		<div>Incorrect</div>
 	</form>
 </section>
 

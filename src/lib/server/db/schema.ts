@@ -55,4 +55,5 @@ export function getTable<T extends DB.TableName>(db: T) {
 	});
 }
 
-export type TableDB = InferSelectModel<ReturnType<typeof getTable<'reg2026'>>> & { [K in 'postal' | 'paid']: string };
+export type Schema = ReturnType<typeof getTable<Exclude<DB.TableName, 'reg2023'>>>;
+export type TableDB = InferSelectModel<Schema> & { [K in 'postal' | 'paid']: string };

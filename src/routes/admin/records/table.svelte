@@ -64,7 +64,9 @@
 			<tr onclick={!owing ? null : setCheck}>
 				<td>
 					{#if owing}
-						<input type="checkbox" name={idString} id={idString} data-ow={owing} onchange={checkChange}>
+						<!-- <input type="checkbox" name={idString} id={idString} data-ow={owing} onchange={checkChange}> -->
+						<input type="checkbox" name={idString} id={idString} onchange={checkChange} />
+						<input type="hidden" name={'ow_'+idString} id={'ow_'+idString} value={owing} />
 					{/if}
 				</td>
 				<td>{id}</td>

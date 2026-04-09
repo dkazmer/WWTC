@@ -1,10 +1,17 @@
+// @ts-nocheck
 // https://stackoverflow.com/a/52948276
-export const myExcelXML = (function() {
-	let Workbook, WorkbookStart = '<?xml version="1.0"?><ss:Workbook  xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40">';
+export const myExcelXML = (function () {
+	let Workbook,
+		WorkbookStart =
+			'<?xml version="1.0"?><ss:Workbook  xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40">';
 	const WorkbookEnd = '</ss:Workbook>';
-	let fs, SheetName = 'SHEET 1',
-		styleID = 1, columnWidth = 80,
-		fileName = "members", uri, link;
+	let fs,
+		SheetName = 'SHEET 1',
+		styleID = 1,
+		columnWidth = 80,
+		fileName = 'members',
+		uri,
+		link;
 
 	class myExcelXML {
 		constructor(o) {
@@ -27,10 +34,10 @@ export const myExcelXML = (function() {
 			Workbook = WorkbookStart + Worksheet + WorkbookEnd;
 
 			uri = 'data:text/xls;charset=utf-8,' + encodeURIComponent(Workbook);
-			link = document.createElement("a");
+			link = document.createElement('a');
 			link.href = uri;
-			link.style = "visibility:hidden";
-			link.download = fileName + ".xls";
+			link.style = 'visibility:hidden';
+			link.download = fileName + '.xls';
 
 			document.body.appendChild(link);
 			link.click();
@@ -66,7 +73,7 @@ export const myExcelXML = (function() {
 		let Styles = '<ss:Styles><ss:Style ss:ID="' + id + '"><ss:Font ss:Bold="1"/></ss:Style></ss:Styles>';
 
 		return Styles;
-	}
+	};
 
 	const myXMLWorkSheet = function (name, o) {
 		const Table = myXMLTable(o);
@@ -74,7 +81,7 @@ export const myExcelXML = (function() {
 		const WorksheetEnd = '</ss:Worksheet>';
 
 		return WorksheetStart + Table + WorksheetEnd;
-	}
+	};
 
 	const myXMLTable = function (o) {
 		let TableStart = '<ss:Table>';
@@ -87,7 +94,6 @@ export const myExcelXML = (function() {
 			let rowData;
 			for (let i = 0; i < columnHeader.length; i++) {
 				TableStart += myXMLColumn(columnWidth);
-
 			}
 			for (let j = 0; j < tableData.length; j++) {
 				rowData += myXMLRow(tableData[j], columnHeader);
@@ -97,12 +103,11 @@ export const myExcelXML = (function() {
 		}
 
 		return TableStart + TableEnd;
-	}
+	};
 
 	const myXMLColumn = function (w) {
 		return '<ss:Column ss:AutoFitWidth="0" ss:Width="' + w + '"/>';
-	}
-
+	};
 
 	const myXMLHead = function (id, h) {
 		let HeadStart = '<ss:Row ss:StyleID="' + id + '">';
@@ -114,7 +119,7 @@ export const myExcelXML = (function() {
 		}
 
 		return HeadStart + HeadEnd;
-	}
+	};
 
 	const myXMLRow = function (r, h) {
 		let RowStart = '<ss:Row>';
@@ -125,7 +130,7 @@ export const myExcelXML = (function() {
 		}
 
 		return RowStart + RowEnd;
-	}
+	};
 
 	const myXMLCell = function (n) {
 		let CellStart = '<ss:Cell>';
@@ -135,14 +140,14 @@ export const myExcelXML = (function() {
 		CellStart += Data;
 
 		return CellStart + CellEnd;
-	}
+	};
 
 	const myXMLData = function (d) {
 		let DataStart = '<ss:Data ss:Type="String">';
 		const DataEnd = '</ss:Data>';
 
 		return DataStart + d + DataEnd;
-	}
+	};
 
 	const flatten = function (obj) {
 		var obj1 = JSON.parse(JSON.stringify(obj));
@@ -151,7 +156,7 @@ export const myExcelXML = (function() {
 			for (var k1 in obj2) {
 				if (obj2.hasOwnProperty(k1)) {
 					if (typeof obj2[k1] === 'object' && obj2[k1] !== null) {
-						delete obj1[k1]
+						delete obj1[k1];
 						for (var k2 in obj2[k1]) {
 							if (obj2[k1].hasOwnProperty(k2)) {
 								obj1[k1 + '-' + k2] = obj2[k1][k2];
@@ -176,7 +181,7 @@ export const myExcelXML = (function() {
 		} else {
 			return obj1;
 		}
-	}
+	};
 
 	return myExcelXML;
 })();

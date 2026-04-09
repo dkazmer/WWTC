@@ -79,6 +79,18 @@
 	function refresh() {
 		console.log('>> refresh');
 	}
+
+	// function markPaid({target}: PointerEvent & {target: HTMLButtonElement}) {
+	// 	if (!confirm('Confirm mark selected as paid')) return;
+	// 	const form = target?.closest('form')
+	// 	form?.submit()
+	// }
+
+	const markPaid: MouseEventHandler<HTMLButtonElement> = ({ currentTarget: t }) => {
+		if (!confirm('Confirm mark selected as paid')) return;
+		const form = t?.closest('form');
+		form?.submit();
+	};
 </script>
 
 <!-- <h1>Records</h1> -->
@@ -111,8 +123,12 @@
 		<section id="table">
 			<Table {...list} onCheckChange={handleChecks} />
 		</section>
-		<button id="is_paid" type="submit" disabled={!checkedSize}>Mark as Paid</button
-		><span class="selected">{checkedSize}</span>
+		<button id="is_paid" type="button" disabled={!checkedSize} onclick={markPaid}>
+			Mark as Paid<img
+				src="https://material-icons.github.io/material-icons/svg/bookmark_border/outline.svg"
+				alt="dollar"
+			>
+		</button><span class="selected">{checkedSize}</span>
 	</form>
 	<section id="numbers"><StatsComponent {...stats} /></section>
 </div>
@@ -182,6 +198,15 @@
 		}
 		&#is_paid {
 			padding-block: 8px;
+
+			img {
+				vertical-align: text-top;
+				margin-left: 8px;
+				margin-right: -6px;
+			}
+			&:disabled img {
+				opacity: 0.2;
+			}
 		}
 	}
 

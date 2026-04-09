@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { ChangeEventHandler, MouseEventHandler } from 'svelte/elements';
+	import type { ChangeEventHandler } from 'svelte/elements';
 	import iconExcel from '$lib/assets/excel_icon.svg';
-	// import { createAPIMethod } from '$lib/createAPI';
 	import { myExcelXML } from './excel.js';
-	import type { Stats, TableDB } from './index';
+	import type { PairingMap, Stats, TableDB } from '.';
 	import StatsComponent from './stats.svelte';
 	import Table from './table.svelte';
+	import { deserialize } from '$app/forms';
+	import { tryCatch } from '$lib/try-catch.js';
 
 	const { data }: { data: { response: TableDB[] } } = $props();
 
@@ -21,7 +22,7 @@
 	];
 
 	let searchDB: DB.TableName = $state('reg2026');
-	let checkedIDs: Set<number>;
+	let checkedIDs: PairingMap;
 	let checkedSize = $state(0);
 	let list: TableDB[] = $state([]);
 	let stats: Stats = $state({
@@ -54,21 +55,10 @@
 		};
 	}
 
-	const handleChecks: Fn<void, Set<number>> = x => {
-		checkedIDs = x;
-		checkedSize = x.size;
-	};
-
-	const markAsPaid: MouseEventHandler<HTMLButtonElement> = () => {
-		if (!checkedSize) return;
-		if (!confirm('Confirm mark selected as paid')) return;
-		console.log('>> mark as paid', checkedIDs);
-	};
-
 	const changeDB: ChangeEventHandler<HTMLSelectElement> = ({ currentTarget }) => {
 		console.log('>> db', currentTarget.value);
 		const form = currentTarget.closest('form');
-		form?.submit();
+		form?.requestSubmit();
 	};
 
 	function genExcel() {
@@ -76,21 +66,49 @@
 		xls.downLoad();
 	}
 
-	function refresh() {
-		console.log('>> refresh');
+	/**
+	 * Feature to come with "remote function" implementation
+	 */
+	async function refresh() {
+		location.reload();
 	}
 
-	// function markPaid({target}: PointerEvent & {target: HTMLButtonElement}) {
-	// 	if (!confirm('Confirm mark selected as paid')) return;
-	// 	const form = target?.closest('form')
-	// 	form?.submit()
-	// }
+	function handleChecks(x: PairingMap) {
+		// console.log('>> handle checks', x);
+		checkedIDs = x;
+		checkedSize = x.size;
+	}
 
-	const markPaid: MouseEventHandler<HTMLButtonElement> = ({ currentTarget: t }) => {
+	async function markPaid() {
 		if (!confirm('Confirm mark selected as paid')) return;
-		const form = t?.closest('form');
-		form?.submit();
-	};
+
+		const formData = new FormData();
+		formData.append('table', searchDB);
+
+		checkedIDs.forEach(({ id, ow }) => {
+			formData.append(id, ow);
+		});
+
+		const { data, error } = await tryCatch(
+			fetch('?/paid', {
+				method: 'POST',
+				body: formData
+			})
+		);
+
+		if (data) {
+			const result = deserialize(await data.text());
+			if (result.type === 'success') {
+				console.log('>> marked!', result);
+				return;
+			}
+
+			console.warn('>> hmm...', result);
+			return;
+		}
+
+		console.error(error);
+	}
 </script>
 
 <!-- <h1>Records</h1> -->
@@ -118,18 +136,15 @@
 			<!-- <input type="hidden" name="pass" id="pass2"> -->
 		</form>
 	</section>
-	<form method="POST" action="?/paid">
-		<input type="hidden" name="table" value={searchDB}>
-		<section id="table">
-			<Table {...list} onCheckChange={handleChecks} />
-		</section>
-		<button id="is_paid" type="button" disabled={!checkedSize} onclick={markPaid}>
-			Mark as Paid<img
-				src="https://material-icons.github.io/material-icons/svg/bookmark_border/outline.svg"
-				alt="dollar"
-			>
-		</button><span class="selected">{checkedSize}</span>
-	</form>
+	<!-- <form method="POST" action="?/paid"> -->
+	<input type="hidden" name="table" value={searchDB}>
+	<section id="table">
+		<Table {...list} onCheckChange={handleChecks} />
+	</section>
+	<button id="is_paid" type="button" disabled={!checkedSize} onclick={markPaid}>
+		Mark as Paid<img src="https://material-icons.github.io/material-icons/svg/bookmark_border/outline.svg" alt="dollar">
+	</button><span class="selected">{checkedSize}</span>
+	<!-- </form> -->
 	<section id="numbers"><StatsComponent {...stats} /></section>
 </div>
 

@@ -1,10 +1,10 @@
 import { fail, redirect, type Cookies } from '@sveltejs/kit';
+import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/mysql2';
 import { DATABASE_URL } from '$env/static/private';
 import { getTable, type TableDB } from '$lib/server/db/schema';
 import { tryCatch } from '$lib/try-catch.js';
 import { send } from './email.js';
-import { eq } from 'drizzle-orm';
 
 const db = drizzle(DATABASE_URL);
 const defaultTable = getTable('reg2026');

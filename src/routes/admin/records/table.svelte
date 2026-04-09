@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ChangeEventHandler, MouseEventHandler } from 'svelte/elements';
-	import type { TableDB } from './index';
+	import type { Pairing, TableDB } from '.';
 
 	let tbody: HTMLElement;
 
@@ -9,7 +9,7 @@
 		'id', 'name', 'email', 'phone', 'address', 'age group', 'gender', 'date', 'type', 'for', 'owing', 'paid'
 	];
 
-	const checkedIDs = new Set<number>();
+	const checkedIDs = new Map<string, Pairing>();
 	const triggerEvent = (box: HTMLInputElement) => box?.dispatchEvent(new Event('change', { bubbles: true }));
 	const { onCheckChange, ...list }: Props = $props();
 
@@ -30,7 +30,13 @@
 	};
 
 	const checkChange: ChangeEventHandler<HTMLInputElement> = ({ currentTarget: box }) => {
-		checkedIDs[box.checked ? 'add' : 'delete'](parseInt(box.name, 10));
+		checkedIDs[box.checked ? 'set' : 'delete'](box.name, {
+			// id: parseInt(box.name, 10),
+			// ow: parseInt(box.dataset.ow!, 10)
+			id: box.name,
+			ow: box.dataset.ow!
+		});
+
 		onCheckChange?.(checkedIDs);
 	};
 
@@ -44,9 +50,8 @@
 	};
 
 	type Props = {
-		onCheckChange?: Fn<void, Set<number>>;
+		onCheckChange?: Fn<void, Map<string, Pairing>>;
 	} & TableDB[];
-	// } & (TableDB & { [K in 'paid' | 'postal']: string })[];
 </script>
 
 <table>
@@ -64,9 +69,7 @@
 			<tr onclick={!owing ? null : setCheck}>
 				<td>
 					{#if owing}
-						<!-- <input type="checkbox" name={idString} id={idString} data-ow={owing} onchange={checkChange}> -->
-						<input type="checkbox" name={idString} id={idString} onchange={checkChange} />
-						<input type="hidden" name={'ow_'+idString} id={'ow_'+idString} value={owing} />
+						<input type="checkbox" name={idString} id={idString} data-ow={owing} onchange={checkChange}>
 					{/if}
 				</td>
 				<td>{id}</td>

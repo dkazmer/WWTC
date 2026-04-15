@@ -150,7 +150,7 @@
 
 <style>
 	:global(div:has(> .wrapper)) {
-		display: flex;
+		/*display: flex;*/
 		max-width: unset;
 	}
 
@@ -284,7 +284,6 @@
 	}
 
 	div.wrapper {
-		display: inline-block;
 		margin-inline: auto;
 		overflow: hidden;
 	}

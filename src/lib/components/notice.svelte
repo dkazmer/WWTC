@@ -4,7 +4,7 @@
 	const { children, type }: { children: Snippet; type?: 'info' | 'warn' | 'danger' } = $props();
 </script>
 
-<div class={type}>{@render children()}</div>
+<div class={`${type} notice`}>{@render children()}</div>
 
 <style>
 	div {

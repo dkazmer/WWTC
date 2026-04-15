@@ -1,6 +1,6 @@
 import { fail } from '@sveltejs/kit';
 import { inArray, sql } from 'drizzle-orm';
-import { drizzle, type MySqlRawQueryResult } from 'drizzle-orm/mysql2';
+import { drizzle } from 'drizzle-orm/mysql2';
 import { DATABASE_URL } from '$env/static/private';
 import { getTable, type TableDB, type Schema } from '$lib/server/db/schema';
 import { tryCatch } from '$lib/try-catch.js';
@@ -28,20 +28,17 @@ export const actions = {
 		const sqlChunks = create.sqlChunks(tableLocal as Schema, pairings);
 		const finalSql = sql.join(sqlChunks, sql.raw(' '));
 
-		const { data, error } = await tryCatch(
-			db
-				.update(tableLocal)
-				.set({
-					owing: 0,
-					paid: finalSql
-				} as unknown as Partial<TableDB>)
-				.where(
-					inArray(
-						tableLocal.id,
-						pairings.map(p => p.id)
-					)
-				)
-		);
+		// biome-ignore format: compact
+		const { data, error } = await tryCatch(db
+			.update(tableLocal)
+			.set({
+				owing: 0,
+				paid: finalSql
+			} as unknown as Partial<TableDB>)
+			.where(inArray(
+				tableLocal.id,
+				pairings.map(p => p.id)
+			)));
 
 		if (error) {
 			// console.log('>> error', error);

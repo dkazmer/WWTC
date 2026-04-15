@@ -25,7 +25,7 @@
 <h1>From the archives</h1>
 <section class="news">
 	{#each availableYears as year}
-		<p><a href="archive/WW_Newsletter_{year}.pdf" target="_blank">Spring {year}</a></p>
+		<p><a href="/archive/newsletter_{year}.pdf" target="_blank">Spring {year}</a></p>
 	{/each}
 </section>
 

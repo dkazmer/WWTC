@@ -46,6 +46,7 @@
 <Header />
 <main>
 	<div>
+		<!-- notices should be procured from static json -->
 		{#if hasRegistered}
 			<Notice
 				><b>Success!</b>&nbsp; We have received your application.
@@ -56,6 +57,9 @@
 				{/if}
 			</Notice>
 		{/if}
+		<Notice type="warn"
+			>Currently under maintenance. Registration is down for a brief period. Thanks for being patient.</Notice
+		>
 		{#if noticeAllowedPages}
 			<Notice type="info"
 				>We are currently in discussions with the City regarding our opening date. They are aiming to have the courts

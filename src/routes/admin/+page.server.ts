@@ -2,7 +2,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import { PASS } from '$env/static/private';
 
 export const actions = {
-	default: async ({ request, cookies }) => {
+	async default({ request, cookies }) {
 		const formData = await request.formData();
 		const pass = formData.get('pass');
 		const path = '/admin/records';

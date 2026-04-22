@@ -24,11 +24,19 @@ The Scarborough Tennis Federation schedule can be found
 	<time class="bold" datetime="2026-04-30">30<sup>th</sup></time>, <time datetime="PH2">7-9pm</time>.
 </p>
 
+<h2 style="border: none; margin-top: 0; color: brown;">Update</h2>
+<p>
+	The team tryout/practice scheduled for <time class="bold" datetime="2026-04-22">Wednesday, April 22</time> has been
+	cancelled. We will keep you updated regarding whether
+	<time class="bold" datetime="2026-04-25">Saturday’s practice</time>
+	will go ahead.
+</p>
+
 <style>
 	.champs {
 		float: left;
 		text-align: center;
-		margin-bottom: 8em;
+		margin-bottom: 18em;
 		margin-right: 4em;
 		font-size: small;
 		padding: 2em;

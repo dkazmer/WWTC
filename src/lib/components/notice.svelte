@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
-	const { children, type }: { children: Snippet; type?: 'info' | 'warn' | 'danger' } = $props();
+	const { children, type }: { children: Snippet; type?: App.Locals['Notice'] } = $props();
 </script>
 
 <div class={`${type} notice`}>{@render children()}</div>

@@ -161,6 +161,10 @@ time {
 	}
 }
 
+.notice + .notice {
+	margin-top: -24px;
+}
+
 @media only screen and (width <= 768px) {
 	nav a {
 		padding: 10px 16px;

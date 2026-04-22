@@ -109,10 +109,6 @@
 		margin-block: 5em;
 	}
 
-	:global(main > div > div):nth-child(n + 2) {
-		margin-top: -24px;
-	}
-
 	table + div {
 		margin: 40px auto;
 		width: 820px;

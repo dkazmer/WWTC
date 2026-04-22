@@ -1,0 +1,21 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"patternProperties": {
+		"^S_": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string"
+				},
+				"text": {
+					"type": "string"
+				},
+				"flag": {
+					"type": "boolean"
+				}
+			},
+			"required": ["type", "text", "flag"]
+		}
+	}
+}

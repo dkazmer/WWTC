@@ -1,0 +1,23 @@
+{
+	"$schema": "https://tennis.in.nf/client/noticesSchema.json",
+	"regSuccess": {
+		"flag": "true",
+		"type": "success",
+		"text": "<b>Success!</b>&nbsp; We have received your application. A confirmation email has been sent. (Check your junk/spam folder.)"
+	},
+	"regSuccessNoemail": {
+		"flag": true,
+		"type": "success",
+		"text": "<b>Success!</b>&nbsp; We have received your application. But a confirmation email could not be sent."
+	},
+	"maintenance": {
+		"flag": false,
+		"type": "warn",
+		"text": "Currently under maintenance. Registration is down for a brief period. Thanks for being patient."
+	},
+	"courtsReady": {
+		"flag": true,
+		"type": "info",
+		"text": "We are currently in discussions with the City regarding our opening date. They are aiming to have the courts ready by the last week of April. The final court surface work will be completed once the weather is consistently warm, likely sometime in June. We’re excited to have the courts revitalized for the upcoming season."
+	}
+}

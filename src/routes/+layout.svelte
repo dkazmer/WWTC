@@ -10,12 +10,14 @@
 	import Header from '$lib/components/header.svelte';
 	import Nav from '$lib/components/nav.svelte';
 	import Notice from '$lib/components/notice.svelte';
+	import { tryCatch } from '$lib/try-catch';
 
 	let { children } = $props();
 	let noticeAllowedPages = $state(false);
 	let title = $state('');
 	let hasRegistered = $state(false);
 	let noEmail = $state(false);
+	let notices: Record<string, { type: App.Locals['Notice']; text: string; flag: boolean }> = $state({});
 
 	onMount(noticeCheckerPlus);
 	// afterNavigate(noticeCheckerPlus);
@@ -28,7 +30,12 @@
 		noEmail = url.searchParams.has('noemail');
 	});
 
-	function noticeCheckerPlus() {
+	async function noticeCheckerPlus() {
+		const { data, error } = await tryCatch(fetch('/notices.json'));
+		if (error) return;
+
+		notices = await data?.json();
+
 		const { pathname } = page.url;
 		noticeAllowedPages = pathname === '/' || pathname === '/membership' || pathname === '/schedule';
 		title = pathname.split('/').at(-1)!.toUpperCase(); // + title setter
@@ -39,14 +46,14 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon}>
-	<title>WWTC &bull; {title || 'home'}</title>
+	<title>WWTC &bull; {title || 'HOME'}</title>
 </svelte:head>
 
 <Nav />
 <Header />
 <main>
 	<div>
-		<!-- notices should be procured from static json -->
+		<!-- should transfer the following to `noticeTemplate` -->
 		{#if hasRegistered}
 			<Notice
 				><b>Success!</b>&nbsp; We have received your application.
@@ -57,20 +64,22 @@
 				{/if}
 			</Notice>
 		{/if}
-		<Notice type="warn"
-			>Currently under maintenance. Registration is down for a brief period. Thanks for being patient.</Notice
-		>
-		{#if noticeAllowedPages}
-			<Notice type="info"
-				>We are currently in discussions with the City regarding our opening date. They are aiming to have the courts
-				ready by the last week of April. The final court surface work will be completed once the weather is consistently
-				warm, likely sometime in June. We’re excited to have the courts revitalized for the upcoming season.</Notice
-			>
+
+		{#if notices.maintenance?.flag}
+			{@render noticeTemplate(notices.maintenance)}
+		{/if}
+		
+		{#if noticeAllowedPages && notices.courtsReady?.flag}
+			{@render noticeTemplate(notices.courtsReady)}
 		{/if}
 		{@render children()}
 	</div>
 </main>
 <Footer />
+
+{#snippet noticeTemplate({text, type}: typeof notices[''])}
+	<Notice {type}>{text}</Notice>
+{/snippet}
 
 <style lang="scss">
 	main {

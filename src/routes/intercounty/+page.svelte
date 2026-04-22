@@ -29,6 +29,14 @@ The InterCounty schedule can be found
 	and Thursday, <time class="bold" datetime="2026-04-30">30<sup>th</sup></time>, <time datetime="PH2">7-9pm</time>.
 </p>
 
+<h2 style="border: none; margin-top: 0; color: brown;">Update</h2>
+<p>
+	The team tryout/practice scheduled for <time class="bold" datetime="2026-04-22">Wednesday, April 22</time> has been
+	cancelled. We will keep you updated regarding whether
+	<time class="bold" datetime="2026-04-25">Saturday’s practice</time>
+	will go ahead.
+</p>
+
 <style lang="scss">
 	.champs {
 		float: right;

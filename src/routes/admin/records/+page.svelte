@@ -100,6 +100,7 @@
 			const result = deserialize(await data.text());
 			if (result.type === 'success') {
 				console.log('>> marked!', result);
+				location.reload();
 				return;
 			}
 

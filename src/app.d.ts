@@ -10,7 +10,9 @@ declare global {
 				command: string;
 			};
 		}
-		// interface Locals {}
+		interface Locals {
+			Notice: 'info' | 'warn' | 'danger';
+		}
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}

@@ -28,7 +28,7 @@ export function send(userData: TableDB) {
 		to: userData.email,
 		from: `Wishing Well Tennis Club <${senderAlt}>`,
 		replyTo: `Wishing Well Tennis Club <${sender}>`,
-		// bcc: `dkazmer@live.ca; ${sender}`,
+		bcc: ['dkazmer@live.ca', sender],
 		subject: `${season} tennis season at WWTC`,
 		// text: getBody(userData),
 		html: getBody(userData)

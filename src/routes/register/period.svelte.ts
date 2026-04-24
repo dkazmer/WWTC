@@ -2,7 +2,6 @@
 import type { Temporal as Tmp } from '@js-temporal/polyfill';
 import type { rates as ratesObj } from '$lib/constants';
 
-// @ts-expect-error (ts2339): "Property 'Temporal' does not exist on type"
 const { Temporal } = 'Temporal' in globalThis ? globalThis : await import('@js-temporal/polyfill');
 const { Now, PlainDate: TPD } = Temporal;
 

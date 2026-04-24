@@ -4,10 +4,10 @@
 	const { children, type }: { children: Snippet; type?: App.Locals['Notice'] } = $props();
 </script>
 
-<div class={`${type} notice`}>{@render children()}</div>
+<div class={`${type} notice`}><div>{@render children()}</div></div>
 
 <style>
-	div {
+	div.notice {
 		--_accent: var(--accent, darkgreen);
 		--_svg: var(
 			--icon,

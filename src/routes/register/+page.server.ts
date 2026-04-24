@@ -66,7 +66,7 @@ function family(formData: FormData) {
 async function insert(formattedData: TableDB, additionalFamily: TableDB[]) {
 	// check existing
 	const existingUser = await db.select().from(defaultTable).where(eq(defaultTable.email, formattedData.email)).limit(1);
-	if (existingUser.length) return { error: new Error('Email has aleady been registered.') };
+	if (existingUser.length) return { error: new Error('Email has already been registered.') };
 
 	// insert
 	const x = additionalFamily.length ? [formattedData, ...additionalFamily] : formattedData;

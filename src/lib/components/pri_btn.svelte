@@ -50,12 +50,12 @@
 		background: linear-gradient(0deg, white, RGBA(102, 51, 102, 0.1));
 
 		&:not(:disabled):is(:hover, :focus) {
-			// margin-top: -1px;
+			/* margin-top: -1px; */
 			translate: 0 -1px;
 			box-shadow: 0 2px 3px var(--secondary);
-			// background: linear-gradient(0deg, white, RGBA(102, 51, 102, 0.05));
+			/* background: linear-gradient(0deg, white, RGBA(102, 51, 102, 0.05)); */
 		}
-		&:not(:disabled):active:is(:hover, :focus) {	// mouse down state
+		&:not(:disabled):active:is(:hover, :focus) {	/* mouse down state */
 			translate: 0 0;
 			box-shadow: 0 1px 2px var(--secondary);
 		}

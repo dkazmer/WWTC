@@ -68,7 +68,7 @@
 		{#if notices.maintenance?.flag}
 			{@render noticeTemplate(notices.maintenance)}
 		{/if}
-		
+
 		{#if noticeAllowedPages && notices.courtsReady?.flag}
 			{@render noticeTemplate(notices.courtsReady)}
 		{/if}
@@ -78,7 +78,7 @@
 <Footer />
 
 {#snippet noticeTemplate({text, type}: typeof notices[''])}
-	<Notice {type}>{text}</Notice>
+	<Notice {type}>{@html text}</Notice>
 {/snippet}
 
 <style lang="scss">

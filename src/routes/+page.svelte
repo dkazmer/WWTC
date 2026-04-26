@@ -8,12 +8,12 @@
 	<PrimaryBtn href="/register" label="Register now" icon={{ family: 'outline', name: 'app_registration' }} />
 </div>
 
-<img
-	src="./images/2024-05-04/20240504_121509.jpg"
+<enhanced:img
+	src="/static/images/2024-05-04/20240504_121509.jpg?w=1080"
 	alt="members"
 	role="presentation"
 	style="width: -webkit-fill-available; margin-bottom: 4em;"
->
+/>
 
 <div class="mapouter">
 	<div class="gmap_canvas">

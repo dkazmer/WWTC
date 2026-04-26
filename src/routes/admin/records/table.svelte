@@ -76,7 +76,7 @@
 				<td class="bold">{firstName} {lastName}</td>
 				<td><a href="mailto:{email}">{email}</a></td>
 				<td>{phone}<br>{phoneSec}</td>
-				<td>{address.replaceAll(/\s?,\s?/g, ', ')}{postal ? `, ${postal}` : ''}</td>
+				<td style="white-space: normal;">{address.replaceAll(/\s?,\s?/g, ', ')}{postal ? `, ${postal}` : ''}</td>
 				<td>{ageGroup === 'a' ? 'adult' : 'junior'}</td>
 				<td>{getGender(gender)}</td>
 				<td>{date}</td>

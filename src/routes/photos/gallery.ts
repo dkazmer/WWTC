@@ -76,5 +76,3 @@ const imagesLast = import.meta.glob<true, string, Picture>(
 	}
 );
 export const galleryLast = Object.values(imagesLast);
-
-console.log('>> gal', { ...images6, ...images6a }, gallery6);

@@ -3,17 +3,12 @@
 </script>
 
 <div class="heading">
-	<h1>Hello everyone!</h1>
+	<h1>Join our community</h1>
 	<a href="http://wwtennis.skedda.com/" target="_blank">Book a court</a>
-	<PrimaryBtn href="/register" label="Register now" icon={{ family: 'outline', name: 'app_registration' }} />
+	<PrimaryBtn href="/register" label="Sign up" icon={{ family: 'outline', name: 'app_registration' }} />
 </div>
 
-<enhanced:img
-	src="/static/images/2024-05-04/20240504_121509.jpg?w=1080"
-	alt="members"
-	role="presentation"
-	style="width: -webkit-fill-available; margin-bottom: 4em;"
-/>
+<enhanced:img src="/static/images/2024-05-04/20240504_121509.jpg?w=1080" alt="members" role="presentation" />
 
 <div class="mapouter">
 	<div class="gmap_canvas">
@@ -72,6 +67,12 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 </article>
 
 <style lang="scss">
+	[alt="members"] {
+		height: auto;
+		width: -webkit-fill-available;
+		margin-bottom: 4em;
+	}
+
 	.mapouter {
 		float: right;
 		margin-left: 4em;
@@ -102,6 +103,7 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 		h1 {
 			flex-grow: 1;
 			margin-top: 4px;
+			text-transform: initial;
 		}
 
 		h1 + a {

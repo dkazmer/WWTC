@@ -50,7 +50,7 @@
 </table>
 
 {#if !hasRegistered}
-	<div><PrimaryBtn href="/register" label="Register now" icon={{ family: 'outline', name: 'app_registration' }} /></div>
+	<div><PrimaryBtn href="/register" label="Sign up" icon={{ family: 'outline', name: 'app_registration' }} /></div>
 {/if}
 
 <h2>Online Booking of Tennis Courts & Hitting Wall</h2>

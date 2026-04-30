@@ -6,7 +6,7 @@
 
 <div class={`${type} notice`}><div>{@render children()}</div></div>
 
-<style>
+<style lang="scss">
 	div.notice {
 		--_accent: var(--accent, darkgreen);
 		--_svg: var(
@@ -21,7 +21,7 @@
 		border-left: var(--_accent) solid 6px;
 		color: var(--_accent);
 
-		&::selection {
+		div::selection {
 			background-color: var(--_accent);
 			color: whitesmoke;
 		}

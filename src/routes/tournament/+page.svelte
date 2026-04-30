@@ -1,10 +1,20 @@
 <script lang="ts">
-	import src from '$lib/assets/banner_tournament.png';
+	import type { Picture } from '@sveltejs/enhanced-img';
+	// @ts-expect-error (ts2307): added query
+	import src from '$lib/assets/banner_tournament.png?w=1080';
 
-	const pics = ['00', '01', '02', '03', '04', '10'];
+	const images = import.meta.glob<true, string, Picture>(
+		'/static/images/2025-09-14/IMG-20250907-WA00{00,01,02,03,04,10}.{jpg,png}',
+		{
+			query: { enhanced: true, w: 529 },
+			eager: true,
+			import: 'default'
+		}
+	);
+	export const gallery = Object.values(images);
 </script>
 
-<img {src} alt="banner" style="max-width: 100%; margin-block: 3em;">
+<enhanced:img {src} alt="banner" />
 
 <div>
 	Hello Wishing Well Tennis Club Members,
@@ -59,19 +69,19 @@ Open Doubles
 </div>
 
 <div class="images">
-	{#each pics as pic, i}
-		<img
-			src="./images/2025-09-14/IMG-20250907-WA00{pic}.jpg"
-			alt="2025 tournament {i+1}"
-			loading="lazy"
-			decoding="async"
-		>
+	{#each gallery as src, i}
+		<enhanced:img {src} alt="2025 tournament {i+1}" loading="lazy" decoding="async" />
 	{/each}
 </div>
 
 <style>
 	.name {
 		font-weight: 600;
+	}
+
+	[alt="banner"] {
+		max-width: 100%;
+		margin-block: 3em;
 	}
 
 	table {
@@ -100,9 +110,14 @@ Open Doubles
 		justify-content: space-between;
 		margin-top: 40px;
 
-		img[alt] {
+		picture {
 			max-width: 49%;
 			margin-top: 20px;
+
+			img {
+				width: 100%;
+				height: auto;
+			}
 		}
 	}
 </style>

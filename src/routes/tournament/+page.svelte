@@ -1,7 +1,5 @@
 <script lang="ts">
 	import type { Picture } from '@sveltejs/enhanced-img';
-	// @ts-expect-error (ts2307): added query
-	import src from '$lib/assets/banner_tournament.png?w=1080';
 
 	const images = import.meta.glob<true, string, Picture>(
 		'/static/images/2025-09-14/IMG-20250907-WA00{00,01,02,03,04,10}.{jpg,png}',
@@ -11,10 +9,11 @@
 			import: 'default'
 		}
 	);
-	export const gallery = Object.values(images);
+
+	const gallery = Object.values(images);
 </script>
 
-<enhanced:img {src} alt="banner" />
+<enhanced:img src="$lib/assets/banner_tournament.png?w=1080" alt="banner" />
 
 <div>
 	Hello Wishing Well Tennis Club Members,
@@ -74,7 +73,7 @@ Open Doubles
 	{/each}
 </div>
 
-<style>
+<style lang="scss">
 	.name {
 		font-weight: 600;
 	}
@@ -82,6 +81,7 @@ Open Doubles
 	[alt="banner"] {
 		max-width: 100%;
 		margin-block: 3em;
+		height: auto;
 	}
 
 	table {

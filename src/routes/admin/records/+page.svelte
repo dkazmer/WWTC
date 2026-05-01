@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import type { ChangeEventHandler } from 'svelte/elements';
 	import iconExcel from '$lib/assets/excel_icon.svg';
-	import { myExcelXML } from './excel.js';
+	import { myExcelXML } from './excel';
 	import type { PairingMap, Stats, TableDB } from '.';
 	import StatsComponent from './stats.svelte';
 	import Table from './table.svelte';
@@ -56,7 +56,6 @@
 	}
 
 	const changeDB: ChangeEventHandler<HTMLSelectElement> = ({ currentTarget }) => {
-		console.log('>> db', currentTarget.value);
 		const form = currentTarget.closest('form');
 		form?.requestSubmit();
 	};
@@ -99,15 +98,17 @@
 		if (data) {
 			const result = deserialize(await data.text());
 			if (result.type === 'success') {
-				console.log('>> marked!', result);
+				// console.log('>> marked!', result);
 				location.reload();
 				return;
 			}
 
+			// biome-ignore lint: suspicious/noConsole
 			console.warn('>> hmm...', result);
 			return;
 		}
 
+		// biome-ignore lint: suspicious/noConsole
 		console.error(error);
 	}
 </script>

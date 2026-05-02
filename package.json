@@ -17,7 +17,7 @@
 		"serve": "ORIGIN=http://localhost:3000 bun run build/index.js"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.4.13",
+		"@biomejs/biome": "2.4.14",
 		"@sveltejs/adapter-node": "^5.5.4",
 		"@sveltejs/enhanced-img": "^0.10.4",
 		"@sveltejs/kit": "^2.58.0",

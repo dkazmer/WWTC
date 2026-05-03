@@ -1,21 +1,27 @@
 {
-	"$schema": "http://json-schema.org/draft-04/schema#",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "Generated schema for Root",
 	"type": "object",
 	"patternProperties": {
-		"^S_": {
+		"^[A-Za-z]+$": {
 			"type": "object",
 			"properties": {
+				"flag": {
+					"description": "Whether this notice is being used in the project",
+					"type": "boolean"
+				},
 				"type": {
+					"description": "Can only be 'success', 'warn', 'info' or 'danger'",
+					"pattern": "\\bsuccess\\b|\\bwarn\\b|\\binfo\\b|\\bdanger\\b",
 					"type": "string"
 				},
 				"text": {
+					"description": "Content of notice",
 					"type": "string"
-				},
-				"flag": {
-					"type": "boolean"
 				}
 			},
-			"required": ["type", "text", "flag"]
-		}
+			"required": ["flag", "type", "text"]
+		},
+		"additionalProperties": false
 	}
 }

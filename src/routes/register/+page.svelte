@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { KeyboardEventHandler } from 'svelte/elements';
 	import Notice from '$lib/components/notice.svelte';
 	import PrimaryBtn from '$lib/components/pri_btn.svelte';
 	import { keyDates, rates, season } from '$lib/constants';
@@ -39,6 +40,15 @@
 			}
 		})(age), 0); // 0, not lessonsTally
 	}
+
+	const phoneDash: KeyboardEventHandler<HTMLInputElement> = ({ currentTarget, key }) => {
+		if (key === 'Backspace') return;
+		switch (currentTarget.value.length) {
+			case 3:
+			case 7:
+				currentTarget.value += '-';
+		}
+	};
 
 	interface Family {
 		firstName: string;
@@ -85,6 +95,7 @@
 					required
 					pattern={'[0-9]{3}-[0-9]{3}-[0-9]{4}'}
 					title="eg., 888-888-8888"
+					onkeyup={phoneDash}
 				>
 				<input
 					type="tel"
@@ -93,6 +104,7 @@
 					placeholder="Phone 2"
 					pattern={'[0-9]{3}-[0-9]{3}-[0-9]{4}'}
 					title="eg., 888-888-8888"
+					onkeyup={phoneDash}
 				>
 			</div>
 			<div>

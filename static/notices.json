@@ -1,12 +1,12 @@
 {
 	"$schema": "https://tennis.in.nf/client/noticesSchema.json",
 	"regSuccess": {
-		"flag": "true",
+		"flag": false,
 		"type": "success",
 		"text": "<b>Success!</b>&nbsp; We have received your application. A confirmation email has been sent. (Check your junk/spam folder.)"
 	},
 	"regSuccessNoemail": {
-		"flag": true,
+		"flag": false,
 		"type": "success",
 		"text": "<b>Success!</b>&nbsp; We have received your application. But a confirmation email could not be sent."
 	},

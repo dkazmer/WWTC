@@ -33,6 +33,7 @@ export const actions = {
 			}
 		});
 
+		formattedData.type = additionalFamily.length ? 'family' : 'solo';
 		formattedData.numApplicants = additionalFamily.length + 1;
 		// console.log('>> formattedData', formattedData, additionalFamily);
 
@@ -56,11 +57,13 @@ function family(formData: FormData) {
 			firstName: formData.get(`firstName[${i}]`),
 			lastName: formData.get(`lastName[${i}]`),
 			ageGroup: formData.get(`ageGroup[${i}]`),
-			gender: formData.get(`gender[${i}]`)
-		} as TableDB);
+			gender: formData.get(`gender[${i}]`),
+			bType: formData.get(`returning`),
+			type: 'family' satisfies TableDB['type']
+		});
 	}
 
-	return arr;
+	return arr as TableDB[];
 }
 
 async function insert(formattedData: TableDB, additionalFamily: TableDB[]) {
@@ -70,6 +73,7 @@ async function insert(formattedData: TableDB, additionalFamily: TableDB[]) {
 
 	// insert
 	const x = additionalFamily.length ? [formattedData, ...additionalFamily] : formattedData;
+
 	// @ts-expect-error (ts2769): apparent type mismatch
 	const { data, error } = await tryCatch(db.insert(defaultTable).values(x));
 	if (error) return { error };
@@ -79,7 +83,7 @@ async function insert(formattedData: TableDB, additionalFamily: TableDB[]) {
 
 async function email(formattedData: TableDB, cookies: Cookies) {
 	const { data, error } = await tryCatch(send(formattedData));
-	console.log('>> emailResponse', data, error);
+	// console.log('>> emailResponse', data, error);
 
 	cookies.set('registered', 'true', {
 		path: '/membership',

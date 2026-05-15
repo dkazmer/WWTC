@@ -181,7 +181,7 @@
 		</section>
 		<div class="total">{total}</div>
 		<input type="hidden" name="owing" bind:value={total}>
-		<input type="hidden" name="season" value="">
+		<!-- <input type="hidden" name="season" value=""> -->
 		<section class="info">
 			<p><b>Membership type:</b></p>
 			<ul>
@@ -214,7 +214,7 @@
 				<input type="checkbox" name="send-money" id="send-money" required>
 				<label for="send-money"
 					><b>Acknowledgement:</b>
-					Please send a money transfer of the above total to <i>wishingwelltennis@hotmail.com</i>. A confirmation email
+					Please send a money transfer in the above total to <i>wishingwelltennis@hotmail.com</i>. A confirmation email
 					will be sent to you shortly.</label
 				>
 			</p>

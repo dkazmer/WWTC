@@ -72,6 +72,12 @@
 		clear: both;
 	}
 
+	h1 {
+		line-height: 1.4;
+		margin-top: 1.5em;
+		margin-bottom: 0.75em;
+	}
+
 	:global(.pics) {
 		padding-top: 2em;
 		border-top: darkgray solid 1px;

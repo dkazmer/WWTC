@@ -1,12 +1,10 @@
 import { fail, redirect, type Cookies } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/mysql2';
-import { DATABASE_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { getTable, type TableDB } from '$lib/server/db/schema';
 import { tryCatch } from '$lib/try-catch.js';
-import { send } from './email.js';
 
-const db = drizzle(DATABASE_URL);
 const defaultTable = getTable('reg2026');
 
 export const actions = {
@@ -67,6 +65,9 @@ function family(formData: FormData) {
 }
 
 async function insert(formattedData: TableDB, additionalFamily: TableDB[]) {
+	if (!env.DATABASE_URL) return { error: new Error('Registration database is not configured.') };
+	const db = drizzle(env.DATABASE_URL);
+
 	// check existing
 	const existingUser = await db.select().from(defaultTable).where(eq(defaultTable.email, formattedData.email)).limit(1);
 	if (existingUser.length) return { error: new Error('Email has already been registered.') };
@@ -82,6 +83,7 @@ async function insert(formattedData: TableDB, additionalFamily: TableDB[]) {
 }
 
 async function email(formattedData: TableDB, cookies: Cookies) {
+	const { send } = await import('./email.js');
 	const { data, error } = await tryCatch(send(formattedData));
 	// console.log('>> emailResponse', data, error);
 

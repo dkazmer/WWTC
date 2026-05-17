@@ -43,9 +43,14 @@
 			}
 		}
 
-		@media screen and (width < 1005px) {
-			background-size: auto;
-			background-position-x: center;
+		@media screen and (max-width: 1005px) {
+			background-size: cover;
+			background-position: center;
+			min-height: 160px;
+			div {
+				font-size: 3.6rem;
+				translate: 0 40px;
+			}
 		}
 	}
 </style>

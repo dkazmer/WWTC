@@ -23,7 +23,7 @@
 		padding-top: 2em;
 		justify-content: space-between;
 
-		@media only screen and (width <= 1200px) {
+		@media only screen and (max-width: 1200px) {
 			justify-content: space-evenly;
 		}
 	}
@@ -31,6 +31,7 @@
 	.biz-card {
 		margin-bottom: 2em;
 		width: 350px;
+		max-width: 100%;
 		height: 200px;
 		display: inline-flex;
 		flex-direction: column;

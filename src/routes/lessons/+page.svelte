@@ -114,9 +114,8 @@
 		}
 	}
 	section.rates {
-		float: right;
-		margin-left: 4em;
-		margin-bottom: 3em;
+		width: fit-content;
+		margin: 0 auto 3em;
 
 		h2 {
 			margin-top: 0;
@@ -126,5 +125,19 @@
 	:global(main li) {
 		font-size: 1.3rem;
 		line-height: 2rem;
+	}
+
+	@media only screen and (max-width: 768px) {
+		section.rates {
+			width: 100%;
+		}
+
+		table {
+			width: 100%;
+		}
+
+		table td {
+			overflow-wrap: anywhere;
+		}
 	}
 </style>

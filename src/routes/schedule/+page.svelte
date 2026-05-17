@@ -50,6 +50,7 @@
 	table {
 		border-collapse: collapse;
 		margin-block: 4em;
+		width: 100%;
 	}
 
 	tr:nth-child(odd) {
@@ -63,5 +64,43 @@
 
 	section {
 		padding-left: 2em;
+	}
+
+	@media only screen and (max-width: 768px) {
+		section {
+			padding-left: 0;
+		}
+
+		table,
+		tbody,
+		tr,
+		td {
+			display: block;
+			width: 100%;
+			box-sizing: border-box;
+		}
+
+		table {
+			margin-block: 2em 3em;
+			border-collapse: separate;
+			border-spacing: 0;
+		}
+
+		tr {
+			margin-bottom: 12px;
+			background-color: whitesmoke;
+			background-image: none;
+			box-shadow: 0 1px 2px rgb(0 0 0 / 12%);
+		}
+
+		td:first-child {
+			padding: 10px 12px 2px;
+		}
+
+		td:last-child {
+			padding: 0 12px 12px;
+			line-height: 1.45;
+			overflow-wrap: anywhere;
+		}
 	}
 </style>

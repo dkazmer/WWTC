@@ -4,12 +4,15 @@
 
 	let menu: HTMLAnchorElement;
 	let subMenu: HTMLDivElement;
+	let mobileToggle: HTMLButtonElement;
+	let mainMenu: HTMLDivElement;
 	let menuOpen = false;
+	let mobileMenuOpen = false;
 
 	const tabs: Tab[] = [
 		{
 			href: '/',
-			// name: 'home',
+			name: 'home',
 			label: 'home',
 			icon: {
 				// name: 'home',
@@ -115,10 +118,25 @@
 
 		menuOpen = isSubmenuItemSelected();
 
-		document.addEventListener('click', ({ target }) => {
-			if (target === menu || target === subMenu || isSubmenuItemClicked(target!) || isSubmenuItemSelected()) return;
+		const collapseMenus = ({ target }: MouseEvent) => {
+			if (target instanceof Node && mobileMenuOpen && !mainMenu.contains(target) && !mobileToggle.contains(target)) {
+				menuOpen = false;
+				mobileMenuOpen = false;
+				return;
+			}
+
+			if (
+				target === menu ||
+				target === subMenu ||
+				(target instanceof Node && mobileToggle.contains(target)) ||
+				isSubmenuItemClicked(target!) ||
+				isSubmenuItemSelected()
+			) return;
 			menuOpen = false;
-		});
+			mobileMenuOpen = false;
+		};
+
+		document.addEventListener('click', collapseMenus);
 
 		function isSubmenuItemSelected() {
 			return [...submenuItems].some(el => el.ariaCurrent === 'page');
@@ -127,6 +145,10 @@
 		function isSubmenuItemClicked(t: EventTarget) {
 			return [...submenuItems].some(el => el === t);
 		}
+
+		return () => {
+			document.removeEventListener('click', collapseMenus);
+		};
 	});
 
 	interface Tab {
@@ -143,7 +165,20 @@
 </script>
 <nav>
 	<!-- top menu -->
-	<div class="main-menu">
+	<button
+		class="hamburger"
+		type="button"
+		aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+		aria-expanded={mobileMenuOpen}
+		aria-controls="main-menu"
+		onclick={() => mobileMenuOpen = !mobileMenuOpen}
+		bind:this={mobileToggle}
+	>
+		<span></span>
+		<span></span>
+		<span></span>
+	</button>
+	<div id="main-menu" class="main-menu" class:open={mobileMenuOpen} bind:this={mainMenu}>
 		<div role="menubar">
 			<ul>
 				{#each tabs as { href, name, role, className, icon, label }}
@@ -170,13 +205,40 @@
 								{name}
 								<div></div>
 							</a>
+							<!-- Programs sub menu for mobile -->
+							<div id="mobile-sub-menu" class="programs-sub-menu mobile-sub-menu" aria-hidden={!menuOpen}>
+								<div role="menubar">
+									<ul>
+										{#each subTabs as { href, name, className, label }}
+											<li>
+												<a
+													{href}
+													aria-current={isPath(href) ? 'page' : null}
+													tabindex={menuOpen ? 0 : -1}
+													title={label}
+													aria-label={label}
+													class={className}
+													onclick={() => {
+														menuOpen = false;
+														mobileMenuOpen = false;
+													}}
+													>{name || href.substring(1)}</a
+												>
+											</li>
+										{/each}
+									</ul>
+								</div>
+							</div>
 						{:else}
 							<a
 								{href}
-								aria-label={label || null}
-								title={label || null}
+								aria-label={label || name || null}
+								title={label || name || null}
 								aria-current={isPath(href) ? 'page' : null}
-								onclick={() => menuOpen = false}
+								onclick={() => {
+									menuOpen = false;
+									mobileMenuOpen = false;
+								}}
 							>
 								{#if icon}
 									<img
@@ -193,8 +255,8 @@
 			</ul>
 		</div>
 	</div>
-	<!-- Programs sub menu -->
-	<div id="sub-menu" aria-hidden={!menuOpen} bind:this={subMenu}>
+	<!-- Programs sub menu for desktop -->
+	<div id="sub-menu" class="programs-sub-menu" aria-hidden={!menuOpen} bind:this={subMenu}>
 		<div role="menubar">
 			<ul>
 				{#each subTabs as { href, name, className, label }}
@@ -216,8 +278,19 @@
 </nav>
 
 <style lang="scss">
-	ul, ul li {
+	.main-menu > div > ul,
+	.main-menu > div > ul li {
 		display: contents;
+	}
+
+	#sub-menu ul,
+	#sub-menu li {
+		display: contents;
+	}
+
+	.mobile-sub-menu ul,
+	.mobile-sub-menu li {
+		display: block;
 	}
 	/* @mixin new() { // mixins not working here; reason unknown */
 	a.new::after {
@@ -328,14 +401,14 @@
 			background-color: var(--primary);
 			color: #fff;
 		}
-		&:has([aria-expanded="false"]) #sub-menu {
+		&:has([aria-controls="sub-menu"][aria-expanded="false"]) #sub-menu {
 			/*// display: none;*/
 			max-height: 0;
 			position: absolute;
 			width: 100%;
 			transition-duration: 0.075s;
 		}
-		&:has([aria-expanded="false"]:hover) #sub-menu {
+		&:has([aria-controls="sub-menu"][aria-expanded="false"]:hover) #sub-menu {
 			/*// display: block;*/
 			max-height: 5px;
 		}
@@ -352,6 +425,12 @@
 	.main-menu {
 		position: relative;
 		z-index: 1;
+	}
+	.hamburger {
+		display: none;
+	}
+	.mobile-sub-menu {
+		display: none;
 	}
 	#sub-menu {
 		max-height: 59px;
@@ -438,9 +517,121 @@
 		}
 	}
 	
-	@media screen and (width < 1000px) {
+	@media screen and (max-width: 1000px) {
 		nav a img {
 			display: none;
+		}
+		nav {
+			padding-inline: 0;
+		}
+		.hamburger {
+			display: inline-flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			position: absolute;
+			top: 10px;
+			right: 16px;
+			width: 44px;
+			height: 44px;
+			border: 2px solid var(--primary);
+			border-radius: 12px;
+			background: white;
+			cursor: pointer;
+			z-index: 20;
+		}
+		.hamburger span {
+			display: block;
+			width: 22px;
+			height: 2px;
+			background: var(--primary-dark);
+			border-radius: 1px;
+			margin: 3px 0;
+		}
+		.main-menu {
+			width: 70%;
+			max-width: 360px;
+			background: whitesmoke;
+			display: none;
+			position: absolute;
+			top: 100%;
+			right: 0;
+			left: auto;
+			z-index: 15;
+			box-shadow: 0 2px 12px rgb(0 0 0 / 25%);
+		}
+		.main-menu.open {
+			display: block;
+		}
+		.main-menu > div {
+			flex-direction: column;
+			align-items: stretch;
+			padding: 0 16px 12px;
+		}
+		.main-menu.open > div {
+			display: flex;
+		}
+		nav a {
+			padding: 10px 12px;
+			font-size: 1.2rem;
+			white-space: normal;
+			flex: 1 1 auto;
+			text-align: left;
+			letter-spacing: 0.04em;
+			border-radius: 12px;
+			margin: 2px 0;
+		}
+		#sub-menu {
+			display: none;
+		}
+		.mobile-sub-menu {
+			display: block;
+			position: static;
+			width: auto;
+			margin: 0;
+			margin-right: auto;
+			margin-left: -9rem;
+			padding-left: 1rem;
+			background: transparent;
+			box-shadow: none;
+			max-height: none;
+			visibility: hidden;
+			height: 0;
+			overflow: hidden;
+		}
+		.mobile-sub-menu[aria-hidden="false"] {
+			visibility: visible;
+			height: auto;
+		}
+		.mobile-sub-menu > div[role="menubar"] {
+			position: static;
+			overflow: visible;
+			display: flex;
+			flex-direction: column;
+			width: 50%;
+			white-space: normal;
+			align-items: flex-start;
+		}
+		.mobile-sub-menu > div[role="menubar"] ul {
+			display: block;
+		}
+		.mobile-sub-menu a {
+			padding-inline: 18px;
+			border-radius: 10px;
+			color: green;
+		}
+		.mobile-sub-menu a[aria-current="page"] {
+			background: rgba(255,255,255,0.1);
+			color: black;
+		}
+		.mobile-sub-menu[aria-hidden="true"]::after {
+			display: none;
+		}
+		[role="menu"]::after {
+			content: none;
+		}
+		[aria-controls="sub-menu"] div {
+			display: none !important;
 		}
 	}
 </style>

@@ -1,15 +1,20 @@
 import { fail } from '@sveltejs/kit';
 import { inArray, sql } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/mysql2';
-import { DATABASE_URL } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { getTable, type TableDB, type Schema } from '$lib/server/db/schema';
 import { tryCatch } from '$lib/try-catch.js';
 import type { Pairing } from '.';
 
-const db = drizzle(DATABASE_URL);
 const defaultTable = getTable('reg2026');
 
+function getDb() {
+	if (!env.DATABASE_URL) throw new Error('DATABASE_URL is not configured.');
+	return drizzle(env.DATABASE_URL);
+}
+
 export const load = async ({ request }) => {
+	const db = getDb();
 	const { searchParams } = new URL(request.url);
 	const tableName = searchParams.get('db') as DB.TableName;
 	const tableLocal = tableName ? getTable(tableName) : defaultTable;
@@ -20,6 +25,7 @@ export const load = async ({ request }) => {
 
 export const actions = {
 	async paid({ request }) {
+		const db = getDb();
 		const formData = await request.formData();
 		const tableLocal = getTable(formData.get('table') as DB.TableName);
 		const pairings = create.pairings(formData);

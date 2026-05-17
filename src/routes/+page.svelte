@@ -23,14 +23,6 @@
 			marginheight="0"
 			marginwidth="0"
 		></iframe>
-		<style>
-			.mapouter {
-				position: relative;
-				text-align: right;
-				height: 400px;
-				width: 500px;
-			}
-		</style>
 		<!-- <a href="https://www.embedgooglemap.net"></a> -->
 	</div>
 </div>
@@ -75,6 +67,8 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 
 	.mapouter {
 		float: right;
+		width: min(45%, 500px);
+		aspect-ratio: 5 / 3;
 		margin-left: 4em;
 		margin-bottom: 3em;
 		border-radius: 12px;
@@ -89,21 +83,28 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 		display: -webkit-box;
 	}
 
-	@media only screen and (width <= 768px) {
+	@media only screen and (max-width: 768px) {
 		.mapouter {
 			float: none;
-			margin: 0 auto;
+			width: 100%;
+			max-width: 520px;
+			aspect-ratio: 16 / 9;
+			margin: 0 auto 3em;
 		}
 	}
 
 	.heading {
 		display: flex;
+		align-items: center;
+		gap: 1rem;
+		flex-wrap: wrap;
 		padding-bottom: 3em;
 
 		h1 {
 			flex-grow: 1;
 			margin-top: 4px;
 			text-transform: initial;
+			min-width: 220px;
 		}
 
 		h1 + a {
@@ -113,10 +114,52 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 		}
 	}
 
+	@media only screen and (max-width: 768px) {
+		.heading {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 1rem;
+		}
+
+		.heading h1 {
+			margin-top: 0;
+		}
+
+		.heading a,
+		.heading :global(button) {
+			width: 100%;
+			max-width: 100%;
+			box-sizing: border-box;
+		}
+
+		.heading :global(.cta) {
+			width: 50%;
+			max-width: 50%;
+			display: block;
+			min-width: 0;
+		}
+
+		.heading :global(.cta button) {
+			width: 100%;
+		}
+
+		.heading a,
+		.heading :global(.cta),
+		.heading :global(button) {
+			margin-right: 0;
+		}
+	}
+
 	.gmap_canvas {
 		overflow: hidden;
 		background: none !important;
-		height: 400px;
-		width: 500px;
+		height: 100%;
+		width: 100%;
+	}
+
+	.gmap_canvas iframe {
+		display: block;
+		width: 100%;
+		height: 100%;
 	}
 </style>

@@ -48,17 +48,23 @@ The Scarborough Tennis Federation schedule can be found
 		b {
 			font-weight: 600;
 		}
+
+		img {
+			max-width: 100%;
+			height: auto;
+		}
 	}
 
 	p {
 		margin-block: 4px 0;
 	}
 
-	@media only screen and (width <= 768px) {
+	@media only screen and (max-width: 768px) {
 		.champs {
 			float: none;
 			margin: 0 auto 3em;
 			max-width: 432px;
+			box-sizing: border-box;
 		}
 	}
 </style>

@@ -39,7 +39,7 @@
 Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and 2.
 
 <article class="more" style="clear: none;">
-	<h2>OPENING DAY</h2>
+	<!-- <h2>OPENING DAY</h2>
 	<p>
 		Early bird rate is $80 and must be paid by Sunday,
 		<time datetime="2026-03-01" class="bold">March 1<sup>st</sup></time>. Pay your
@@ -48,7 +48,7 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 		<time datetime="2026-05-02" class="bold">May 2<sup>nd</sup></time>,
 		<time datetime="PH2">11am to 1pm</time>. The rain date is the following day, Sunday,
 		<time datetime="2026-05-03" class="bold">May 3<sup>rd</sup></time>.
-	</p>
+	</p> -->
 	<h2>Social Events</h2>
 	<p>
 		Mark your calendar for the Friday evening socials on

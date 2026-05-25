@@ -183,41 +183,52 @@
 		<input type="hidden" name="owing" bind:value={total}>
 		<!-- <input type="hidden" name="season" value=""> -->
 		<section class="info">
-			<p><b>Membership type:</b></p>
-			<ul>
-				<li>junior: (under 18yo) at <span class="dollar-junior bold">{junior}</span>.</li>
-				<li>
-					adult:
-					<ul>
-						<li>early bird at <span class="dollar-adult-eb bold">{earlyBird}</span></li>
-						<li>regular season at <span class="dollar-adult bold">{regular}</span></li>
-						<li>late season (from August 15) at <span class="bold">${fall}</span></li>
-					</ul>
-				</li>
-			</ul>
-			<p>
-				<b>Lessons:</b>
-				please contact the club head pro <b>Milica Stamenic</b>
-				at <a href="tel:+437-984-7792">437-984-7792</a> or
-				<a href="mailto:s_milica@hotmail.com">s_milica@hotmail.com</a>,
-				<b>Michael Qian</b>
-				(Mandarin only) <a href="mailto:stringhome.ca@hotmail.com">stringhome.ca@hotmail.com</a>
-				or <b>Akemi Seiriki</b> <a href="mailto:akemitennis@gmail.com">akemitennis@gmail.com</a>.
-			</p>
-			<p>
-				<b>Privacy policy:</b>
-				We value and respect your privacy. Your personal information will never be used without your consent for any
-				purpose other than relating to WWTC. Membership information is confidential and is restrictively used by Wishing
-				Well Tennis Club and the Scarborough Tennis Federation.
-			</p>
-			<p>
-				<input type="checkbox" name="send-money" id="send-money" required>
-				<label for="send-money"
-					><b>Acknowledgement:</b>
-					Please send a money transfer in the above total to <i>wishingwelltennis@hotmail.com</i>. A confirmation email
-					will be sent to you shortly.</label
-				>
-			</p>
+			<div>
+				<h3>Membership fees</h3>
+				<ul>
+					<li>junior: (under 18yo) at <span class="dollar-junior bold">{junior}</span>.</li>
+					<li>
+						adult:
+						<ul>
+							<li style="color: #999;">
+								<strike>early bird (before March 1) at <span class="dollar-adult-eb bold">{earlyBird}</span></strike>
+							</li>
+							<li>regular season at <span class="dollar-adult bold">{regular}</span></li>
+							<li>late season (from August 15) at <span class="bold">${fall}</span></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<h3>Privacy policy</h3>
+				<p>
+					We value and respect your privacy. Your personal information will never be used without your consent for any
+					purpose other than relating to WWTC. Membership information is confidential and is restrictively used by
+					Wishing Well Tennis Club and the Scarborough Tennis Federation.
+				</p>
+			</div>
+			<div>
+				<h3>Lessons</h3>
+				<p>
+					Contact the club head pro <b>Milica Stamenic</b>
+					at <a href="tel:+437-984-7792">437-984-7792</a> or
+					<a href="mailto:s_milica@hotmail.com">s_milica@hotmail.com</a>,
+					<b>Michael Qian</b>
+					(Mandarin only) <a href="mailto:stringhome.ca@hotmail.com">stringhome.ca@hotmail.com</a>
+					or <b>Akemi Seiriki</b> <a href="mailto:akemitennis@gmail.com">akemitennis@gmail.com</a>.
+				</p>
+			</div>
+
+			<div>
+				<h3>Acknowledgement</h3>
+				<p>
+					<input type="checkbox" name="send-money" id="send-money" required>
+					<label for="send-money">
+						Please send a money transfer in the above total to <i>wishingwelltennis@hotmail.com</i>. You should receive
+						a confirmation email.</label
+					>
+				</p>
+			</div>
 		</section>
 		<PrimaryBtn label="Submit" type="submit" />
 	</form>
@@ -403,9 +414,10 @@
 		padding-bottom: 2em;
 
 		@media only screen and (width > 768px) {
-			columns: 2;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
 			column-gap: 4em;
-			column-rule: gray dotted 1px;
+
 			p {
 				margin-top: 0;
 				page-break-inside: avoid;
@@ -572,7 +584,7 @@
 			color: #350;
 		}
 	}
-	
+
 	#email2:invalid {
 		background-color: #fdd;
 	}

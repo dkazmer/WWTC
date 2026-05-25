@@ -32,7 +32,7 @@
 				<b>Early Bird</b>
 				(before <time datetime="2026-03-01">March 1<sup>st</sup></time>)
 			</td>
-			<td>${earlyBird}</td>
+			<td><strike>${earlyBird}</strike></td>
 			<td rowspan="3">${junior}</td>
 		</tr>
 		<tr>

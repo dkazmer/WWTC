@@ -1,29 +1,29 @@
 import { createTransport, type SendMailOptions } from 'nodemailer';
 import type SMTPTransport from 'nodemailer/lib/smtp-transport';
-import { env } from '$env/dynamic/private';
+import { DB_PASS, DB_USER } from '$env/static/private';
 import { season } from '$lib/constants';
 import type { TableDB } from '$lib/server/db/schema';
 
 const senderAlt = 'wwtcspri@sv32.byethost32.org';
 const sender = 'wishingwelltennis@hotmail.com';
 
+const transporter = createTransport({
+	host: 'sv32.byethost32.org',
+	port: 587,
+	from: `Wishing Well Tennis Club <${senderAlt}>`,
+	replyTo: `Wishing Well Tennis Club <${sender}>`,
+	// headers: {
+	// 	'MIME-Version': '1.0',
+	// 	'Content-type': 'text/plain; charset=UTF-8'
+	// },
+	auth: {
+		user: DB_USER,
+		pass: decodeURIComponent(DB_PASS)
+	}
+});
+
 export function send(userData: TableDB) {
 	// return Promise.resolve('email fake sent' as unknown as SMTPTransport.SentMessageInfo);
-	if (!env.DB_USER || !env.DB_PASS) throw new Error('Email credentials are not configured.');
-	const transporter = createTransport({
-		host: 'sv32.byethost32.org',
-		port: 587,
-		from: `Wishing Well Tennis Club <${senderAlt}>`,
-		replyTo: `Wishing Well Tennis Club <${sender}>`,
-		// headers: {
-		// 	'MIME-Version': '1.0',
-		// 	'Content-type': 'text/plain; charset=UTF-8'
-		// },
-		auth: {
-			user: env.DB_USER,
-			pass: decodeURIComponent(env.DB_PASS)
-		}
-	});
 
 	const mailOptions: SendMailOptions = {
 		to: userData.email,

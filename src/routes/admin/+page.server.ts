@@ -1,5 +1,5 @@
 import { fail, redirect } from '@sveltejs/kit';
-import { env } from '$env/dynamic/private';
+import { PASS } from '$env/static/private';
 
 export const actions = {
 	async default({ request, cookies }) {
@@ -7,7 +7,7 @@ export const actions = {
 		const pass = formData.get('pass');
 		const path = '/admin/records';
 
-		if (pass === env.PASS) {
+		if (pass === PASS) {
 			cookies.set('authenticated', 'true', {
 				path,
 				httpOnly: true,

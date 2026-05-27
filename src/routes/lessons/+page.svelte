@@ -105,12 +105,22 @@
 	table td:first-child {
 		font-weight: 600;
 	}
-	table td {
-		padding: 8px 16px;
-		background-color: #eee;
+	table {
+		@media (width <= 768px) {
+			width: 100%;
+		}
 
-		&:first-child {
-			min-width: 4em;
+		td {
+			padding: 8px 16px;
+			background-color: #eee;
+
+			&:first-child {
+				min-width: 4em;
+			}
+
+			@media (width <= 768px) {
+				overflow-wrap: anywhere;
+			}
 		}
 	}
 	section.rates {
@@ -121,23 +131,13 @@
 			margin-top: 0;
 			border: none;
 		}
+
+		@media (width <= 768px) {
+			width: 100%;
+		}
 	}
 	:global(main li) {
 		font-size: 1.3rem;
 		line-height: 2rem;
-	}
-
-	@media only screen and (max-width: 768px) {
-		section.rates {
-			width: 100%;
-		}
-
-		table {
-			width: 100%;
-		}
-
-		table td {
-			overflow-wrap: anywhere;
-		}
 	}
 </style>

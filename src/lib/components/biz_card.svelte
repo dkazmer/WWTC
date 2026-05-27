@@ -23,7 +23,7 @@
 		padding-top: 2em;
 		justify-content: space-between;
 
-		@media only screen and (max-width: 1200px) {
+		@media only screen and (width <= 1200px) {
 			justify-content: space-evenly;
 		}
 	}

@@ -73,7 +73,7 @@
 	}
 
 	h1 {
-		line-height: 1.4;
+		line-height: 1.4em;
 		margin-top: 1.5em;
 		margin-bottom: 0.75em;
 	}

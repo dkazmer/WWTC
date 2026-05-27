@@ -66,7 +66,7 @@
 		padding-left: 2em;
 	}
 
-	@media only screen and (max-width: 768px) {
+	@media only screen and (width <= 768px) {
 		section {
 			padding-left: 0;
 		}

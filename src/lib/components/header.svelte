@@ -43,7 +43,7 @@
 			}
 		}
 
-		@media screen and (max-width: 1005px) {
+		@media screen and (width < 1005px) {
 			background-size: cover;
 			background-position: center;
 			min-height: 160px;

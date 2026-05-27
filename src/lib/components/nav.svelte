@@ -101,17 +101,17 @@
 	}
 
 	/* function isSubPath() {
-		switch (page.url.pathname) {
-			case '/intercounty':
-			case '/stf':
-			case '/juniors':
-			case '/lessons':
-			case '/tournament':
-				return 0;
-		}
-
-		return -1;
-	} */
+			switch (page.url.pathname) {
+				case '/intercounty':
+				case '/stf':
+				case '/juniors':
+				case '/lessons':
+				case '/tournament':
+					return 0;
+			}
+	
+			return -1;
+		} */
 
 	onMount(() => {
 		const submenuItems = Array.from(subMenu.querySelectorAll('a'));
@@ -131,7 +131,8 @@
 				(target instanceof Node && mobileToggle.contains(target)) ||
 				isSubmenuItemClicked(target!) ||
 				isSubmenuItemSelected()
-			) return;
+			)
+				return;
 			menuOpen = false;
 			mobileMenuOpen = false;
 		};
@@ -218,9 +219,9 @@
 													title={label}
 													aria-label={label}
 													class={className}
-													onclick={() => {
-														menuOpen = false;
-														mobileMenuOpen = false;
+													onclick={() => {
+														menuOpen = false;
+														mobileMenuOpen = false;
 													}}
 													>{name || href.substring(1)}</a
 												>
@@ -235,9 +236,9 @@
 								aria-label={label || name || null}
 								title={label || name || null}
 								aria-current={isPath(href) ? 'page' : null}
-								onclick={() => {
-									menuOpen = false;
-									mobileMenuOpen = false;
+								onclick={() => {
+									menuOpen = false;
+									mobileMenuOpen = false;
 								}}
 							>
 								{#if icon}
@@ -517,7 +518,7 @@
 		}
 	}
 	
-	@media screen and (max-width: 1000px) {
+	@media screen and (width < 1000px) {
 		nav a img {
 			display: none;
 		}

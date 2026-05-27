@@ -49,7 +49,7 @@
 			color: #ccc;
 			font-size: 1.3rem;
 
-			@media only screen and (min-width: 769px) {
+			@media only screen and (width > 768px) {
 				display: grid;
 				grid-template-columns: 1fr 1fr;
 			}

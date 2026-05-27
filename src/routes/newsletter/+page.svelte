@@ -38,6 +38,12 @@
 		gap: 0.75em 1em;
 		margin-top: 40px;
 
+		@media (width <= 768px) {
+			grid-template-columns: 1fr 1fr;
+			gap: 0.75em;
+			margin-top: 24px;
+		}
+
 		p {
 			padding-left: 2em;
 			margin-top: 0;
@@ -49,79 +55,73 @@
 				width: 16px;
 				opacity: 0.6;
 			}
-		}
-	}
 
-	@media only screen and (max-width: 768px) {
-		section.news {
-			grid-template-columns: 1fr 1fr;
-			gap: 0.75em;
-			margin-top: 24px;
+			@media (width <= 768px) {
+				margin: 0;
+				padding-left: 0;
+			}
 		}
 
-		section.news p {
-			margin: 0;
-			padding-left: 0;
-		}
-
-		section.news a {
-			display: block;
-			padding: 0.75em 1em;
-			background-color: whitesmoke;
-			border-radius: 6px;
-			box-sizing: border-box;
-			overflow-wrap: anywhere;
+		@media (width <= 768px) {
+			a {
+				display: block;
+				padding: 0.75em 1em;
+				background-color: whitesmoke;
+				border-radius: 6px;
+				box-sizing: border-box;
+				overflow-wrap: anywhere;
+			}
 		}
 	}
 
 	/*section.current-affairs {
-		background-color: #ccc;
-		padding: 3em;
-		font-style: italic;
-		font-size: 2rem;
-		line-height: 3rem;
-		user-select: none;
-		position: relative;
-		isolation: isolate;
-		div {
-			display: block;
-			font-weight: 600;
-			margin-top: 1em;
-			font-style: normal;
-		}
-		img {
-			all: revert;
-			float: left;
-			margin-right: 3em;
-			margin-bottom: 6em;
-			box-shadow: gray 0 2px 4px;
-			rotate: 0deg;
-			transition: all 0.1s ease-out;
-		}
-		&::before {
-			content: open-quote;
-			position: absolute;
-			font-size: 40rem;
-			color: #ddd;
-			font-style: normal;
-			right: 30px;
-			top: -1rem;
-			pointer-events: none;
-			rotate: 180deg;
-			z-index: -1;
-		}
-		&::after {
-			content: "";
-			clear: both;
-			display: block;
-		}
-		a:first-of-type:hover img {
-			box-shadow:
-				gray 0 2px 4px,
-				var(--secondary) 0 0 10px 1px;
-			rotate: -7deg;
-		}
-	}*/
+			background-color: #ccc;
+			padding: 3em;
+			font-style: italic;
+			font-size: 2rem;
+			line-height: 3rem;
+			user-select: none;
+			position: relative;
+			isolation: isolate;
+			div {
+				display: block;
+				font-weight: 600;
+				margin-top: 1em;
+				font-style: normal;
+			}
+			img {
+				all: revert;
+				float: left;
+				margin-right: 3em;
+				margin-bottom: 6em;
+				box-shadow: gray 0 2px 4px;
+				rotate: 0deg;
+				transition: all 0.1s ease-out;
+			}
+			&::before {
+				content: open-quote;
+				position: absolute;
+				font-size: 40rem;
+				color: #ddd;
+				font-style: normal;
+				right: 30px;
+				top: -1rem;
+				pointer-events: none;
+				rotate: 180deg;
+				z-index: -1;
+			}
+			&::after {
+				content: "";
+				clear: both;
+				display: block;
+			}
+			a:first-of-type:hover img {
+				box-shadow:
+					gray 0 2px 4px,
+					var(--secondary) 0 0 10px 1px;
+				rotate: -7deg;
+			}
+		}*/
 
 	section.execs {
 		background-color: white;
@@ -149,28 +149,28 @@
 	}
 
 	/*.intro {
-		position: relative;
-		font-size: 0;
-		line-height: 0;
-		border-bottom: white 30px solid;
-		max-height: 400px;
-		overflow: hidden;
-		&::before {
-			content: ". . .";
-			display: block;
-		}
-		&::after {
-			content: "";
-			display: block;
-			width: 100%;
-			height: 100px;
-			position: absolute;
-			bottom: 0;
-			background: linear-gradient(0deg, white, transparent);
-		}
-		img {
-			width: 100%;
-			image-rendering: -webkit-optimize-contrast;
-		}
-	}*/
+			position: relative;
+			font-size: 0;
+			line-height: 0;
+			border-bottom: white 30px solid;
+			max-height: 400px;
+			overflow: hidden;
+			&::before {
+				content: ". . .";
+				display: block;
+			}
+			&::after {
+				content: "";
+				display: block;
+				width: 100%;
+				height: 100px;
+				position: absolute;
+				bottom: 0;
+				background: linear-gradient(0deg, white, transparent);
+			}
+			img {
+				width: 100%;
+				image-rendering: -webkit-optimize-contrast;
+			}
+		}*/
 </style>

@@ -90,6 +90,10 @@ Open Doubles
 		max-width: 100%;
 		table-layout: fixed;
 
+		@media (width <= 768px) {
+			font-size: 1.3rem;
+		}
+
 		td {
 			background-color: whitesmoke;
 			padding: 8px 16px;
@@ -108,6 +112,10 @@ Open Doubles
 		th,
 		td {
 			overflow-wrap: anywhere;
+
+			@media (width <= 768px) {
+				padding: 8px;
+			}
 		}
 	}
 
@@ -125,17 +133,6 @@ Open Doubles
 				width: 100%;
 				height: auto;
 			}
-		}
-	}
-
-	@media only screen and (max-width: 768px) {
-		table {
-			font-size: 1.3rem;
-		}
-
-		table th,
-		table td {
-			padding: 8px;
 		}
 	}
 </style>

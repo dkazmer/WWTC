@@ -64,7 +64,7 @@ The InterCounty schedule can be found
 		margin-block: 4px 0;
 	}
 
-	@media only screen and (max-width: 768px) {
+	@media only screen and (width <= 768px) {
 		.champs {
 			float: none;
 			margin: 0 auto 3em;

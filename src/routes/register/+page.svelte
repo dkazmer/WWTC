@@ -609,7 +609,7 @@
 		text-transform: initial;
 	}
 
-	@media only screen and (max-width: 768px) {
+	@media only screen and (width <= 768px) {
 		input,
 		select {
 			margin-right: 0;

@@ -83,7 +83,7 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 		display: -webkit-box;
 	}
 
-	@media only screen and (max-width: 768px) {
+	@media only screen and (width <= 768px) {
 		.mapouter {
 			float: none;
 			width: 100%;
@@ -91,30 +91,7 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 			aspect-ratio: 16 / 9;
 			margin: 0 auto 3em;
 		}
-	}
 
-	.heading {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		flex-wrap: wrap;
-		padding-bottom: 3em;
-
-		h1 {
-			flex-grow: 1;
-			margin-top: 4px;
-			text-transform: initial;
-			min-width: 220px;
-		}
-
-		h1 + a {
-			max-height: 24px;
-			margin-top: 8px;
-			margin-right: 56pt;
-		}
-	}
-
-	@media only screen and (max-width: 768px) {
 		.heading {
 			flex-direction: column;
 			align-items: stretch;
@@ -147,6 +124,27 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 		.heading :global(.cta),
 		.heading :global(button) {
 			margin-right: 0;
+		}
+	}
+
+	.heading {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+		padding-bottom: 3em;
+
+		h1 {
+			flex-grow: 1;
+			margin-top: 4px;
+			text-transform: initial;
+			min-width: 220px;
+		}
+
+		h1 + a {
+			max-height: 24px;
+			margin-top: 8px;
+			margin-right: 56pt;
 		}
 	}
 

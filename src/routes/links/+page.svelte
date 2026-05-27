@@ -1,5 +1,6 @@
 <script lang="ts">
 	import external from '$lib/assets/external_link.svg';
+
 	const links: { [K in 'href' | 'name']: string }[] = [
 		{ href: 'http://tennisontario.com/', name: 'Ontario Tennis Association' },
 		{ href: 'http://intercountytennis.com/', name: 'Toronto Intercounty Tennis' },
@@ -75,7 +76,7 @@
 		}
 	}
 
-	@media only screen and (max-width: 768px) {
+	@media only screen and (width <= 768px) {
 		.links {
 			grid-template-columns: 1fr;
 		}

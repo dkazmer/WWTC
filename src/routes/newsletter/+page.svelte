@@ -127,24 +127,27 @@
 		background-color: white;
 		margin: 10rem 0 5rem;
 		font-size: 0;
-		position: relative;
-		overflow: hidden;
 		img {
-			display: block;
-			width: 100%;
-			max-width: max-content;
-			height: auto;
+			all: unset;
+			vertical-align: bottom;
 		}
 		&::after {
 			content: "";
-			display: block;
-			position: absolute;
-			right: 0;
-			bottom: 0;
+			display: inline-block;
 			height: 240px;
 			width: 35px;
+			vertical-align: bottom;
+			translate: -35px;
 			background-image: linear-gradient(-90deg, white, transparent);
-			pointer-events: none;
+		}
+		@media (width <= 768px) {
+			img {
+				width: 100%;
+				height: auto;
+			}
+			&::after {
+				display: none;
+			}
 		}
 	}
 

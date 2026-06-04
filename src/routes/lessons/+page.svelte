@@ -105,35 +105,38 @@
 	table td:first-child {
 		font-weight: 600;
 	}
-	table {
-		@media (width <= 768px) {
-			width: 100%;
-		}
+	table td {
+		padding: 8px 16px;
+		background-color: #eee;
 
-		td {
-			padding: 8px 16px;
-			background-color: #eee;
-
-			&:first-child {
-				min-width: 4em;
-			}
-
-			@media (width <= 768px) {
-				overflow-wrap: anywhere;
-			}
+		&:first-child {
+			min-width: 4em;
 		}
 	}
 	section.rates {
-		width: fit-content;
-		margin: 0 auto 3em;
+		float: right;
+		margin-left: 4em;
+		margin-bottom: 3em;
 
 		h2 {
 			margin-top: 0;
 			border: none;
 		}
+	}
 
-		@media (width <= 768px) {
+	@media (width <= 768px) {
+		section.rates {
+			float: none;
 			width: 100%;
+			margin-left: 0;
+		}
+		table {
+			width: 100%;
+			table-layout: fixed;
+		}
+		table td {
+			min-width: 0;
+			overflow-wrap: anywhere;
 		}
 	}
 	:global(main li) {

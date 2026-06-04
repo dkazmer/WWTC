@@ -91,40 +91,6 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 			aspect-ratio: 16 / 9;
 			margin: 0 auto 3em;
 		}
-
-		.heading {
-			flex-direction: column;
-			align-items: stretch;
-			gap: 1rem;
-		}
-
-		.heading h1 {
-			margin-top: 0;
-		}
-
-		.heading a,
-		.heading :global(button) {
-			width: 100%;
-			max-width: 100%;
-			box-sizing: border-box;
-		}
-
-		.heading :global(.cta) {
-			width: 50%;
-			max-width: 50%;
-			display: block;
-			min-width: 0;
-		}
-
-		.heading :global(.cta button) {
-			width: 100%;
-		}
-
-		.heading a,
-		.heading :global(.cta),
-		.heading :global(button) {
-			margin-right: 0;
-		}
 	}
 
 	.heading {
@@ -145,6 +111,36 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 			max-height: 24px;
 			margin-top: 8px;
 			margin-right: 56pt;
+		}
+
+		@media only screen and (width <= 768px) {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 1rem;
+
+			h1 {
+				margin-top: 0;
+			}
+
+			a,
+			:global(button) {
+				width: 100%;
+				max-width: 100%;
+				box-sizing: border-box;
+				margin-right: 0;
+			}
+
+			:global(.cta) {
+				width: 50%;
+				max-width: 50%;
+				display: block;
+				min-width: 0;
+				margin-right: 0;
+			}
+
+			:global(.cta button) {
+				width: 100%;
+			}
 		}
 	}
 

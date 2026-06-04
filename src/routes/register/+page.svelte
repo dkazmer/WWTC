@@ -295,14 +295,12 @@
 		padding: 8px 16px;
 		margin: 0 4px 8px 0;
 		border: none;
-		box-sizing: border-box;
 	}
 	input:not([type="button"], [type="hidden"], [type="checkbox"], [type="radio"]) {
 		min-width: 219px;
-
-		&.long {
-			min-width: 478px;
-		}
+	}
+	input.long {
+		min-width: 478px;
 	}
 	@supports (-webkit-text-security: circle) {
 		select {
@@ -610,28 +608,14 @@
 	}
 
 	@media only screen and (width <= 768px) {
-		input,
+		input:not([type="button"], [type="hidden"], [type="checkbox"], [type="radio"]),
 		select {
+			width: 100% !important;
+			min-width: 0 !important;
+			max-width: 100% !important;
+			box-sizing: border-box;
+			display: block;
 			margin-right: 0;
-		}
-
-		input:not([type="button"], [type="hidden"], [type="checkbox"], [type="radio"]) {
-			min-width: unset;
-			width: 100%;
-			max-width: 100%;
-			display: block;
-		}
-
-		select {
-			width: 100%;
-			max-width: 100%;
-			min-width: unset;
-			display: block;
-		}
-
-		input.long,
-		input:not([type="button"]):not([type="hidden"]) {
-			min-width: unset;
 		}
 
 		.contact > div,

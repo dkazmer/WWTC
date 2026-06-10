@@ -206,39 +206,25 @@
 								{name}
 								<div></div>
 							</a>
-							<!-- Programs sub menu for mobile -->
-							<div id="mobile-sub-menu" class="programs-sub-menu mobile-sub-menu" aria-hidden={!menuOpen}>
-								<div role="menubar">
-									<ul>
-										{#each subTabs as { href, name, className, label }}
-											<li>
-												<a
-													{href}
-													aria-current={isPath(href) ? 'page' : null}
-													tabindex={menuOpen ? 0 : -1}
-													title={label}
-													aria-label={label}
-													class={className}
-													onclick={() => {
-														menuOpen = false;
-														mobileMenuOpen = false;
-													}}
-													>{name || href.substring(1)}</a
-												>
-											</li>
-										{/each}
-									</ul>
-								</div>
-							</div>
+							{#each subTabs as { href, name, label, className }}
+								<a
+									class="sub-tab {className || ''}"
+									{href}
+									aria-current={isPath(href) ? 'page' : null}
+									title={label}
+									aria-label={label}
+									onclick={() => { menuOpen = false; mobileMenuOpen = false; }}
+								>{name || href.substring(1)}</a>
+							{/each}
 						{:else}
 							<a
 								{href}
 								aria-label={label || name || null}
 								title={label || name || null}
 								aria-current={isPath(href) ? 'page' : null}
-								onclick={() => {
-									menuOpen = false;
-									mobileMenuOpen = false;
+								onclick={() => {
+									menuOpen = false;
+									mobileMenuOpen = false;
 								}}
 							>
 								{#if icon}
@@ -289,10 +275,6 @@
 		display: contents;
 	}
 
-	.mobile-sub-menu ul,
-	.mobile-sub-menu li {
-		display: block;
-	}
 	/* @mixin new() { // mixins not working here; reason unknown */
 	a.new::after {
 		content: "new";
@@ -430,7 +412,7 @@
 	.hamburger {
 		display: none;
 	}
-	.mobile-sub-menu {
+	.sub-tab {
 		display: none;
 	}
 	#sub-menu {
@@ -518,12 +500,19 @@
 		}
 	}
 	
-	@media screen and (width < 1000px) {
+	a[href="/"] {
+		font-size: 0;
+	}
+
+	@media screen and (width <= 768px) {
 		nav a img {
 			display: none;
 		}
 		nav {
 			padding-inline: 0;
+		}
+		a[href="/"] {
+			font-size: 1.2rem;
 		}
 		.hamburger {
 			display: inline-flex;
@@ -548,6 +537,16 @@
 			background: var(--primary-dark);
 			border-radius: 1px;
 			margin: 3px 0;
+			transition: transform 0.2s ease, opacity 0.2s ease;
+		}
+		.hamburger[aria-expanded="true"] span:nth-child(1) {
+			transform: translateY(8px) rotate(45deg);
+		}
+		.hamburger[aria-expanded="true"] span:nth-child(2) {
+			opacity: 0;
+		}
+		.hamburger[aria-expanded="true"] span:nth-child(3) {
+			transform: translateY(-8px) rotate(-45deg);
 		}
 		.main-menu {
 			width: 70%;
@@ -585,54 +584,11 @@
 		#sub-menu {
 			display: none;
 		}
-		.mobile-sub-menu {
-			display: block;
-			position: static;
-			width: auto;
-			margin: 0;
-			margin-right: auto;
-			margin-left: -9rem;
-			padding-left: 1rem;
-			background: transparent;
-			box-shadow: none;
-			max-height: none;
-			visibility: hidden;
-			height: 0;
-			overflow: hidden;
-		}
-		.mobile-sub-menu[aria-hidden="false"] {
-			visibility: visible;
-			height: auto;
-		}
-		.mobile-sub-menu > div[role="menubar"] {
-			position: static;
-			overflow: visible;
-			display: flex;
-			flex-direction: column;
-			width: 50%;
-			white-space: normal;
-			align-items: flex-start;
-		}
-		.mobile-sub-menu > div[role="menubar"] ul {
-			display: block;
-		}
-		.mobile-sub-menu a {
-			padding-inline: 18px;
-			border-radius: 10px;
-			color: green;
-		}
-		.mobile-sub-menu a[aria-current="page"] {
-			background: rgba(255,255,255,0.1);
-			color: black;
-		}
-		.mobile-sub-menu[aria-hidden="true"]::after {
+		[role="menu"] {
 			display: none;
 		}
-		[role="menu"]::after {
-			content: none;
-		}
-		[aria-controls="sub-menu"] div {
-			display: none !important;
+		.sub-tab {
+			display: block;
 		}
 	}
 </style>

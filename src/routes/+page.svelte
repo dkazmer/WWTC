@@ -68,7 +68,7 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 	.mapouter {
 		float: right;
 		width: min(45%, 500px);
-		aspect-ratio: 5 / 3;
+		aspect-ratio: 5 / 4;
 		margin-left: 4em;
 		margin-bottom: 3em;
 		border-radius: 12px;

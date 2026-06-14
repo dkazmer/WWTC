@@ -122,6 +122,10 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 				margin-top: 0;
 			}
 
+			h1 + a {
+				margin-right: 0;
+			}
+
 			a,
 			:global(button) {
 				width: 100%;

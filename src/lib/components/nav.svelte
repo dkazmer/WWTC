@@ -214,7 +214,8 @@
 									title={label}
 									aria-label={label}
 									onclick={() => { menuOpen = false; mobileMenuOpen = false; }}
-								>{name || href.substring(1)}</a>
+									>{name || href.substring(1)}</a
+								>
 							{/each}
 						{:else}
 							<a
@@ -310,7 +311,7 @@
 				max-width: 1200px;
 				width: 100%;
 				padding-inline: 60px;
-	            box-sizing: border-box;
+				box-sizing: border-box;
 			}
 		}
 		a {
@@ -326,12 +327,12 @@
 			text-align: center;
 			white-space: nowrap;
 			letter-spacing: 1pt;
-			
+
 			img {
 				vertical-align: middle;
 				margin-block: -7px -4px;
 				filter: var(--primary-dark-filter);
-				opacity: .54;
+				opacity: 0.54;
 				pointer-events: none;
 			}
 
@@ -339,7 +340,7 @@
 				background-color: var(--primary);
 				color: white;
 				pointer-events: none;
-				
+
 				img {
 					filter: invert(1) drop-shadow(0px 2px 4px var(--primary-dark));
 					opacity: 1;
@@ -351,7 +352,7 @@
 				/* background-color: #9b6 !important; */
 				background: linear-gradient(0, #683, #9b6);
 				text-shadow: 0 1px 2px #360;
-				
+
 				img {
 					filter: invert(1) drop-shadow(0px 2px 4px var(--primary-dark));
 					opacity: 1;
@@ -375,7 +376,7 @@
 		}
 		&:has([aria-expanded="true"]) [aria-current="page"] {
 			background-color: #9b6;
-			
+
 			img {
 				filter: invert(1);
 			}
@@ -426,7 +427,7 @@
 
 		a {
 			color: white;
-	        padding-inline: 30px;
+			padding-inline: 30px;
 			border-radius: 13px;
 			box-shadow: 0 0 0px 6px var(--primary) inset;
 			outline: var(--primary) solid 2px;
@@ -499,7 +500,7 @@
 			}
 		}
 	}
-	
+
 	a[href="/"] {
 		font-size: 0;
 	}
@@ -529,25 +530,31 @@
 			background: white;
 			cursor: pointer;
 			z-index: 20;
+
+			span {
+				display: block;
+				width: 22px;
+				height: 2px;
+				background: var(--primary-dark);
+				border-radius: 1px;
+				margin: 3px 0;
+				transition:
+					transform 0.2s ease,
+					opacity 0.2s ease;
+			}
+			&[aria-expanded="true"] {
+				span:nth-child(1) {
+					transform: translateY(8px) rotate(45deg);
+				}
+				span:nth-child(2) {
+					opacity: 0;
+				}
+				span:nth-child(3) {
+					transform: translateY(-8px) rotate(-45deg);
+				}
+			}
 		}
-		.hamburger span {
-			display: block;
-			width: 22px;
-			height: 2px;
-			background: var(--primary-dark);
-			border-radius: 1px;
-			margin: 3px 0;
-			transition: transform 0.2s ease, opacity 0.2s ease;
-		}
-		.hamburger[aria-expanded="true"] span:nth-child(1) {
-			transform: translateY(8px) rotate(45deg);
-		}
-		.hamburger[aria-expanded="true"] span:nth-child(2) {
-			opacity: 0;
-		}
-		.hamburger[aria-expanded="true"] span:nth-child(3) {
-			transform: translateY(-8px) rotate(-45deg);
-		}
+
 		.main-menu {
 			width: 70%;
 			max-width: 360px;

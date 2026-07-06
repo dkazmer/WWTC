@@ -164,6 +164,9 @@ time {
 .notice + .notice {
 	margin-top: -24px;
 }
+.notice.warn > div {
+	filter: brightness(.8);
+}
 
 @media only screen and (width <= 768px) {
 	nav a {

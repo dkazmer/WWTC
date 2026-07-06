@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import Notice from '$lib/components/notice.svelte';
 	import PrimaryBtn from '$lib/components/pri_btn.svelte';
 	import { rates, season } from '$lib/constants';
 
@@ -50,7 +51,13 @@
 </table>
 
 {#if !hasRegistered}
-	<div><PrimaryBtn href="/register" label="Sign up" icon={{ family: 'outline', name: 'app_registration' }} /></div>
+	<div>
+		<Notice type="warn"
+			>Please check your spam/junk folder if you do not receive a response from us
+			<span>after you have registered</span>.</Notice
+		>
+		<PrimaryBtn href="/register" label="Sign up" icon={{ family: 'outline', name: 'app_registration' }} />
+	</div>
 {/if}
 
 <h2>Online Booking of Tennis Courts & Hitting Wall</h2>
@@ -86,13 +93,19 @@
 <!-- <h2>Members can bring guests</h2> -->
 <p>
 	<span style="font-weight: 600;">Members can bring guests!</span>
-	The guest fee is $10.00 per person, 3 visit limit; e-transfer to: <u>wishingwelltennis@hotmail.com</u>
+	The guest fee is $10 per person, 3 visit limit; e-transfer to: <u>wishingwelltennis@hotmail.com</u>
 </p>
 
 <p>
 	Once you have joined, you will have access to the court booking system at
 	<a href="http://wwtennis.skedda.com/" target="_blank">Skedda</a>
 </p>
+
+{#if !hasRegistered}
+	<div class="sign-in-bottom">
+		<PrimaryBtn href="/register" label="Sign up" icon={{ family: 'outline', name: 'app_registration' }} />
+	</div>
+{/if}
 
 <style lang="scss">
 	/* experimental */
@@ -109,15 +122,20 @@
 		margin-block: 5em;
 	}
 
-	table + div {
-		margin: 40px auto;
+	table, table + div {
+		margin: 2em auto;
 		width: 820px;
 	}
 
-	table {
-		margin: 40px auto;
-		min-width: 820px;
+	:global(main > div table + div .notice) {
+		margin-bottom: 2em !important;
+		span {
+			font-weight: 600;
+			text-decoration: underline;
+		}
+	}
 
+	table {
 		b {
 			font-weight: 600;
 		}
@@ -137,6 +155,10 @@
 				font-weight: normal;
 			}
 		}
+	}
+
+	.sign-in-bottom {
+		padding-block: 2em;
 	}
 
 	@media only screen and (width <= 768px) {

@@ -162,10 +162,9 @@
 	}
 
 	@media only screen and (width <= 768px) {
+		table,
 		table + div {
-			width: auto;
-		}
-		table {
+			width: 100%;
 			min-width: unset;
 		}
 	}

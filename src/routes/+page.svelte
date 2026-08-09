@@ -95,16 +95,12 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 
 	.heading {
 		display: flex;
-		align-items: center;
-		gap: 1rem;
-		flex-wrap: wrap;
 		padding-bottom: 3em;
 
 		h1 {
 			flex-grow: 1;
 			margin-top: 4px;
 			text-transform: initial;
-			min-width: 220px;
 		}
 
 		h1 + a {
@@ -114,36 +110,38 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 		}
 
 		@media only screen and (width <= 768px) {
-			flex-direction: column;
-			align-items: stretch;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: baseline;
+			text-align: center;
 			gap: 1rem;
 
 			h1 {
 				margin-top: 0;
+				flex-basis: 100%;
 			}
 
 			h1 + a {
 				margin-right: 0;
-			}
-
-			a,
-			:global(button) {
-				width: 100%;
-				max-width: 100%;
-				box-sizing: border-box;
-				margin-right: 0;
+				max-height: none;
+				display: inline-block;
+				padding: 10px 28px 10px 20px;
+				border-radius: 6px;
+				border-bottom: none;
+				box-shadow: 0 1px 2px var(--secondary);
+				background: linear-gradient(0deg, white, rgb(102 51 102 / 10%));
+				color: var(--secondary);
+				font-weight: 600;
+				font-size: 1.6rem;
+				line-height: 2rem;
+				text-shadow: 0 1px white;
 			}
 
 			:global(.cta) {
-				width: 50%;
-				max-width: 50%;
-				display: block;
+				display: flex;
+				align-items: center;
 				min-width: 0;
 				margin-right: 0;
-			}
-
-			:global(.cta button) {
-				width: 100%;
 			}
 		}
 	}

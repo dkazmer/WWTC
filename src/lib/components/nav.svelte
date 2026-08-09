@@ -214,7 +214,7 @@
 									title={label}
 									aria-label={label}
 									onclick={() => { menuOpen = false; mobileMenuOpen = false; }}
-									>{name || href.substring(1)}</a
+									><span class="tab-label">{name || href.substring(1)}</span></a
 								>
 							{/each}
 						{:else}
@@ -235,7 +235,7 @@
 										aria-hidden="true"
 									>
 								{/if}
-								{name || href.substring(1)}
+								<span class="tab-label">{name || href.substring(1)}</span>
 							</a>
 						{/if}
 					</li>
@@ -501,8 +501,8 @@
 		}
 	}
 
-	a[href="/"] {
-		font-size: 0;
+	a[href="/"] .tab-label {
+		display: none;
 	}
 
 	@media screen and (width <= 768px) {
@@ -512,8 +512,8 @@
 		nav {
 			padding-inline: 0;
 		}
-		a[href="/"] {
-			font-size: 1.2rem;
+		a[href="/"] .tab-label {
+			display: inline-block;
 		}
 		.hamburger {
 			display: inline-flex;
@@ -525,24 +525,31 @@
 			right: 16px;
 			width: 44px;
 			height: 44px;
-			border: 2px solid var(--primary);
+			border: none;
 			border-radius: 12px;
-			background: white;
+			background: none;
 			cursor: pointer;
 			z-index: 20;
+			filter: drop-shadow(0 1px 1px rgb(0 0 0 / 45%));
 
 			span {
 				display: block;
 				width: 22px;
 				height: 2px;
-				background: var(--primary-dark);
+				background: white;
 				border-radius: 1px;
 				margin: 3px 0;
 				transition:
 					transform 0.2s ease,
-					opacity 0.2s ease;
+					opacity 0.2s ease,
+					background 0.2s ease;
 			}
 			&[aria-expanded="true"] {
+				filter: none;
+
+				span {
+					background: var(--primary-dark);
+				}
 				span:nth-child(1) {
 					transform: translateY(8px) rotate(45deg);
 				}
@@ -556,30 +563,50 @@
 		}
 
 		.main-menu {
-			width: 70%;
-			max-width: 360px;
+			width: 72%;
+			max-width: 280px;
 			background: whitesmoke;
-			display: none;
-			position: absolute;
-			top: 100%;
+			position: fixed;
+			top: 0;
 			right: 0;
 			left: auto;
+			height: 100vh;
+			height: 100dvh;
+			overflow-y: auto;
 			z-index: 15;
-			box-shadow: 0 2px 12px rgb(0 0 0 / 25%);
+			border-radius: 14px 0 0 14px;
+			box-shadow: -6px 0 16px rgb(0 0 0 / 25%);
+			opacity: 0;
+			visibility: hidden;
+			transform: translateX(100%);
+			transition:
+				opacity 0.2s ease,
+				transform 0.25s ease,
+				visibility 0.25s ease;
 		}
 		.main-menu.open {
-			display: block;
+			opacity: 1;
+			visibility: visible;
+			transform: translateX(0);
 		}
 		.main-menu > div {
+			position: relative;
+			display: flex;
 			flex-direction: column;
 			align-items: stretch;
-			padding: 0 16px 12px;
+			padding: 60px 4px 14px;
 		}
-		.main-menu.open > div {
-			display: flex;
+		.main-menu > div::before {
+			content: "";
+			position: absolute;
+			top: 54px;
+			left: 4px;
+			right: 4px;
+			height: 1px;
+			background: rgb(0 0 0 / 10%);
 		}
 		nav a {
-			padding: 10px 12px;
+			padding: 12px 2px 12px 8px;
 			font-size: 1.2rem;
 			white-space: normal;
 			flex: 1 1 auto;
@@ -587,6 +614,18 @@
 			letter-spacing: 0.04em;
 			border-radius: 12px;
 			margin: 2px 0;
+		}
+		nav a:is([aria-current="page"], [aria-expanded="true"]) {
+			background: none;
+			color: var(--primary-dark);
+			pointer-events: none;
+		}
+		nav a[aria-current="page"] .tab-label {
+			display: inline-block;
+			background-color: var(--primary);
+			color: #fff;
+			padding: 3px 12px;
+			border-radius: 8px;
 		}
 		#sub-menu {
 			display: none;

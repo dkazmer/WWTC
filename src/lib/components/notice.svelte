@@ -60,4 +60,8 @@
 			--icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z'/%3E%3C/svg%3E");
 		}
 	}
+
+	:global(div.notice b) {
+		font-weight: 600;
+	}
 </style>

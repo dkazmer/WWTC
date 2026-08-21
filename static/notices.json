@@ -18,6 +18,11 @@
 	"courtsReady": {
 		"flag": true,
 		"type": "info",
-		"text": "<b>Exciting News Wishing Well Members:</b> We just received confirmation that the Contractor is planning to begin the acrylic surfacing on Monday July 27<sup>th</sup>, weather permitting.  We expect the entire work will take approximately one week to complete. <u><b>We will be cancelling all court activities Monday July 27<sup>th</sup>-31<sup>st</sup>.</b></u>"
+		"text": "<b>Good News, Wishing Well Tennis Club Members!</b> 🎾<p>Our courts are almost finished! The final lines were painted today and need two days to harden. To make sure everything cures properly, the City has placed chains and padlocks on the gates so no one can get onto the courts before they are ready.</p><b>The good news is—we are opening this Friday, August 21st at 8:00 AM!</b> 🎉"
+	},
+	"social": {
+		"flag": true,
+		"type": "info",
+		"text": "🎾 <b>Friday Night Social — August 21st 7-9pm</b><p>We are so excited to celebrate our newly refurbished courts with you!</p><p>Our coaches are looking forward to getting out there with everyone for some Live Ball on the new courts. It’s going to be an amazing evening!</p>Please remember to RSVP so we know how many refreshments to provide."
 	}
 }

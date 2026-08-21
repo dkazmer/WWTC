@@ -11,11 +11,9 @@
 
 	function setScrollPosition() {
 		if (!header) return;
-		if (window.matchMedia('(min-width: 1005px)').matches) {
-			header.style.backgroundPositionY = `calc(80% + 60px + ${window.scrollY / 2}px)`;
-		} else {
-			header.style.backgroundPositionY = '';
-		}
+
+		const { matches } = matchMedia('(min-width: 1005px)');
+		header.style.backgroundPositionY = matches ? `calc(80% + 60px + ${scrollY / 2}px)` : '0';
 	}
 </script>
 

@@ -8,7 +8,7 @@
 	<PrimaryBtn href="/register" label="Sign up" icon={{ family: 'outline', name: 'app_registration' }} />
 </div>
 
-<enhanced:img src="/static/images/2024-05-04/20240504_121509.jpg?w=1080" alt="members" role="presentation" />
+<enhanced:img src="/static/images/2024-05-04/20240504_121509.jpg?w=1080" alt="members" />
 
 <div class="mapouter">
 	<div class="gmap_canvas">

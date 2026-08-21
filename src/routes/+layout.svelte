@@ -72,6 +72,10 @@
 		{#if noticeAllowedPages && notices.courtsReady?.flag}
 			{@render noticeTemplate(notices.courtsReady)}
 		{/if}
+
+		{#if noticeAllowedPages && notices.social?.flag}
+			{@render noticeTemplate(notices.social)}
+		{/if}
 		{@render children()}
 	</div>
 </main>

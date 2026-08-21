@@ -123,6 +123,22 @@
 			border: none;
 		}
 	}
+
+	@media (width <= 768px) {
+		section.rates {
+			float: none;
+			width: 100%;
+			margin-left: 0;
+		}
+		table {
+			width: 100%;
+			table-layout: fixed;
+		}
+		table td {
+			min-width: 0;
+			overflow-wrap: anywhere;
+		}
+	}
 	:global(main li) {
 		font-size: 1.3rem;
 		line-height: 2rem;

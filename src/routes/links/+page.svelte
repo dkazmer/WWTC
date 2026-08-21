@@ -1,5 +1,6 @@
 <script lang="ts">
 	import external from '$lib/assets/external_link.svg';
+
 	const links: { [K in 'href' | 'name']: string }[] = [
 		{ href: 'http://tennisontario.com/', name: 'Ontario Tennis Association' },
 		{ href: 'http://intercountytennis.com/', name: 'Toronto Intercounty Tennis' },
@@ -37,6 +38,7 @@
 			padding-left: 0;
 			transition: padding-left 250ms ease-out;
 			outline-color: transparent;
+			overflow-wrap: anywhere;
 			
 			&:is(:hover, :focus-visible) {
 				background-color: #7473;
@@ -75,6 +77,19 @@
 	}
 
 	@media only screen and (width <= 768px) {
+		.links {
+			grid-template-columns: 1fr;
+		}
+
+		.links a:link {
+			margin-right: 0;
+			padding: 0.85em 0;
+		}
+
+		.links a:link:is(:hover, :focus-visible) {
+			padding-left: 0.75em;
+		}
+
 		.links span {
 			display: none;
 		}

@@ -31,6 +31,7 @@
 	.biz-card {
 		margin-bottom: 2em;
 		width: 350px;
+		max-width: 100%;
 		height: 200px;
 		display: inline-flex;
 		flex-direction: column;

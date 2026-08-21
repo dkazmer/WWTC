@@ -23,14 +23,6 @@
 			marginheight="0"
 			marginwidth="0"
 		></iframe>
-		<style>
-			.mapouter {
-				position: relative;
-				text-align: right;
-				height: 400px;
-				width: 500px;
-			}
-		</style>
 		<!-- <a href="https://www.embedgooglemap.net"></a> -->
 	</div>
 </div>
@@ -75,6 +67,8 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 
 	.mapouter {
 		float: right;
+		width: min(45%, 500px);
+		aspect-ratio: 5 / 4;
 		margin-left: 4em;
 		margin-bottom: 3em;
 		border-radius: 12px;
@@ -92,7 +86,10 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 	@media only screen and (width <= 768px) {
 		.mapouter {
 			float: none;
-			margin: 0 auto;
+			width: 100%;
+			max-width: 520px;
+			aspect-ratio: 16 / 9;
+			margin: 0 auto 3em;
 		}
 	}
 
@@ -111,12 +108,54 @@ Weekends and statutory holidays, <time datetime="PH3">1-4pm</time>, courts 1 and
 			margin-top: 8px;
 			margin-right: 56pt;
 		}
+
+		@media only screen and (width <= 768px) {
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: baseline;
+			text-align: center;
+			gap: 1rem;
+
+			h1 {
+				margin-top: 0;
+				flex-basis: 100%;
+			}
+
+			h1 + a {
+				margin-right: 0;
+				max-height: none;
+				display: inline-block;
+				padding: 10px 28px 10px 20px;
+				border-radius: 6px;
+				border-bottom: none;
+				box-shadow: 0 1px 2px var(--secondary);
+				background: linear-gradient(0deg, white, rgb(102 51 102 / 10%));
+				color: var(--secondary);
+				font-weight: 600;
+				font-size: 1.6rem;
+				line-height: 2rem;
+				text-shadow: 0 1px white;
+			}
+
+			:global(.cta) {
+				display: flex;
+				align-items: center;
+				min-width: 0;
+				margin-right: 0;
+			}
+		}
 	}
 
 	.gmap_canvas {
 		overflow: hidden;
 		background: none !important;
-		height: 400px;
-		width: 500px;
+		height: 100%;
+		width: 100%;
+	}
+
+	.gmap_canvas iframe {
+		display: block;
+		width: 100%;
+		height: 100%;
 	}
 </style>

@@ -59,6 +59,7 @@ The Scarborough Tennis Federation schedule can be found
 			float: none;
 			margin: 0 auto 3em;
 			max-width: 432px;
+			box-sizing: border-box;
 		}
 	}
 </style>

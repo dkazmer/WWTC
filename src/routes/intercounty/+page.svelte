@@ -53,6 +53,11 @@ The InterCounty schedule can be found
 		b {
 			font-weight: 600;
 		}
+
+		img {
+			max-width: 100%;
+			height: auto;
+		}
 	}
 
 	p {
@@ -64,6 +69,7 @@ The InterCounty schedule can be found
 			float: none;
 			margin: 0 auto 3em;
 			max-width: 432px;
+			box-sizing: border-box;
 		}
 	}
 </style>

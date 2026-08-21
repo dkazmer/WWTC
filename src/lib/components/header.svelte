@@ -6,10 +6,16 @@
 	onMount(() => {
 		setScrollPosition();
 		document.addEventListener('scroll', setScrollPosition);
+		return () => document.removeEventListener('scroll', setScrollPosition);
 	});
 
 	function setScrollPosition() {
-		header.style.backgroundPositionY = `calc(80% + 60px + ${window.scrollY / 2}px)`;
+		if (!header) return;
+		if (window.matchMedia('(min-width: 1005px)').matches) {
+			header.style.backgroundPositionY = `calc(80% + 60px + ${window.scrollY / 2}px)`;
+		} else {
+			header.style.backgroundPositionY = '';
+		}
 	}
 </script>
 
@@ -23,6 +29,8 @@
 		background-color: darkgray;
 		background-image: url("$lib/assets/banner1.jpg");
 		background-size: cover;
+		background-repeat: no-repeat;
+		background-position-x: center;
 		background-position-y: calc(80% + 60px);
 		text-align: center;
 		min-height: 177px;
@@ -44,8 +52,13 @@
 		}
 
 		@media screen and (width < 1005px) {
-			background-size: auto;
-			background-position-x: center;
+			background-size: cover;
+			background-position: center;
+			min-height: 160px;
+			div {
+				font-size: 3.6rem;
+				translate: 0 40px;
+			}
 		}
 	}
 </style>

@@ -34,7 +34,9 @@
 
 <style lang="scss">
 	.cta button {
+		box-sizing: border-box;
 		cursor: pointer;
+		max-width: 100%;
 		color: var(--secondary);
 		appearance: none;
 		padding: 10px 20px;

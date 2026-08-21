@@ -107,9 +107,11 @@
 	table {
 		margin: 40px auto;
 		min-width: 820px;
+		max-width: 100%;
 		td {
 			background-color: whitesmoke;
 			padding: 8px 16px;
+			overflow-wrap: anywhere;
 			&:nth-child(2):not([colspan]) {
 				font-weight: 600;
 			}
@@ -118,8 +120,34 @@
 
 	@media only screen and (width <= 768px) {
 		table {
+			display: block;
 			min-width: unset;
 			width: 100%;
+			margin: 24px 0 40px;
+			border-spacing: 0;
+		}
+
+		colgroup,
+		tbody,
+		tr,
+		td {
+			display: block;
+			width: 100%;
+			box-sizing: border-box;
+		}
+
+		tr {
+			margin-bottom: 12px;
+			background-color: whitesmoke;
+			box-shadow: 0 1px 2px rgb(0 0 0 / 12%);
+		}
+
+		td {
+			padding: 8px 12px;
+		}
+
+		td + td {
+			padding-top: 0;
 		}
 	}
 </style>

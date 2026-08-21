@@ -173,6 +173,10 @@ strike {
 }
 
 @media only screen and (width <= 768px) {
+	:is(main, header, footer) > div {
+		padding: 24px 20px;
+	}
+	
 	nav a {
 		padding: 10px 16px;
 	}

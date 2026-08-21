@@ -4,12 +4,15 @@
 
 	let menu: HTMLAnchorElement;
 	let subMenu: HTMLDivElement;
+	let mobileToggle: HTMLButtonElement;
+	let mainMenu: HTMLDivElement;
 	let menuOpen = false;
+	let mobileMenuOpen = false;
 
 	const tabs: Tab[] = [
 		{
 			href: '/',
-			// name: 'home',
+			name: 'home',
 			label: 'home',
 			icon: {
 				// name: 'home',
@@ -98,27 +101,43 @@
 	}
 
 	/* function isSubPath() {
-		switch (page.url.pathname) {
-			case '/intercounty':
-			case '/stf':
-			case '/juniors':
-			case '/lessons':
-			case '/tournament':
-				return 0;
-		}
-
-		return -1;
-	} */
+			switch (page.url.pathname) {
+				case '/intercounty':
+				case '/stf':
+				case '/juniors':
+				case '/lessons':
+				case '/tournament':
+					return 0;
+			}
+	
+			return -1;
+		} */
 
 	onMount(() => {
 		const submenuItems = Array.from(subMenu.querySelectorAll('a'));
 
 		menuOpen = isSubmenuItemSelected();
 
-		document.addEventListener('click', ({ target }) => {
-			if (target === menu || target === subMenu || isSubmenuItemClicked(target!) || isSubmenuItemSelected()) return;
+		const collapseMenus = ({ target }: MouseEvent) => {
+			if (target instanceof Node && mobileMenuOpen && !mainMenu.contains(target) && !mobileToggle.contains(target)) {
+				menuOpen = false;
+				mobileMenuOpen = false;
+				return;
+			}
+
+			if (
+				target === menu ||
+				target === subMenu ||
+				(target instanceof Node && mobileToggle.contains(target)) ||
+				isSubmenuItemClicked(target!) ||
+				isSubmenuItemSelected()
+			)
+				return;
 			menuOpen = false;
-		});
+			mobileMenuOpen = false;
+		};
+
+		document.addEventListener('click', collapseMenus);
 
 		function isSubmenuItemSelected() {
 			return [...submenuItems].some(el => el.ariaCurrent === 'page');
@@ -127,6 +146,10 @@
 		function isSubmenuItemClicked(t: EventTarget) {
 			return [...submenuItems].some(el => el === t);
 		}
+
+		return () => {
+			document.removeEventListener('click', collapseMenus);
+		};
 	});
 
 	interface Tab {
@@ -143,7 +166,20 @@
 </script>
 <nav>
 	<!-- top menu -->
-	<div class="main-menu">
+	<button
+		class="hamburger"
+		type="button"
+		aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+		aria-expanded={mobileMenuOpen}
+		aria-controls="main-menu"
+		onclick={() => mobileMenuOpen = !mobileMenuOpen}
+		bind:this={mobileToggle}
+	>
+		<span></span>
+		<span></span>
+		<span></span>
+	</button>
+	<div id="main-menu" class="main-menu" class:open={mobileMenuOpen} bind:this={mainMenu}>
 		<div role="menubar">
 			<ul>
 				{#each tabs as { href, name, role, className, icon, label }}
@@ -170,13 +206,27 @@
 								{name}
 								<div></div>
 							</a>
+							{#each subTabs as { href, name, label, className }}
+								<a
+									class="sub-tab {className || ''}"
+									{href}
+									aria-current={isPath(href) ? 'page' : null}
+									title={label}
+									aria-label={label}
+									onclick={() => { menuOpen = false; mobileMenuOpen = false; }}
+									><span class="tab-label">{name || href.substring(1)}</span></a
+								>
+							{/each}
 						{:else}
 							<a
 								{href}
-								aria-label={label || null}
-								title={label || null}
+								aria-label={label || name || null}
+								title={label || name || null}
 								aria-current={isPath(href) ? 'page' : null}
-								onclick={() => menuOpen = false}
+								onclick={() => {
+									menuOpen = false;
+									mobileMenuOpen = false;
+								}}
 							>
 								{#if icon}
 									<img
@@ -185,7 +235,7 @@
 										aria-hidden="true"
 									>
 								{/if}
-								{name || href.substring(1)}
+								<span class="tab-label">{name || href.substring(1)}</span>
 							</a>
 						{/if}
 					</li>
@@ -193,8 +243,8 @@
 			</ul>
 		</div>
 	</div>
-	<!-- Programs sub menu -->
-	<div id="sub-menu" aria-hidden={!menuOpen} bind:this={subMenu}>
+	<!-- Programs sub menu for desktop -->
+	<div id="sub-menu" class="programs-sub-menu" aria-hidden={!menuOpen} bind:this={subMenu}>
 		<div role="menubar">
 			<ul>
 				{#each subTabs as { href, name, className, label }}
@@ -216,9 +266,16 @@
 </nav>
 
 <style lang="scss">
-	ul, ul li {
+	.main-menu > div > ul,
+	.main-menu > div > ul li {
 		display: contents;
 	}
+
+	#sub-menu ul,
+	#sub-menu li {
+		display: contents;
+	}
+
 	/* @mixin new() { // mixins not working here; reason unknown */
 	a.new::after {
 		content: "new";
@@ -254,7 +311,7 @@
 				max-width: 1200px;
 				width: 100%;
 				padding-inline: 60px;
-	            box-sizing: border-box;
+				box-sizing: border-box;
 			}
 		}
 		a {
@@ -270,12 +327,12 @@
 			text-align: center;
 			white-space: nowrap;
 			letter-spacing: 1pt;
-			
+
 			img {
 				vertical-align: middle;
 				margin-block: -7px -4px;
 				filter: var(--primary-dark-filter);
-				opacity: .54;
+				opacity: 0.54;
 				pointer-events: none;
 			}
 
@@ -283,7 +340,7 @@
 				background-color: var(--primary);
 				color: white;
 				pointer-events: none;
-				
+
 				img {
 					filter: invert(1) drop-shadow(0px 2px 4px var(--primary-dark));
 					opacity: 1;
@@ -295,7 +352,7 @@
 				/* background-color: #9b6 !important; */
 				background: linear-gradient(0, #683, #9b6);
 				text-shadow: 0 1px 2px #360;
-				
+
 				img {
 					filter: invert(1) drop-shadow(0px 2px 4px var(--primary-dark));
 					opacity: 1;
@@ -319,7 +376,7 @@
 		}
 		&:has([aria-expanded="true"]) [aria-current="page"] {
 			background-color: #9b6;
-			
+
 			img {
 				filter: invert(1);
 			}
@@ -328,14 +385,14 @@
 			background-color: var(--primary);
 			color: #fff;
 		}
-		&:has([aria-expanded="false"]) #sub-menu {
+		&:has([aria-controls="sub-menu"][aria-expanded="false"]) #sub-menu {
 			/*// display: none;*/
 			max-height: 0;
 			position: absolute;
 			width: 100%;
 			transition-duration: 0.075s;
 		}
-		&:has([aria-expanded="false"]:hover) #sub-menu {
+		&:has([aria-controls="sub-menu"][aria-expanded="false"]:hover) #sub-menu {
 			/*// display: block;*/
 			max-height: 5px;
 		}
@@ -353,6 +410,12 @@
 		position: relative;
 		z-index: 1;
 	}
+	.hamburger {
+		display: none;
+	}
+	.sub-tab {
+		display: none;
+	}
 	#sub-menu {
 		max-height: 59px;
 		transition: max-height 0.3s ease-out;
@@ -364,7 +427,7 @@
 
 		a {
 			color: white;
-	        padding-inline: 30px;
+			padding-inline: 30px;
 			border-radius: 13px;
 			box-shadow: 0 0 0px 6px var(--primary) inset;
 			outline: var(--primary) solid 2px;
@@ -437,10 +500,141 @@
 			}
 		}
 	}
-	
-	@media screen and (width < 1000px) {
+
+	a[href="/"] .tab-label {
+		display: none;
+	}
+
+	@media screen and (width <= 768px) {
 		nav a img {
 			display: none;
+		}
+		nav {
+			padding-inline: 0;
+		}
+		a[href="/"] .tab-label {
+			display: inline-block;
+		}
+		.hamburger {
+			display: inline-flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			position: absolute;
+			top: 10px;
+			right: 16px;
+			width: 44px;
+			height: 44px;
+			border: none;
+			border-radius: 12px;
+			background: none;
+			cursor: pointer;
+			z-index: 20;
+			filter: drop-shadow(0 1px 1px rgb(0 0 0 / 45%));
+
+			span {
+				display: block;
+				width: 22px;
+				height: 2px;
+				background: white;
+				border-radius: 1px;
+				margin: 3px 0;
+				transition:
+					transform 0.2s ease,
+					opacity 0.2s ease,
+					background 0.2s ease;
+			}
+			&[aria-expanded="true"] {
+				filter: none;
+
+				span {
+					background: var(--primary-dark);
+				}
+				span:nth-child(1) {
+					transform: translateY(8px) rotate(45deg);
+				}
+				span:nth-child(2) {
+					opacity: 0;
+				}
+				span:nth-child(3) {
+					transform: translateY(-8px) rotate(-45deg);
+				}
+			}
+		}
+
+		.main-menu {
+			width: 72%;
+			max-width: 280px;
+			background: whitesmoke;
+			position: fixed;
+			top: 0;
+			right: 0;
+			left: auto;
+			height: 100vh;
+			height: 100dvh;
+			overflow-y: auto;
+			z-index: 15;
+			border-radius: 14px 0 0 14px;
+			box-shadow: -6px 0 16px rgb(0 0 0 / 25%);
+			opacity: 0;
+			visibility: hidden;
+			transform: translateX(100%);
+			transition:
+				opacity 0.2s ease,
+				transform 0.25s ease,
+				visibility 0.25s ease;
+		}
+		.main-menu.open {
+			opacity: 1;
+			visibility: visible;
+			transform: translateX(0);
+		}
+		.main-menu > div {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+			padding: 60px 4px 14px;
+		}
+		.main-menu > div::before {
+			content: "";
+			position: absolute;
+			top: 54px;
+			left: 4px;
+			right: 4px;
+			height: 1px;
+			background: rgb(0 0 0 / 10%);
+		}
+		nav a {
+			padding: 12px 2px 12px 8px;
+			font-size: 1.2rem;
+			white-space: normal;
+			flex: 1 1 auto;
+			text-align: left;
+			letter-spacing: 0.04em;
+			border-radius: 12px;
+			margin: 2px 0;
+		}
+		nav a:is([aria-current="page"], [aria-expanded="true"]) {
+			background: none;
+			color: var(--primary-dark);
+			pointer-events: none;
+		}
+		nav a[aria-current="page"] .tab-label {
+			display: inline-block;
+			background-color: var(--primary);
+			color: #fff;
+			padding: 3px 12px;
+			border-radius: 8px;
+		}
+		#sub-menu {
+			display: none;
+		}
+		[role="menu"] {
+			display: none;
+		}
+		.sub-tab {
+			display: block;
 		}
 	}
 </style>

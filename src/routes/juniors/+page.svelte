@@ -108,6 +108,24 @@
 		}
 		& > * {
 			page-break-inside: avoid;
+			break-inside: avoid;
+			margin-bottom: 1.5em;
+		}
+
+		ul {
+			padding-left: 1.4em;
+		}
+
+		li + li {
+			margin-top: 0.35em;
+		}
+	}
+
+	@media only screen and (max-width: 768px) {
+		article {
+			columns: 1;
+			column-rule: none;
+			line-height: 1.55;
 		}
 	}
 </style>

@@ -87,6 +87,12 @@ Open Doubles
 	table {
 		margin-block: 2em;
 		min-width: 100%;
+		max-width: 100%;
+		table-layout: fixed;
+
+		@media (width <= 768px) {
+			font-size: 1.3rem;
+		}
 
 		td {
 			background-color: whitesmoke;
@@ -101,6 +107,15 @@ Open Doubles
 			background-color: #683;
 			padding: 8px 16px;
 			font-weight: 600;
+		}
+
+		th,
+		td {
+			overflow-wrap: anywhere;
+
+			@media (width <= 768px) {
+				padding: 8px;
+			}
 		}
 	}
 

@@ -298,10 +298,9 @@
 	}
 	input:not([type="button"], [type="hidden"], [type="checkbox"], [type="radio"]) {
 		min-width: 219px;
-
-		&.long {
-			min-width: 478px;
-		}
+	}
+	input.long {
+		min-width: 478px;
 	}
 	@supports (-webkit-text-security: circle) {
 		select {
@@ -609,13 +608,46 @@
 	}
 
 	@media only screen and (width <= 768px) {
-		input:not([type="button"], [type="hidden"], [type="checkbox"], [type="radio"]) {
-			min-width: unset;
-			max-width: 8em;
+		input:not([type="button"], [type="hidden"], [type="checkbox"], [type="radio"]),
+		select {
+			width: 100% !important;
+			min-width: 0 !important;
+			max-width: 100% !important;
+			box-sizing: border-box;
+			display: block;
+			margin-right: 0;
+		}
 
-			&.long {
-				min-width: calc(18em + 8px);
-			}
+		.contact > div,
+		.address > div,
+		.additional section {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.75rem;
+		}
+
+		form > section:not(.returning, .contact, .address, .additional, .lessons, .info) {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.75rem;
+		}
+
+		.contact > div input,
+		.address > div input,
+		form > section:not(.returning, .contact, .address, .additional, .lessons, .info) input,
+		form > section:not(.returning, .contact, .address, .additional, .lessons, .info) select,
+		.additional section input,
+		.additional section select {
+			flex: 1 1 100%;
+		}
+
+		.returning label {
+			display: inline-block;
+			margin-bottom: 0.75rem;
+		}
+
+		#disclaimer[aria-hidden="false"] {
+			max-height: 360px;
 		}
 	}
 

@@ -20,9 +20,9 @@
 		"type": "info",
 		"text": "<b>Good News, Wishing Well Tennis Club Members!</b> 🎾<p>Our courts are almost finished! The final lines were painted today and need two days to harden. To make sure everything cures properly, the City has placed chains and padlocks on the gates so no one can get onto the courts before they are ready.</p><b>The good news is—we are opening this Friday, August 21st at 8:00 AM!</b> 🎉"
 	},
-	"social": {
+	"tournament": {
 		"flag": true,
 		"type": "info",
-		"text": "🎾 <b>Friday Night Social — August 21st 7-9pm</b><p>We are so excited to celebrate our newly refurbished courts with you!</p><p>Our coaches are looking forward to getting out there with everyone for some Live Ball on the new courts. It’s going to be an amazing evening!</p>Please remember to RSVP so we know how many refreshments to provide."
+		"text": "<b>Club Year-End Tennis Tournament — September 5<sup>th</sup> &amp; 6<sup>th</sup>, 2026</b> 🎾<p>All Wishing Well members are invited to join the club tournament on Sept 5 and 6 (Sat–Sun), 9 AM – 6 PM each day, with <b>Open Singles</b>, <b>Ladies Singles</b>, and <b>Open Doubles</b> categories.</p><p><b>To enter,</b> email <a href=\"mailto:mahakwwtournamentdirector@gmail.com\">mahakwwtournamentdirector@gmail.com</a> with your name, phone number, and categories by <b>Monday, August 31<sup>st</sup>, 2026</b>. Please be available both days.</p>"
 	}
 }

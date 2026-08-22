@@ -14,6 +14,7 @@
 
 	let { children } = $props();
 	let noticeAllowedPages = $state(false);
+	let tournamentNoticePages = $state(false);
 	let title = $state('');
 	let hasRegistered = $state(false);
 	let noEmail = $state(false);
@@ -38,6 +39,7 @@
 
 		const { pathname } = page.url;
 		noticeAllowedPages = pathname === '/' || pathname === '/membership' || pathname === '/schedule';
+		tournamentNoticePages = noticeAllowedPages || pathname === '/tournament';
 		title = pathname.split('/').at(-1)!.toUpperCase(); // + title setter
 	}
 
@@ -73,8 +75,8 @@
 			{@render noticeTemplate(notices.courtsReady)}
 		{/if}
 
-		{#if noticeAllowedPages && notices.social?.flag}
-			{@render noticeTemplate(notices.social)}
+		{#if tournamentNoticePages && notices.tournament?.flag}
+			{@render noticeTemplate(notices.tournament)}
 		{/if}
 		{@render children()}
 	</div>

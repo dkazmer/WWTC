@@ -45,11 +45,6 @@ The Scarborough Tennis Federation schedule can be found
 		box-shadow: gray 0 2px 4px;
 		user-select: none;
 
-		img {
-			max-width: 100%;
-			height: auto;
-		}
-
 		b {
 			font-weight: 600;
 		}
@@ -65,6 +60,11 @@ The Scarborough Tennis Federation schedule can be found
 			margin: 0 auto 3em;
 			max-width: min(432px, 100%);
 			box-sizing: border-box;
+
+			img {
+				max-width: 100%;
+				height: auto;
+			}
 		}
 	}
 </style>
